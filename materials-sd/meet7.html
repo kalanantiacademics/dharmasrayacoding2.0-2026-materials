@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUANGGURU CODING</title>
+    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset dan Global Styles */
+        body { margin: 0; padding: 0; font-family: 'Fredoka', sans-serif; background: url('https://i.imgur.com/z221jXz.png') center/cover fixed no-repeat; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .presentation-container { width: 77vw; height: 75.5vh; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative; background-color: transparent; }
+        .slide { width: 100%; height: 100%; padding: 40px 60px; box-sizing: border-box; color: #333; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out; background-color: rgba(255, 255, 255, 0.95); visibility: hidden; overflow-y: auto; opacity: 0; }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+        .slide.is-next { transform: translateX(100%); visibility: visible; opacity: 1; z-index: 11; }
+        .slide.is-exiting { transform: translateX(100%); opacity: 1; z-index: 11; }
+        
+        #slide1 { background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://i.imgur.com/z221jXz.png') center/cover no-repeat; color: white; align-items: center; text-align: center; justify-content: center; }
+        .solid-teal-bg { background-color: #008080; color: white; }
+        .highlight-gradient { background: linear-gradient(to right, #008080, #a8c368, #f2c140); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+        .starburst { position: absolute; width: 100px; height: 100px; z-index: 2; }
+        
+        /* Logos */
+        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; transition: opacity 0.3s ease; gap: 15px; }
+        .slide-logo-left img { height: 45px; width: auto; }
+        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; transition: opacity 0.3s ease; }
+        .slide-logo-right img { height: 45px; width: auto; }
+
+        .nav-button {
+            background-color: #f2c140; /* Kuning yang mencolok */
+            color: #222; /* Ikon panah gelap */
+            border: 3px solid white; /* Garis tepi putih untuk pemisah dari BG gelap */
+            position: fixed; /* Tombol diposisikan secara fixed terhadap viewport */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100; /* Pastikan di atas semua elemen lain */
+            width: 50px; /* Sedikit diperbesar */
+            height: 50px; 
+            border-radius: 50%; /* Bulat */
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Shadow kuat */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #prevBtn { left: 20px; } 
+        #nextBtn { right: 20px; }
+        .nav-button:hover:not(:disabled) {
+            background-color: #ffab19; /* Oranye saat di-hover */
+            color: white;
+            transform: translateY(-50%) scale(1.15); /* Perbesar sedikit */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        .nav-button:disabled {
+            background-color: #e0e0e0;
+            color: #999;
+            border-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translateY(-50%);
+        }
+        
+        .cover-title { font-size: 4rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; z-index: 3; text-align: center; }
+        .cover-subtitle { font-size: 1.8rem; font-weight: 400; margin-bottom: 20px; border-bottom: 3px solid #f2c140; padding-bottom: 10px; display: inline-block; z-index: 3; color: white; }
+        .agenda-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: #008080; line-height: 1.2; margin-bottom: 30px; width: 100%; text-align: center; }
+        
+        .game-title-gradient {
+            background: linear-gradient(135deg, #f2c140 0%, #ffffff 50%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 20px rgba(242, 193, 64, 0.4));
+            display: inline-block;
+        }
+        
+        /* Modern Utilities */
+        .txt-blue { color: #4c97ff; font-weight: 800; }
+        .txt-purple { color: #9966ff; font-weight: 800; }
+        .txt-pink { color: #cf63cf; font-weight: 800; }
+        .txt-teal { color: #008080; font-weight: 800; }
+        .txt-yellow { color: #f2c140; font-weight: 800; }
+        .txt-green { color: #a8c368; font-weight: 800; }
+        .txt-red { color: #ff6b6b; font-weight: 800; }
+
+        /* Grid Cards */
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; max-width: 900px; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.05); border: 2px solid #f0f0f0; transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .card-icon { font-size: 3rem; margin-bottom: 15px; }
+        .huge-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(to right, #008080, #f2c140); color: white; text-decoration: none; font-size: 1.5rem; font-weight: 700; padding: 15px 40px; border-radius: 50px; cursor: pointer; border: none; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0,128,128,0.3); }
+        .huge-btn:hover { transform: scale(1.05); }
+
+        /* Drag and Drop Zones */
+        .dnd-container { display: flex; flex-direction: column; width: 100%; max-width: 900px; gap: 20px; align-items: center; }
+        .drop-zones { display: flex; width: 100%; justify-content: space-around; gap: 30px; }
+        .drop-zone { flex: 1; background: #f9f9f9; border: 4px dashed #ccc; border-radius: 20px; min-height: 200px; padding: 20px; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 10px; transition: all 0.3s; justify-content: center;}
+        .drop-zone.over { background: #e0f2fe; border-color: #4c97ff; }
+        .drop-zone.over-wrong { background: #fee2e2; border-color: #ef4444; }
+        .drop-zone-title { width: 100%; text-align: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; }
+        .items-pool { display: flex; flex-wrap: wrap; gap: 15px; background: #fffaf0; border: 3px solid #f2c140; border-radius: 20px; padding: 20px; width: 100%; justify-content: center; min-height: 100px; }
+        .draggable-item { font-size: 3rem; cursor: grab; user-select: none; transition: transform 0.2s; background: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #eee; }
+        .draggable-item:active { cursor: grabbing; transform: scale(1.1); }
+        .draggable-text { font-size: 1.2rem; font-weight: bold; background: white; border: 2px solid #ccc; padding: 10px 20px; border-radius: 10px; cursor: grab; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .draggable-text:active { cursor: grabbing; transform: scale(1.1); }
+
+        /* AI Tester */
+        .ai-tester { display: flex; flex-direction: column; align-items: center; background: #f0fdf4; border: 4px solid #a8c368; padding: 30px; border-radius: 30px; width: 100%; max-width: 600px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .robot-avatar { font-size: 6rem; animation: floatSprite 2s infinite alternate; margin-bottom: 10px; }
+        .ai-speech { background: white; padding: 15px 25px; border-radius: 20px; border: 2px solid #ddd; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; color: #333; position: relative; min-width: 250px; text-align: center; }
+        .ai-speech::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); border-width: 10px 10px 0; border-style: solid; border-color: #ddd transparent transparent transparent; }
+        .ai-input-group { display: flex; gap: 10px; width: 100%; }
+        .ai-input { flex: 1; padding: 15px; font-size: 1.5rem; border-radius: 15px; border: 2px solid #ccc; outline: none; }
+        .ai-input:focus { border-color: #008080; }
+        .ai-btn { background: #008080; color: white; border: none; padding: 15px 25px; font-size: 1.2rem; font-weight: bold; border-radius: 15px; cursor: pointer; transition: 0.2s; }
+        .ai-btn:hover { background: #005959; }
+
+        /* Step Grid */
+        .step-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1000px; width: 100%; }
+        .step-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #f0f0f0; display: flex; flex-direction: column; }
+        .step-header { background: #008080; color: white; padding: 10px 15px; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .step-num-circle { background: #f2c140; color: #333; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .step-body { padding: 20px; font-size: 1.1rem; display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
+        .step-img { max-width: 100%; max-height: 150px; object-fit: contain; margin-top: 15px; border-radius: 8px; border: 1px solid #eee; }
+
+        /* Generic Modals */
+        .dnd-modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); display: flex; justify-content: center; align-items: center; z-index: 50; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; border-radius: 12px; }
+        .dnd-modal-overlay.show { opacity: 1; pointer-events: auto; }
+        .dnd-modal { background: white; border-radius: 24px; padding: 40px 50px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transform: scale(0.7); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: 480px; width: 90%; }
+        .dnd-modal-overlay.show .dnd-modal { transform: scale(1); }
+        .dnd-modal-emoji { font-size: 4rem; display: block; margin-bottom: 12px; animation: bounce 0.8s infinite alternate; }
+        .dnd-modal-title { font-size: 1.8rem; font-weight: 900; color: #008080; margin-bottom: 8px; }
+        .dnd-modal-msg { font-size: 1.2rem; color: #555; margin-bottom: 24px; line-height: 1.5; }
+        .dnd-modal-btn { background: linear-gradient(to right, #008080, #a8c368); color: white; border: none; padding: 12px 32px; border-radius: 30px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 15px rgba(0,128,128,0.3); font-family: 'Fredoka', sans-serif;}
+
+        /* Quiz */
+        .quiz-opt { background: white; border: 2px solid #ccc; padding: 15px 20px; border-radius: 15px; font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-align: left; margin-bottom: 10px; width: 100%; max-width: 500px; }
+        .quiz-opt:hover { border-color: #008080; background: #f0fdf4; }
+        .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; }
+        .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; }
+
+        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <div class="slide-logo-left" id="globalLogoLeft">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/0070c0?text=RG'" alt="Logo Ruangguru">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/0070c0?text=DH'" alt="Logo Kabupaten Dharmasraya">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/0070c0?text=DS'" alt="Logo Disdik Dharmasraya">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" 
+             onerror="this.onerror=null; this.src='https://placehold.co/40x40/ffffff/0070c0?text=DS'"
+             alt="Logo Dharmasraya Juara">
+    </div>
+    <div class="slide-logo-right" id="globalLogoRight">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" onerror="this.onerror=null; this.src='https://placehold.co/80x40/ffffff/000000?text=RG+Coding'" alt="Logo Ruangguru Coding">
+    </div>
+
+    <div class="presentation-container" id="mainContainer">
+        
+        <!-- Slide 1: Cover -->
+        <div class="slide active" id="slide1">
+            <h1 class="cover-title" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+                <div style="line-height: 1.1; text-align: center;">
+                    <span style="font-size: 3rem; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">PROJECT:</span><br>
+                    <span class="game-title-gradient" style="font-size: 6.5rem;">MAKE ME HAPPY</span>
+                </div>
+            </h1>
+
+            <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px auto; z-index: 3;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" 
+                     alt="Scratch" 
+                     style="height: 100px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+                <span style="font-size: 3rem; color: white; font-weight: bold;">+</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" 
+                     alt="ML4K" 
+                     style="height: 100px; width: auto; object-fit: contain; background: #008080; padding: 10px; border-radius: 15px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+            </div>
+            
+            <p class="cover-subtitle">Sesi 7: PENGENALAN MACHINE LEARNING</p>
+        </div>
+
+        <!-- Slide 2: Review Scratch -->
+        <div class="slide" id="slide2">
+            <h2 class="agenda-title" style="margin-bottom: 10px;">Masih Ingat Pelajaran Scratch? 🐱</h2>
+            <!-- <img src="https://cdn.worldvectorlogo.com/logos/scratch-cat.svg" alt="Scratch Cat" style="height: 50px; margin-bottom: 20px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); animation: floatSprite 2.5s infinite alternate;"> -->
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; margin-top: 0;">
+                Semua yang kita pelajari di Scratch adalah dasar dari <strong>Computational Thinking</strong> (Cara Berpikir Komputasi). Kemampuan ini sangat penting untuk membuat program cerdas yang sesungguhnya!
+            </p>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3 class="txt-teal">Sequence & Loop</h3>
+                    <p>Memerintah komputer secara berurutan dan berulang.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔀</div>
+                    <h3 class="txt-purple">Conditional (If-Then)</h3>
+                    <p>Membuat komputer bisa mengambil keputusan sendiri.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Objectives -->
+        <div class="slide" id="slide3">
+            <h2 class="agenda-title">Hari Ini Kita Akan Belajar... 🎯</h2>
+            <div class="grid-container" style="max-width: 700px; gap: 15px;">
+                <div class="card" style="padding: 15px;">
+                    <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 5px;">🤖</div>
+                    <h3 class="txt-blue" style="font-size: 1.1rem; margin-bottom: 5px;">Apa itu Machine Learning?</h3>
+                    <p style="font-size: 0.95rem; margin: 0;">Memahami bagaimana komputer bisa dilatih untuk "berpikir" seperti manusia.</p>
+                </div>
+                <div class="card" style="padding: 15px;">
+                    <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 5px;">📚</div>
+                    <h3 class="txt-pink" style="font-size: 1.1rem; margin-bottom: 5px;">Melatih AI Text Recognition</h3>
+                    <p style="font-size: 0.95rem; margin: 0;">Mengajari robot untuk bisa mengenali kata-kata yang kita ketik.</p>
+                </div>
+                <div class="card" style="grid-column: span 2; padding: 15px;">
+                    <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 5px;">😊</div>
+                    <h3 class="txt-green" style="font-size: 1.1rem; margin-bottom: 5px;">Project "Make Me Happy"</h3>
+                    <p style="font-size: 0.95rem; margin: 0;">Mempraktikkan pembuatan program yang bisa tahu apakah kata-katamu menyedihkan atau menyenangkan menggunakan <strong>ML4K</strong>!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Apersepsi -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">Menebak Perasaan Seseorang 🤔</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center;">
+                <div style="font-size: 8rem; animation: floatSprite 2s infinite alternate;">😁</div>
+                <div style="max-width: 600px; font-size: 1.5rem; line-height: 1.5;">
+                    <p>Bisakah komputer tahu kalau kita sedang sedih atau senang?</p>
+                    <p style="background: #fdf2f8; padding: 20px; border-radius: 15px; border-left: 5px solid #cf63cf; margin-top: 20px;">
+                        <strong>Pikirkan ini:</strong><br>
+                        Pernahkah kamu menebak perasaan temanmu dari wajahnya? Kalau dia tersenyum, artinya dia sedang senang. Darimana kamu tahu?<br>
+                        <span class="txt-purple">Karena kamu sudah SERING melihat orang tersenyum dan merekamnya di otakmu!</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Apa itu ML -->
+        <div class="slide" id="slide5">
+            <h2 class="agenda-title">Apa itu Machine Learning? 🧠🤖</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center;">
+                <div style="text-align: center;">
+                    <div style="font-size: 6rem;">🧠</div>
+                    <h3 class="txt-teal">Otak Manusia</h3>
+                    <p>Belajar dari <strong>Pengalaman</strong></p>
+                </div>
+                <div style="font-size: 3rem; color: #ccc;">VS</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 6rem;">💻</div>
+                    <h3 class="txt-blue">Otak Komputer</h3>
+                    <p>Belajar dari <strong>Contoh Data</strong></p>
+                </div>
+            </div>
+            <p style="font-size: 1.5rem; text-align: center; max-width: 800px; margin-top: 30px; background: #e0f2fe; padding: 20px; border-radius: 15px; border: 2px dashed #4c97ff;">
+                Sama seperti kamu belajar mengenali senyuman, komputer juga bisa diajari! Kita melatih komputer dengan <strong>banyak contoh</strong> agar bisa mengenali sesuatu secara otomatis. Inilah yang disebut <strong>Machine Learning (Mesin yang Belajar)</strong>.
+            </p>
+        </div>
+
+        <!-- Slide 6: DND Makanan -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title" style="margin-bottom: 10px;">Latihan 1: Mengajari AI Membedakan Makanan 🍎</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Tarik barang-barang di bawah ke keranjang yang TEPAT! Hati-hati jangan sampai AI makan benda mati!</p>
+            
+            <div class="dnd-container">
+                <div class="drop-zones">
+                    <div class="drop-zone" id="dz-food" data-accept="food" style="border-color: #a8c368; background: #f0fdf4;">
+                        <div class="drop-zone-title txt-green">🍽️ Makanan</div>
+                    </div>
+                    <div class="drop-zone" id="dz-notfood" data-accept="notfood" style="border-color: #ff6b6b; background: #fef2f2;">
+                        <div class="drop-zone-title txt-red">🚫 Bukan Makanan</div>
+                    </div>
+                </div>
+                <div class="items-pool" id="emoji-pool">
+                    <!-- Dinamis via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: AI Emoji Tester -->
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title" style="margin-bottom: 10px;">Tes Robotmu! 🤖</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Robot sudah mengingat semua barang yang kamu kelompokkan tadi. Coba ketik salah satu emoji tersebut!</p>
+            
+            <div class="ai-tester">
+                <div class="robot-avatar">🤖</div>
+                <div class="ai-speech" id="aiEmojiSpeech">Halo! Beri aku emoji barang tadi!</div>
+                
+                <div class="ai-input-group">
+                    <input type="text" id="aiEmojiInput" class="ai-input" placeholder="Masukkan 1 emoji..." maxlength="2">
+                    <button class="ai-btn" onclick="testEmojiAI()">KIRIM</button>
+                </div>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 15px;">Tips: Tekan <strong>Windows + .</strong> (Titik) atau <strong>Cmd + Ctrl + Space</strong> untuk membuka keyboard emoji.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Penjelasan Training -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Bagaimana Robot Bisa Tahu? 🤓</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px;">
+                <div style="font-size: 6rem; margin-bottom: 20px;">📚 ➡️ 🤖 ➡️ 💡</div>
+                <p style="font-size: 1.6rem; line-height: 1.6;">
+                    Robot itu pintar tapi awalnya ia <strong>tidak tahu apa-apa</strong>. Semakin banyak <strong>CONTOH</strong> benda yang kita berikan dan kita kelompokkan ke dia, dia akan mengingat polanya.
+                </p>
+                <p style="font-size: 1.6rem; line-height: 1.6; color: #008080; font-weight: bold; margin-top: 15px;">
+                    Itulah yang disebut "Melatih Mesin" (Training the Machine)!
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 9: DND Teks -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title" style="margin-bottom: 10px;">Latihan 2: Text Recognition 📝</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Sekarang kita latih dia membaca! Tarik kata-kata ini ke kelompok yang benar.</p>
+            
+            <div class="dnd-container">
+                <div class="drop-zones">
+                    <div class="drop-zone" id="dz-good" data-accept="good" style="border-color: #4c97ff; background: #eff6ff;">
+                        <div class="drop-zone-title txt-blue">🌟 Kata Baik (Good)</div>
+                    </div>
+                    <div class="drop-zone" id="dz-bad" data-accept="bad" style="border-color: #cf63cf; background: #fdf4ff;">
+                        <div class="drop-zone-title txt-pink">💔 Kata Buruk (Bad)</div>
+                    </div>
+                </div>
+                <div class="items-pool" id="text-pool">
+                    <!-- Dinamis via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: AI Text Tester -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title" style="margin-bottom: 10px;">Tes Robot Membaca Teks! 💬</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Ketik kata yang sudah kamu ajarkan tadi, atau coba kata baru yang belum diajarkan.</p>
+            
+            <div class="ai-tester">
+                <div class="robot-avatar" style="font-size: 6rem;">🤖</div>
+                <div class="ai-speech" id="aiTextSpeech">Ketik kata sifat di bawah ini!</div>
+                
+                <div class="ai-input-group">
+                    <input type="text" id="aiTextInput" class="ai-input" placeholder="Ketik kata (misal: Pintar)">
+                    <button class="ai-btn" onclick="testTextAI()">KIRIM</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Mesin Bingung -->
+        <div class="slide" id="slide11">
+            <h2 class="agenda-title">Kenapa Mesin Kadang Bingung? 🤷‍♂️</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; max-width: 900px;">
+                <div style="font-size: 8rem; animation: pulse 2s infinite;">😵‍💫</div>
+                <div>
+                    <p style="font-size: 1.6rem; line-height: 1.6;">
+                        Pernahkah kamu memasukkan kata asing dan robot membalas <em>"Maaf, aku belum mengerti"</em>?
+                    </p>
+                    <p style="font-size: 1.4rem; line-height: 1.6; background: #fff3cd; padding: 20px; border-radius: 15px; border-left: 5px solid #f2c140; margin-top: 15px;">
+                        <strong>Itu hal yang sangat wajar!</strong> Kalau mesin tidak bisa menjawab, artinya informasi contoh yang kita berikan kepadanya masih kurang banyak. Solusinya? Kita hanya perlu <strong>memberikan lebih banyak contoh</strong> lagi!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Datasets -->
+        <div class="slide solid-teal-bg" id="slide12">
+            <h2 class="agenda-title" style="color: #f2c140; margin-bottom: 20px;">Kosakata Penting Hari Ini! 📖</h2>
+            <div style="background: white; color: #333; padding: 40px; border-radius: 30px; text-align: center; max-width: 700px; box-shadow: 0 15px 30px rgba(0,0,0,0.2);">
+                <h1 style="font-size: 4.5rem; margin: 0 0 10px 0; color: #008080;">DATASETS</h1>
+                <p style="font-size: 1.6rem; color: #555;">(Kumpulan Data)</p>
+                <div style="width: 100%; height: 2px; background: #eee; margin: 20px 0;"></div>
+                <p style="font-size: 1.4rem; line-height: 1.6;">
+                    Semua contoh emoji dan kata-kata yang kita kelompokkan tadi, dalam bahasa komputer disebut sebagai <strong>DATASETS</strong>.
+                </p>
+                <p style="font-size: 1.2rem; font-weight: bold; color: #cf63cf; margin-top: 15px;">
+                    Semakin besar datasets-nya, semakin pintar AI-nya! 🚀
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Intro ML4K -->
+        <div class="slide" id="slide13">
+            <h2 class="agenda-title">Waktunya Melatih Mesin Sungguhan! 🌐</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px;">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="max-height: 150px; margin-bottom: 30px; background: #008080; padding: 20px; border-radius: 20px;">
+                <p style="font-size: 1.6rem; line-height: 1.6;">
+                    Kita akan menggunakan website khusus bernama <strong>Machine Learning for Kids (ML4K)</strong>. Di sini, kita akan melatih model AI dan menyambungkannya ke Scratch!
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 14: ML4K Link -->
+        <div class="slide" id="slide14">
+            <div style="text-align: center;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 20px;">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" alt="ML4K" style="height: 100px; background: #008080; padding: 10px; border-radius: 15px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" alt="Scratch" style="height: 100px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
+                    <div style="font-size: 6rem; animation: bounce 1s infinite alternate;">👇</div>
+                </div>
+                <a href="https://machinelearningforkids.co.uk/" target="_blank" class="huge-btn" style="font-size: 2rem; padding: 30px 60px;">BUKA ML4K SEKARANG 🌐</a>
+                <p style="margin-top: 30px; font-size: 1.2rem; color: #888;">machinelearningforkids.co.uk</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Registrasi ML4K -->
+        <div class="slide" id="slide15">
+            <h2 class="agenda-title" style="margin-bottom: 20px;">Cara Masuk ke ML4K 🔑</h2>
+            <div class="step-grid" style="grid-template-columns: 1fr 1fr; max-width: 1000px;">
+                <div class="step-card">
+                    <div class="step-header"><div class="step-num-circle">1</div> Klik Get Started</div>
+                    <div class="step-body" style="justify-content: center;">
+                        Cari tombol biru besar "Get Started" di halaman depan.
+                        <div style="margin-top:15px; background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; display: inline-block;">Get Started</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee;">
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/94c0c098-324e-417c-9321-b030308db7cf.png" alt="Get Started Step" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+            <p style="margin-top: 20px; color: #666; font-size: 1.1rem;">Ikuti arahan dari gurumu jika kamu sudah diberikan akun kelas khusus!</p>
+        </div>
+
+        <!-- Slide 16: Demo Final Project -->
+        <div class="slide" id="slide16">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Project: Make Me Happy 😄</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Ini adalah project yang akan kita buat menggunakan AI yang sudah dilatih!</p>
+            <div style="width: 500px; height: 415px; background: #ffffff; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border: 5px solid #008080; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                <img src="https://cdn-web.ruangguru.com/file-uploader/4bd204de-9b2b-41e5-a5b1-77232ecf5341.gif" alt="Make Me Happy Demo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+        </div>
+
+        <!-- Slide 17: Tahap 1 -->
+        <div class="slide" id="slide17">
+            <h2 class="agenda-title" style="margin-bottom: 20px;">Tahap 1: Membuat Project Baru 📂</h2>
+            <div class="step-grid" style="grid-template-columns: 1fr 1fr; align-items: stretch; max-width: 1100px;">
+                <div class="step-card">
+                    <div class="step-header" style="background: #4c97ff;"><div class="step-num-circle">1</div> Konfigurasi Project</div>
+                    <div class="step-body" style="text-align: left; align-items: flex-start; font-size: 1.2rem; line-height: 1.8;">
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Klik tombol <strong>Add a new project</strong></li>
+                            <li>Project Name: <strong class="txt-blue">Make Me Happy</strong></li>
+                            <li>Recognizing: <strong class="txt-purple">Text</strong></li>
+                            <li>Language: <strong class="txt-teal">English</strong></li>
+                            <li>Klik tombol <strong>Create</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee;">
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/d5fa3793-b156-4040-b8f6-8a26ee65bca8.png" alt="Get Started Step" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Tahap 2 -->
+        <div class="slide" id="slide18">
+            <h2 class="agenda-title" style="margin-bottom: 20px;">Tahap 2: Melatih Model (Train) 🧠</h2>
+            <div class="step-grid" style="grid-template-columns: 1fr 1fr; align-items: stretch; max-width: 1100px;">
+                <div class="step-card">
+                    <div class="step-header" style="background: #cf63cf;"><div class="step-num-circle">2</div> Tambahkan Datasets</div>
+                    <div class="step-body" style="text-align: left; align-items: flex-start; font-size: 1.1rem; line-height: 1.6;">
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Buka projectmu lalu klik menu <strong>Train</strong>.</li>
+                            <li>Klik <strong>Add New Label</strong>. Buat dua label: <strong class="txt-green">good_words</strong> dan <strong class="txt-red">bad_words</strong>.</li>
+                            <li>Masukkan 10+ contoh kalimat bahasa Inggris ke setiap kolom.</li>
+                            <li>Jika sudah selesai, klik <strong>Back to Project</strong>.</li>
+                        </ul>
+                        <div style="background: #fff9db; padding: 10px 15px; border-left: 4px solid #f2c140; margin-top: 15px; font-size: 0.95rem; width: 100%; box-sizing: border-box;">
+                            💡 <strong>Tips:</strong> Gunakan Google Translate jika kamu tidak tahu bahasa Inggris.
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee;">
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/fa3dd690-ad32-4d24-8805-15064f715714.png" alt="Datasets Step" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Tahap 3 -->
+        <div class="slide" id="slide19">
+            <h2 class="agenda-title" style="margin-bottom: 20px;">Tahap 3: Hubungkan ke Scratch 🐱</h2>
+            <div class="step-grid" style="grid-template-columns: 1fr 1fr 1fr; max-width: 1100px; gap: 15px;">
+                <div class="step-card">
+                    <div class="step-header" style="background: #a8c368; color: white;">Klik menu Make</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <div style="width: 100%; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" alt="Make Menu" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p style="margin:0; font-size: 1rem;">Kembali ke halaman project, klik menu <strong>Make</strong>.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #4c97ff; color: white;">Pilih Scratch 3</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <div style="width: 100%; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <img src="https://roboguru-forum-cdn.ruangguru.com//image/3379679f-269d-444e-9652-d2d505d255ac.png" alt="Scratch 3" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p style="margin:0; font-size: 1rem;">Pilih <strong>Scratch 3</strong> sebagai platform tempat kita membuat program.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #f2c140; color: #333;">Buka Editor Scratch</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <div style="width: 100%; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                            <img src="https://roboguru-forum-cdn.ruangguru.com//image/1f78009f-f890-433e-b2bf-4a35b52e22f3.png" alt="Editor" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p style="margin:0; font-size: 1rem;">Klik <strong>Straight into Scratch now</strong> untuk masuk ke editor!</p>
+                    </div>
+                </div>
+            </div>
+            <p style="color: #008080; font-weight: bold; margin-top: 20px; font-size: 1.1rem; background: #e0f2f1; padding: 15px 30px; border-radius: 50px; border: 2px dashed #008080;">🎉 Kamu akan otomatis diarahkan ke editor Scratch khusus yang sudah dilengkapi dengan blok cerdas buatanmu!</p>
+        </div>
+
+        <!-- Slide 20: Tahap 4 -->
+        <div class="slide" id="slide20">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Tahap 4: Simpan Projectmu! 💾</h2>
+            
+            <div style="background: #fff3cd; border-left: 10px solid #f2c140; padding: 20px; border-radius: 15px; margin-bottom: 25px; width: 100%; max-width: 900px; box-sizing: border-box;">
+                <h3 style="margin: 0; color: #856404; font-size: 1.5rem;">⚠️ PENTING UNTUK DIPERHATIKAN</h3>
+                <p style="margin: 10px 0 0; font-size: 1.1rem; color: #856404; line-height: 1.5;">
+                    Project ini hanya bisa dibuka melalui editor Scratch di website <strong>ML4K</strong>. Agar hasil kerjamu tidak hilang, kamu <strong>WAJIB</strong> menyimpannya ke komputer masing-masing.
+                </p>
+            </div>
+
+            <div class="step-grid" style="grid-template-columns: 1fr 1.2fr; align-items: stretch; max-width: 1100px;">
+                <div class="step-card">
+                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">4</div> Cara Menyimpan</div>
+                    <div class="step-body" style="text-align: left; align-items: flex-start; font-size: 1.1rem; line-height: 1.6;">
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>Klik menu <strong>File</strong> di pojok kiri atas.</li>
+                            <li>Pilih <strong>Save to your computer</strong>.</li>
+                            <li>Gunakan nama yang rapi, contoh:<br>
+                                <code style="background: #eee; padding: 2px 8px; border-radius: 5px;">MakeMeHappy_Budi.sb3</code>
+                            </li>
+                        </ul>
+                        <p style="margin-top: 15px; font-size: 0.95rem; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
+                            💡 Besok-besok kalau mau lanjut, kamu harus buka lewat project ini lagi lalu pilih <strong>Load from your computer</strong>.
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee; background: #fff;">
+                    <!-- Placeholder for Save to Computer Image -->
+                    <img src="https://roboguru-forum-cdn.ruangguru.com//image/c3714519-ed1c-4088-b3e3-06c5aabb001e.png" alt="Save to Computer" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Selebrasi -->
+        <div class="slide" id="slide21">
+            <h2 class="agenda-title">SELESAI! LUAR BIASA! 🎉</h2>
+            <div style="font-size: 8rem; animation: bounce 1s infinite alternate; margin-bottom: 20px;">🙌🥳🤖</div>
+            <p style="font-size: 1.8rem; text-align: center; max-width: 800px; color: #444; line-height: 1.6;">
+                Kalian sudah resmi menjadi <strong class="txt-teal">Pelatih AI (AI Trainer)</strong>!
+            </p>
+            <p style="font-size: 1.3rem; margin-top: 20px; background: #f0fdf4; padding: 15px 30px; border-radius: 50px; border: 2px dashed #a8c368;">
+                Ada yang berani maju ke depan kelas untuk memperlihatkan datasets nya? 🙋‍♂️🙋‍♀️
+            </p>
+        </div>
+
+        <!-- Slide 22: Quiz -->
+        <div class="slide solid-teal-bg" id="slide22">
+            <h1 class="main-header" style="color: #f2c140; font-size: 3rem; margin-bottom: 10px;">Waktunya Kuis Cepat! ⏱️</h1>
+            
+            <div style="background: white; color: #333; padding: 30px; border-radius: 20px; width: 100%; max-width: 700px; margin-top: 20px;">
+                <h3 id="q-text" style="font-size: 1.5rem; margin-top: 0; color: #008080;">1. Apa sebutan untuk kumpulan data contoh yang kita berikan ke komputer agar ia belajar?</h3>
+                <div id="q-options" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                    <button class="quiz-opt" onclick="checkQuiz(this, false)">A. Data Blocks</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this, true)">B. Datasets</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this, false)">C. Variables</button>
+                </div>
+                <div id="q-feedback" style="margin-top: 20px; font-weight: bold; font-size: 1.2rem; min-height: 30px;"></div>
+                <button id="q-next" class="ai-btn" style="display: none; margin-top: 15px;" onclick="nextQuiz()">Soal Berikutnya ➜</button>
+            </div>
+        </div>
+
+        <!-- Slide 23: Rangkuman -->
+        <div class="slide" id="slide23">
+            <h2 class="agenda-title">Ringkasan Hari Ini 📝</h2>
+            <div class="grid-container" style="max-width: 800px; grid-template-columns: 1fr;">
+                <div class="card" style="flex-direction: row; text-align: left; gap: 20px; padding: 20px 30px;">
+                    <div class="card-icon" style="margin: 0; font-size: 2.5rem;">🧠</div>
+                    <p style="margin: 0; font-size: 1.2rem;"><strong>Machine Learning:</strong> Mengajari komputer agar bisa mengenali pola dan mengambil keputusan sendiri dari contoh yang kita berikan.</p>
+                </div>
+                <div class="card" style="flex-direction: row; text-align: left; gap: 20px; padding: 20px 30px;">
+                    <div class="card-icon" style="margin: 0; font-size: 2.5rem;">📚</div>
+                    <p style="margin: 0; font-size: 1.2rem;"><strong>Datasets:</strong> Kumpulan data (contoh teks, gambar, angka) yang sangat penting untuk proses pelatihan (Training).</p>
+                </div>
+                <div class="card" style="flex-direction: row; text-align: left; gap: 20px; padding: 20px 30px;">
+                    <div class="card-icon" style="margin: 0; font-size: 2.5rem;">🤖</div>
+                    <p style="margin: 0; font-size: 1.2rem;"><strong>Tidak Tahu? Wajar!:</strong> Jika AI salah menebak, kita hanya perlu memberikannya lebih banyak Datasets.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: Feedback -->
+        <div class="slide" id="slide24">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                    <h3 style="color: #008080; margin: 0 0 20px 0;">QR Code Feedback</h3>
+                    <div style="width: 150px; height: 150px; border: 4px solid #333; border-radius: 10px; padding: 5px; margin-bottom: 20px;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://bit.ly/feedback_class_dms" style="width: 100%;">
+                    </div>
+                    <div style="background: #e0f2f1; padding: 10px 20px; border-radius: 30px; border: 2px solid #008080;">
+                        <a href="http://bit.ly/feedback_class_dms" target="_blank" style="color: #008080; font-weight: bold; text-decoration: none; font-size: 1.1rem;">bit.ly/feedback_class_dms</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <!-- Generic Modals -->
+    <div class="dnd-modal-overlay" id="genericModal">
+        <div class="dnd-modal">
+            <span class="dnd-modal-emoji" id="gmEmoji">🎉</span>
+            <div class="dnd-modal-title" id="gmTitle">Hebat!</div>
+            <div class="dnd-modal-msg" id="gmMsg">Pesan</div>
+            <button class="dnd-modal-btn" onclick="closeGenericModal()" id="gmBtn">Lanjutkan ➜</button>
+        </div>
+    </div>
+
+<script>
+    // Navigation Logic
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentSlide = 0;
+
+    function showSlide(index, direction = 'next') {
+        if (index === currentSlide && slides[index].classList.contains('active')) {
+            return; 
+        }
+
+        const oldSlide = slides[currentSlide];
+        const newSlide = slides[index];
+
+        slides.forEach(slide => { 
+            slide.classList.remove('active', 'is-next', 'is-exiting'); 
+            slide.style.zIndex = 1; 
+        });
+
+        if (direction === 'next') {
+            oldSlide.style.zIndex = 10;
+            newSlide.style.zIndex = 11;
+            newSlide.classList.add('is-next');
+            requestAnimationFrame(() => { 
+                newSlide.classList.add('active'); 
+                newSlide.classList.remove('is-next'); 
+            });
+        } else {
+            oldSlide.style.zIndex = 11;
+            newSlide.style.zIndex = 10;
+            newSlide.classList.add('active');
+            oldSlide.classList.add('is-exiting');
+        }
+
+        currentSlide = index;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+
+        // Kontras Navigasi
+        const isDarkSlide = slides[index].id === 'slide1' || slides[index].classList.contains('solid-teal-bg');
+        if (isDarkSlide) {
+            prevBtn.style.backgroundColor = 'rgba(255,255,255,0.2)'; 
+            nextBtn.style.backgroundColor = 'rgba(255,255,255,0.2)';
+            prevBtn.style.color = 'white';
+            nextBtn.style.color = 'white';
+        } else {
+            prevBtn.style.backgroundColor = '#f2c140'; 
+            nextBtn.style.backgroundColor = '#f2c140';
+            prevBtn.style.color = '#222';
+            nextBtn.style.color = '#222';
+        }
+    }
+
+    function changeSlide(direction) {
+        const newIndex = currentSlide + direction;
+        if (newIndex >= 0 && newIndex < slides.length) {
+            showSlide(newIndex, direction === 1 ? 'next' : 'prev');
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') changeSlide(1);
+        else if (e.key === 'ArrowLeft') changeSlide(-1);
+    });
+
+    // Modal Helpers
+    function showModal(emoji, title, msg, btnText = "SAYA MENGERTI") {
+        document.getElementById('gmEmoji').textContent = emoji;
+        document.getElementById('gmTitle').textContent = title;
+        document.getElementById('gmMsg').textContent = msg;
+        document.getElementById('gmBtn').textContent = btnText;
+        document.getElementById('genericModal').classList.add('show');
+    }
+    function closeGenericModal() { document.getElementById('genericModal').classList.remove('show'); }
+
+    // DND Logic Setup
+    const emojis = [
+        { e: '🍎', type: 'food' }, { e: '🚗', type: 'notfood' }, { e: '🍔', type: 'food' }, { e: '📱', type: 'notfood' },
+        { e: '🥕', type: 'food' }, { e: '⚽', type: 'notfood' }, { e: '🍕', type: 'food' }, { e: '👟', type: 'notfood' },
+        { e: '🍌', type: 'food' }, { e: '⌚', type: 'notfood' }, { e: '🌭', type: 'food' }, { e: '🎸', type: 'notfood' },
+        { e: '🍩', type: 'food' }, { e: '🔑', type: 'notfood' }, { e: '🍇', type: 'food' }, { e: '📚', type: 'notfood' }
+    ];
+    
+    const words = [
+        { t: 'Pintar', type: 'good' }, { t: 'Bodoh', type: 'bad' }, { t: 'Ramah', type: 'good' }, { t: 'Jahat', type: 'bad' },
+        { t: 'Hebat', type: 'good' }, { t: 'Jelek', type: 'bad' }, { t: 'Sopan', type: 'good' }, { t: 'Kasar', type: 'bad' }
+    ];
+
+    function initDND() {
+        const emojiPool = document.getElementById('emoji-pool');
+        emojis.forEach(item => {
+            const el = document.createElement('div');
+            el.className = 'draggable-item';
+            el.textContent = item.e;
+            el.draggable = true;
+            el.dataset.type = item.type;
+            el.addEventListener('dragstart', handleDragStart);
+            el.addEventListener('dragend', handleDragEnd);
+            emojiPool.appendChild(el);
+        });
+
+        const textPool = document.getElementById('text-pool');
+        words.forEach(item => {
+            const el = document.createElement('div');
+            el.className = 'draggable-text';
+            el.textContent = item.t;
+            el.draggable = true;
+            el.dataset.type = item.type;
+            el.addEventListener('dragstart', handleDragStart);
+            el.addEventListener('dragend', handleDragEnd);
+            textPool.appendChild(el);
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                zone.classList.add('over');
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('over', 'over-wrong');
+            });
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('over');
+                const dragged = document.querySelector('.dragging');
+                if(!dragged) return;
+
+                if (dragged.dataset.type === zone.dataset.accept) {
+                    // Benar
+                    zone.appendChild(dragged);
+                    dragged.draggable = false;
+                    dragged.style.cursor = 'default';
+                } else {
+                    // Salah
+                    zone.classList.add('over-wrong');
+                    setTimeout(() => zone.classList.remove('over-wrong'), 500);
+                    showModal('🚨', 'Peringatan!', 'Wah, sepertinya kamu salah memasukkan data. Nanti robotnya bisa bingung dan rusak lho! Coba lagi ya.', 'Oke!');
+                }
+            });
+        });
+    }
+
+    function handleDragStart(e) {
+        e.target.classList.add('dragging');
+    }
+    function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
+    }
+
+    // AI Emoji Tester Logic
+    function testEmojiAI() {
+        const input = document.getElementById('aiEmojiInput').value.trim();
+        const speech = document.getElementById('aiEmojiSpeech');
+        if(!input) return;
+
+        const isFood = emojis.some(e => e.e === input && e.type === 'food');
+        const isNotFood = emojis.some(e => e.e === input && e.type === 'notfood');
+
+        if (isFood) {
+            speech.textContent = "Nyam! Itu makanan yang enak!";
+            speech.style.color = "#008080";
+        } else if (isNotFood) {
+            speech.textContent = "Aduh keras! Itu bukan makanan!";
+            speech.style.color = "#ff6b6b";
+        } else {
+            speech.textContent = "Hmm.. aku belum tahu benda itu. Aku perlu belajar lagi!";
+            speech.style.color = "#f2c140";
+        }
+        document.getElementById('aiEmojiInput').value = '';
+    }
+
+    // AI Text Tester Logic
+    function testTextAI() {
+        const input = document.getElementById('aiTextInput').value.trim().toLowerCase();
+        const speech = document.getElementById('aiTextSpeech');
+        if(!input) return;
+
+        const isGood = words.some(w => w.t.toLowerCase() === input && w.type === 'good');
+        const isBad = words.some(w => w.t.toLowerCase() === input && w.type === 'bad');
+
+        if (isGood) {
+            speech.textContent = "Terima kasih! Itu kata yang sangat baik 😊";
+            speech.style.color = "#4c97ff";
+        } else if (isBad) {
+            speech.textContent = "Oh tidak, itu kata yang buruk 😢";
+            speech.style.color = "#cf63cf";
+        } else {
+            speech.textContent = "Maaf, saya perlu belajar lagi. Saya belum tahu arti kata itu.";
+            speech.style.color = "#f2c140";
+        }
+        document.getElementById('aiTextInput').value = '';
+    }
+
+    // Quiz Logic
+    const quizData = [
+        {
+            q: "Apa sebutan untuk kumpulan data contoh yang kita berikan ke komputer agar ia belajar?",
+            opts: ["A. Data Blocks", "B. Datasets", "C. Variables"],
+            ans: 1,
+            exp: "Tepat! Datasets adalah sekumpulan contoh informasi yang dipakai untuk melatih AI."
+        },
+        {
+            q: "Apa yang terjadi jika AI membalas 'Saya tidak mengerti'?",
+            opts: ["A. AI rusak dan harus diganti", "B. Kita perlu memberikan lebih banyak contoh (Datasets)", "C. AI sedang mengantuk"],
+            ans: 1,
+            exp: "Benar sekali! AI cuma butuh lebih banyak latihan dan contoh data."
+        },
+        {
+            q: "Di menu apa kita memasukkan kumpulan contoh kata-kata di ML4K?",
+            opts: ["A. Menu Train", "B. Menu Make", "C. Menu Learn"],
+            ans: 0,
+            exp: "Betul! Menu Train adalah tempat kita melatih robot dengan label dan datasets."
+        }
+    ];
+
+    let currentQIdx = 0;
+    function checkQuiz(btn, isCorrectIdx) {
+        // Find correct based on logic
+        const opts = document.querySelectorAll('.quiz-opt');
+        opts.forEach(o => o.disabled = true); // disable all
+
+        const qData = quizData[currentQIdx];
+        const isCorrect = Array.from(opts).indexOf(btn) === qData.ans;
+        const feedback = document.getElementById('q-feedback');
+
+        if (isCorrect) {
+            btn.classList.add('correct');
+            feedback.style.color = '#22c55e';
+            feedback.textContent = qData.exp;
+        } else {
+            btn.classList.add('wrong');
+            opts[qData.ans].classList.add('correct'); // highlight correct
+            feedback.style.color = '#ef4444';
+            feedback.textContent = "Kurang tepat. Jawabannya B! " + qData.exp;
+        }
+        
+        if(currentQIdx < quizData.length - 1) {
+            document.getElementById('q-next').style.display = 'inline-block';
+        } else {
+            setTimeout(() => {
+                feedback.style.color = '#008080';
+                feedback.textContent = "Hore! Kamu sudah menyelesaikan semua kuis!";
+                document.getElementById('q-next').style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    function nextQuiz() {
+        currentQIdx++;
+        const qData = quizData[currentQIdx];
+        document.getElementById('q-text').textContent = (currentQIdx+1) + ". " + qData.q;
+        
+        const optsDiv = document.getElementById('q-options');
+        optsDiv.innerHTML = '';
+        qData.opts.forEach((optText, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-opt';
+            btn.textContent = optText;
+            btn.onclick = () => checkQuiz(btn);
+            optsDiv.appendChild(btn);
+        });
+
+        document.getElementById('q-feedback').textContent = '';
+        document.getElementById('q-next').style.display = 'none';
+    }
+
+    // Allow enter key in inputs
+    document.getElementById('aiEmojiInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') testEmojiAI();
+    });
+    document.getElementById('aiTextInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') testTextAI();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showSlide(0);
+        initDND();
+    });
+</script>
+</body>
+</html>

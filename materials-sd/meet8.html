@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUANGGURU CODING - SESI 8</title>
+    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset dan Global Styles */
+        body { margin: 0; padding: 0; font-family: 'Fredoka', sans-serif; background: url('https://i.imgur.com/z221jXz.png') center/cover fixed no-repeat; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .presentation-container { width: 77vw; height: 75.5vh; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative; background-color: transparent; }
+        .slide { width: 100%; height: 100%; padding: 40px 60px; box-sizing: border-box; color: #333; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out; background-color: rgba(255, 255, 255, 0.95); visibility: hidden; overflow-y: auto; opacity: 0; }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+        .slide.is-next { transform: translateX(100%); visibility: visible; opacity: 1; z-index: 11; }
+        .slide.is-exiting { transform: translateX(100%); opacity: 1; z-index: 11; }
+        
+        #slide1 { background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://i.imgur.com/z221jXz.png') center/cover no-repeat; color: white; align-items: center; text-align: center; justify-content: center; }
+        .solid-teal-bg { background-color: #008080; color: white; }
+        .highlight-gradient { background: linear-gradient(to right, #008080, #a8c368, #f2c140); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+        
+        /* Logos */
+        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; transition: opacity 0.3s ease; }
+        .slide-logo-left img { height: 45px; width: auto; }
+        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; transition: opacity 0.3s ease; }
+        .slide-logo-right img { height: 45px; width: auto; }
+
+        .nav-button {
+            background-color: #f2c140; 
+            color: #222; 
+            border: 3px solid white; 
+            position: fixed; 
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #prevBtn { left: 20px; } 
+        #nextBtn { right: 20px; }
+        .nav-button:hover:not(:disabled) {
+            background-color: #ffab19; 
+            color: white;
+            transform: translateY(-50%) scale(1.15); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        .nav-button:disabled {
+            background-color: #e0e0e0;
+            color: #999;
+            border-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translateY(-50%);
+        }
+        
+        .cover-title { font-size: 4rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; z-index: 3; text-align: center; }
+        .cover-subtitle { font-size: 1.8rem; font-weight: 400; margin-bottom: 20px; border-bottom: 3px solid #f2c140; padding-bottom: 10px; display: inline-block; z-index: 3; color: white; }
+        .agenda-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: #008080; line-height: 1.2; margin-bottom: 30px; width: 100%; text-align: center; }
+        
+        .game-title-gradient {
+            background: linear-gradient(135deg, #f2c140 0%, #ffffff 50%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 20px rgba(242, 193, 64, 0.4));
+            display: inline-block;
+        }
+        
+        /* Modern Utilities */
+        .txt-blue { color: #4c97ff; font-weight: 800; }
+        .txt-purple { color: #9966ff; font-weight: 800; }
+        .txt-pink { color: #cf63cf; font-weight: 800; }
+        .txt-teal { color: #008080; font-weight: 800; }
+        .txt-yellow { color: #f2c140; font-weight: 800; }
+        .txt-green { color: #a8c368; font-weight: 800; }
+        .txt-red { color: #ff6b6b; font-weight: 800; }
+
+        /* Grid Cards */
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; max-width: 900px; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.05); border: 2px solid #f0f0f0; transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .card-icon { font-size: 3rem; margin-bottom: 15px; }
+        .huge-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(to right, #008080, #f2c140); color: white; text-decoration: none; font-size: 1.5rem; font-weight: 700; padding: 15px 40px; border-radius: 50px; cursor: pointer; border: none; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0,128,128,0.3); }
+        .huge-btn:hover { transform: scale(1.05); }
+
+        /* Scratch Blocks */
+        .block-stack { display: flex; flex-direction: column; gap: 0px; align-items: flex-start; }
+        .block { padding: 8px 15px; min-width: 150px; font-weight: 600; color: white; font-size: 0.95rem; position: relative; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(0,0,0,0.1); }
+        .block-event { background: #ffbf00; color: #333; border-radius: 20px 20px 4px 4px; padding-top: 15px; margin-bottom: 2px; }
+        .block-control { background: #ffab19; color: white; }
+        .block-looks { background: #9966ff; color: white; }
+        .block-sensing { background: #4c97ff; color: white; }
+        .block-ai { background: #008080; color: white; border-radius: 4px; }
+        .block-if { background: #ffab19; color: white; padding-right: 30px; border-radius: 4px; }
+        .block-indent { margin-left: 20px; border-left: 10px solid #ffab19; padding-left: 10px; width: calc(100% - 30px); }
+        .block-cap { height: 10px; width: 100%; background: #ffab19; border-radius: 0 0 10px 10px; margin-bottom: 10px; }
+        .input-white { background: white; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.85rem; font-weight: bold; }
+        .input-shape { background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 20px; font-size: 0.85rem; }
+
+        /* Step Grid */
+        .step-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1000px; width: 100%; }
+        .step-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #f0f0f0; display: flex; flex-direction: column; }
+        .step-header { background: #008080; color: white; padding: 10px 15px; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .step-num-circle { background: #f2c140; color: #333; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .step-body { padding: 20px; font-size: 1.1rem; display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
+        
+        /* Quiz */
+        .quiz-opt { background: white; border: 2px solid #ccc; padding: 15px 20px; border-radius: 15px; font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-align: left; margin-bottom: 10px; width: 100%; max-width: 500px; font-family: 'Fredoka', sans-serif; }
+        .quiz-opt:hover { border-color: #008080; background: #f0fdf4; }
+        .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; }
+        .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; }
+
+        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <div class="slide-logo-left" id="globalLogoLeft">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="Logo Ruangguru">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="Logo Kabupaten Dharmasraya">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="Logo Disdik Dharmasraya">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Logo Dharmasraya Juara">
+    </div>
+    <div class="slide-logo-right" id="globalLogoRight">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="Logo Ruangguru Coding">
+    </div>
+
+    <div class="presentation-container" id="mainContainer">
+        
+        <!-- Slide 1: Cover -->
+        <div class="slide active" id="slide1">
+            <h1 class="cover-title" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+                <div style="line-height: 1.1; text-align: center;">
+                    <span style="font-size: 3rem; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">PROJECT:</span><br>
+                    <span class="game-title-gradient" style="font-size: 6.5rem;">MAKE ME HAPPY PART 2</span>
+                </div>
+            </h1>
+
+            <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px auto; z-index: 3;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" 
+                     alt="Scratch" 
+                     style="height: 100px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+                <span style="font-size: 3rem; color: white; font-weight: bold;">+</span>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" 
+                     alt="ML4K" 
+                     style="height: 100px; width: auto; object-fit: contain; background: #008080; padding: 10px; border-radius: 15px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+            </div>
+            
+            <p class="cover-subtitle">SESI 8: PENERAPAN MACHINE LEARNING PADA SCRATCH</p>
+        </div>
+
+        <!-- Slide 2: Review Meet 7 -->
+        <div class="slide" id="slide2">
+            <h2 class="agenda-title">Kemarin Kita Sudah Belajar Apa? 🤔</h2>
+            <div class="grid-container" style="max-width: 850px;">
+                <div class="card">
+                    <div class="card-icon">🏗️</div>
+                    <h3 class="txt-teal">Setup ML4K</h3>
+                    <p>Membuat project baru dan menyiapkan label di website Machine Learning for Kids.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧠</div>
+                    <h3 class="txt-purple">Training Model</h3>
+                    <p>Memberikan contoh kata-kata (Datasets) agar robot bisa mengenali perasaan kita.</p>
+                </div>
+            </div>
+            <p style="font-size: 1.3rem; margin-top: 30px; text-align: center; font-weight: 600; color: #555;">
+                Nah, sekarang otak robotnya sudah ada! Waktunya kita gunakan di Scratch! 🚀
+            </p>
+        </div>
+
+        <!-- Slide 3: Objectives -->
+        <div class="slide" id="slide3">
+            <h2 class="agenda-title">Hari Ini Kita Akan Belajar... 🎯</h2>
+            <div class="grid-container" style="max-width: 750px; gap: 15px;">
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 20px;">
+                    <div class="card-icon" style="font-size: 2.5rem; margin: 0;">🧩</div>
+                    <div>
+                        <h4 class="txt-blue" style="margin: 0; font-size: 1.2rem;">Memasukkan Blok AI</h4>
+                        <p style="margin: 0; font-size: 1rem;">Membuka Scratch khusus yang sudah ada blok cerdas buatanmu.</p>
+                    </div>
+                </div>
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 20px;">
+                    <div class="card-icon" style="font-size: 2.5rem; margin: 0;">🎭</div>
+                    <div>
+                        <h4 class="txt-pink" style="margin: 0; font-size: 1.2rem;">Menyusun Logika</h4>
+                        <p style="margin: 0; font-size: 1rem;">Mengatur kostum wajah agar berubah sesuai pesan yang diterima.</p>
+                    </div>
+                </div>
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 20px; grid-column: span 2;">
+                    <div class="card-icon" style="font-size: 2.5rem; margin: 0;">💬</div>
+                    <div>
+                        <h4 class="txt-green" style="margin: 0; font-size: 1.2rem;">Blok [Ask] & Testing</h4>
+                        <p style="margin: 0; font-size: 1rem;">Menguji model secara langsung dengan mengetik pesan ke robot.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Penjelasan Pretrained -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">AI: Dari Latihan ke Model! 🧠</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 1000px;">
+                <div style="flex: 1; text-align: left; background: #f0fdf4; padding: 30px; border-radius: 25px; border: 4px dashed #a8c368;">
+                    <p style="font-size: 1.4rem; line-height: 1.6; color: #333;">
+                        Kemarin kita sudah mencoba <strong>Training</strong> model sendiri. Keren kan? Itu adalah latihan agar kita tahu cara robot belajar! 🤖<br><br>
+                        Tapi, melatih AI agar benar-benar pintar itu butuh ribuan data dan waktu yang lama. Agar project kita hari ini berjalan super lancar, kita akan menggunakan <strong>Pretrained Model</strong> (Model yang sudah sangat pintar) yang sudah disediakan ML4K!
+                    </p>
+                </div>
+                <div style="flex: 0.8; text-align: center;">
+                    <div style="font-size: 8rem;">🎓✨</div>
+                    <p style="font-weight: 700; color: #008080;">Model di ML4K sudah "belajar" sangat lama!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Open ML4K -->
+        <div class="slide" id="slide5">
+            <h2 class="agenda-title">Langkah 1: Masuk ke Editor Scratch 🌐</h2>
+            <div class="step-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 1000px; gap: 20px;">
+                <div class="step-card">
+                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">1</div> Menu Pretrained</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/3eec3c37-e65b-44b6-ae93-a3000012a056.png" alt="Langkah 1" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Buka menu <strong>Pretrained</strong> di bagian atas.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">2</div> Pilih Toxicity</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/965ebfe7-2c62-4c81-b0a4-0f1ce9a098b8.png" alt="Langkah 2" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Cari model bernama <strong>Toxicity</strong>.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">3</div> Get Started</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/2b460641-fec3-4bb2-a32d-fb3c97f14e92.png" alt="Langkah 3" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Klik tombol <strong>Get Started</strong>.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">4</div> Ke Scratch</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/bb9649d6-bc7b-40c2-bb5d-76b46ab3281a.png" alt="Langkah 4" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Klik <strong>Scratch 3</strong> -> <strong>Open</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Tambah Extension -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title">Langkah Tambahan: Tambah Extension 📂</h2>
+            <div class="step-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1200px; gap: 20px;">
+                <div class="step-card">
+                    <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">1</div> Add Extension</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/e833d95a-2806-48ab-8043-ae7557bd892f.png" alt="Add Extension" style="width: 100%; height: 220px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Klik ikon <strong>Add Extension</strong> di pojok kiri bawah.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">2</div> Pilih Toxicity</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/a9ad8da3-9b25-4cb3-9a5d-5b7ea306000a.png" alt="Select Toxicity" style="width: 100%; height: 220px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Pilih extension bernama <strong>Toxicity</strong>.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">3</div> Cek Blok Baru</div>
+                    <div class="step-body" style="padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/bdefb61e-e89a-495d-8c8b-3c2cba16d00e.png" alt="New Blocks" style="width: 100%; height: 220px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
+                        <p style="font-size: 1.1rem; margin: 0;">Blok hijau <strong>Toxicity</strong> akan muncul!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Create Sprite & Costumes -->
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title">Langkah 2: Siapkan Sprite Emoji 🎨</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 25px; border: 3px solid #eee; text-align: center;">
+                    <div style="font-size: 6rem; margin-bottom: 10px;">😐</div>
+                    <p class="txt-teal"><strong>Costume 1:</strong><br>not sure</p>
+                </div>
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 25px; border: 3px solid #eee; text-align: center;">
+                    <div style="font-size: 6rem; margin-bottom: 10px;">😢</div>
+                    <p class="txt-red"><strong>Costume 2:</strong><br>sad</p>
+                </div>
+                <div style="background: #f9f9f9; padding: 25px; border-radius: 25px; border: 3px solid #eee; text-align: center;">
+                    <div style="font-size: 6rem; margin-bottom: 10px;">😄</div>
+                    <p class="txt-green"><strong>Costume 3:</strong><br>happy</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 1.2rem; max-width: 800px; text-align: center;">
+                Buatlah satu Sprite baru berupa wajah emoji. <br>
+                Pastikan nama kostumnya benar: <strong class="txt-teal">not sure</strong>, <strong class="txt-red">sad</strong>, dan <strong class="txt-green">happy</strong>.
+            </p>
+        </div>
+
+        <!-- Slide 8: The Coding -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Langkah 3: Rangkai Kode Sprite! 🧩</h2>
+            <div style="display: flex; gap: 40px; align-items: flex-start; justify-content: center; width: 100%;">
+                <div class="block-stack" style="transform: scale(1.0);">
+                    <div class="block block-event">when <img src="https://scratch.mit.edu/static/blocks-media/green-flag.svg" style="height: 15px;"> clicked</div>
+                    <div class="block block-looks">switch costume to <span class="input-white">not sure ▾</span></div>
+                    <div class="block block-control">forever</div>
+                    <div class="block-indent" style="min-height: 200px;">
+                        <div class="block block-sensing">ask <span class="input-white">hey, say something nice to me</span> and wait</div>
+                        
+                        <div class="block block-if">if <span class="input-shape" style="background: #a8c368; color: #333; font-size: 0.8rem;">probability that <span class="input-white" style="background: #4c97ff; color: white;">answer</span> is toxic ▾ > 70</span> then</div>
+                        <div class="block-indent" style="margin-left: 20px; border-left-color: #ffab19;">
+                            <div class="block block-looks">switch costume to <span class="input-white">sad ▾</span></div>
+                        </div>
+                        <div class="block-cap"></div>
+
+                        <div class="block block-if">if <span class="input-shape" style="background: #a8c368; color: #333; font-size: 0.8rem;">probability that <span class="input-white" style="background: #4c97ff; color: white;">answer</span> is NOT toxic ▾ > 70</span> then</div>
+                        <div class="block-indent" style="margin-left: 20px; border-left-color: #ffab19;">
+                            <div class="block block-looks">switch costume to <span class="input-white">happy ▾</span></div>
+                        </div>
+                        <div class="block-cap"></div>
+                    </div>
+                    <div class="block-cap" style="width: 100%;"></div>
+                </div>
+                <div style="max-width: 350px; padding: 20px; background: #fff8e1; border-left: 10px solid #f2c140; border-radius: 10px; font-size: 1.1rem; line-height: 1.6;">
+                    <h4 style="margin-top: 0;">Penjelasan:</h4>
+                    <ol>
+                        <li>Reset wajah ke <strong>not sure</strong>.</li>
+                        <li>Gunakan blok <strong>Forever</strong> agar robot terus bertanya.</li>
+                        <li>Jika probabilitas (kemungkinan) jawaban adalah <strong>toxic</strong> > 70%, maka dia sedih.</li>
+                        <li>Jika <strong>NOT toxic</strong> > 70%, maka dia senang!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Testing -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title">Waktunya Testing! 🧪</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
+                <div style="font-size: 10rem; animation: floatSprite 2s infinite alternate;">💭⌨️</div>
+                <div style="max-width: 600px;">
+                    <p style="font-size: 1.5rem; line-height: 1.6;">
+                        Klik bendera hijau, lalu ketikkan kata-kata dalam bahasa Inggris (karena model Toxicity ini paling hebat dalam bahasa Inggris).
+                    </p>
+                    <div style="background: #e0f2f1; border-left: 5px solid #008080; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                        <h4 style="margin: 0; color: #008080;">Coba ketik:</h4>
+                        <p style="margin: 5px 0 0; font-size: 1.2rem; color: #555;">
+                            "You are very smart" (Pujian)<br>
+                            "You are so mean" (Ejekan)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Encouragement -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title">Sadar Gak Ada Kata yang Gak Sesuai? 🤔</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 850px;">
+                <div style="font-size: 6rem; margin-bottom: 20px;">🧐🤖💬❓</div>
+                <p style="font-size: 1.6rem; line-height: 1.6;">
+                    Mungkin kalian sadar, AI ini kadang masih salah menebak kata-kata tertentu. Kenapa ya?
+                </p>
+                <div style="background: #fff8e1; padding: 20px 40px; border-radius: 20px; border: 2px dashed #f2c140; margin-top: 20px; text-align: left;">
+                    <p style="margin: 0; font-size: 1.2rem; color: #333;">
+                        Melatih AI itu tidak semudah yang kita bayangkan! Butuh ribuan data yang sangat rapi. Pretrained model yang kita pakai ini sudah hebat, tapi tetap saja ada batasannya. Itulah serunya AI, kita selalu punya ruang untuk memperbaikinya!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Save Project -->
+        <div class="slide" id="slide11">
+            <h2 class="agenda-title">PENTING: Simpan Project Kamu! 💾</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
+                <div style="background: white; padding: 25px; border-radius: 25px; border: 3px solid #eee; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/6f189d51-e705-419b-8972-62944efff182.png" alt="Save to Computer" style="width: 500px; border-radius: 10px;">
+                    <p style="margin-top: 15px; font-weight: bold; color: #008080; text-align: center;">Pilih [File] > [Save to your computer]</p>
+                </div>
+                <div style="max-width: 400px; text-align: left;">
+                    <p style="font-size: 1.3rem; line-height: 1.6;">
+                        Jangan lupa simpan project kamu sekarang! Kita akan menggunakan file yang sama minggu depan untuk tahap evaluasi.
+                    </p>
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 15px; border: 2px solid #a8c368; margin-top: 20px;">
+                        <h4 style="margin: 0; color: #008080;">Tips Penamaan:</h4>
+                        <p style="margin: 10px 0 0; font-size: 1.1rem; color: #444;">
+                            Beri nama yang jelas, contoh:<br>
+                            <code style="background: #eee; padding: 2px 5px; border-radius: 5px;">Toxicity_NamaKamu.sb3</code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Success Celebration -->
+        <div class="slide" id="slide12">
+            <h1 class="game-title-gradient" style="font-size: 5rem; margin-bottom: 20px;">HEBAT! 🎉</h1>
+            <div style="font-size: 8rem; animation: bounce 1s infinite alternate; margin-bottom: 20px;">🙌🥳✨</div>
+            <p style="font-size: 2rem; text-align: center; max-width: 800px; color: #333; font-weight: 700;">
+                Sekarang kamu sudah bisa menyusun program cerdas menggunakan Machine Learning!
+            </p>
+        </div>
+
+        <!-- Slide 13: Rangkuman -->
+        <div class="slide" id="slide13">
+            <h2 class="agenda-title">Rangkuman Materi Hari Ini 📝</h2>
+            <div class="grid-container" style="max-width: 900px; grid-template-columns: repeat(2, 1fr);">
+                <div class="card" style="padding: 20px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🧪</div>
+                    <h4 style="margin: 0; color: #008080;">Pretrained Model</h4>
+                    <p style="margin: 5px 0 0; font-size: 0.95rem;">Menggunakan otak AI yang sudah pintar (Toxicity) agar program lebih akurat.</p>
+                </div>
+                <div class="card" style="padding: 20px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🔌</div>
+                    <h4 style="margin: 0; color: #f2c140;">Scratch Extension</h4>
+                    <p style="margin: 5px 0 0; font-size: 0.95rem;">Menambahkan kemampuan baru ke Scratch melalui menu Extension.</p>
+                </div>
+                <div class="card" style="padding: 20px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">🧩</div>
+                    <h4 style="margin: 0; color: #4c97ff;">Logika Probabilitas</h4>
+                    <p style="margin: 5px 0 0; font-size: 0.95rem;">Menggunakan persentase (%) kemungkinan untuk menentukan reaksi emoji.</p>
+                </div>
+                <div class="card" style="padding: 20px;">
+                    <div style="font-size: 2.5rem; margin-bottom: 10px;">💬</div>
+                    <h4 style="margin: 0; color: #a8c368;">Interaksi User</h4>
+                    <p style="margin: 5px 0 0; font-size: 0.95rem;">Membuat robot yang bisa merespon ketikan manusia secara cerdas.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: What's Next -->
+        <div class="slide" id="slide14" style="background: linear-gradient(135deg, #008080 0%, #004d4d 100%); color: white;">
+            <h2 class="agenda-title" style="color: #f2c140;">Apa Selanjutnya? 🔜</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 850px;">
+                <div style="font-size: 6rem; margin-bottom: 20px;">🎨🚀✨</div>
+                <p style="font-size: 1.8rem; line-height: 1.6; font-weight: 600;">
+                    Program kita sudah pintar, tapi tampilannya masih "biasa saja" kan?
+                </p>
+                <p style="font-size: 1.3rem; margin-top: 15px; opacity: 0.9;">
+                    Di pertemuan berikutnya, kita akan belajar cara <strong>mempercantik program</strong> kita! Kita akan tambahkan animasi yang lebih keren, latar belakang yang hidup, dan respon teks yang lebih menarik. Jangan sampai ketinggalan ya!
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Quick Quiz -->
+        <div class="slide solid-teal-bg" id="slide15">
+            <h2 class="agenda-title" style="color: #f2c140;">Kuis Kilat! ⏱️</h2>
+            <div style="background: white; color: #333; padding: 30px; border-radius: 20px; width: 100%; max-width: 700px; margin-top: 20px;">
+                <h3 id="q-text" style="font-size: 1.5rem; margin-top: 0; color: #008080;">1. Mengapa kita menggunakan Pretrained Model hari ini?</h3>
+                <div id="q-options" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                    <button class="quiz-opt" onclick="checkQuiz(this, false)">A. Karena training sendiri terlalu lama</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this, true)">B. Agar model AI kita sudah pintar sejak awal</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this, false)">C. Karena robotnya mau istirahat</button>
+                </div>
+                <div id="q-feedback" style="margin-top: 20px; font-weight: bold; font-size: 1.2rem; min-height: 30px;"></div>
+                <button id="q-next" class="huge-btn" style="display: none; margin-top: 15px; padding: 10px 25px; font-size: 1.1rem;" onclick="nextQuiz()">Soal Berikutnya ➜</button>
+            </div>
+        </div>
+
+        <!-- Slide 16: Feedback -->
+        <div class="slide" id="slide16">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                    <h3 style="color: #008080; margin: 0 0 20px 0;">QR Code Feedback</h3>
+                    <div style="width: 150px; height: 150px; border: 4px solid #333; border-radius: 10px; padding: 5px; margin-bottom: 20px;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://bit.ly/feedback_class_dms" style="width: 100%;">
+                    </div>
+                    <div style="background: #e0f2f1; padding: 10px 20px; border-radius: 30px; border: 2px solid #008080;">
+                        <a href="http://bit.ly/feedback_class_dms" target="_blank" style="color: #008080; font-weight: bold; text-decoration: none; font-size: 1.1rem;">bit.ly/feedback_class_dms</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function showSlide(index, direction = 'next') {
+            if (index === currentSlide && slides[index].classList.contains('active')) return;
+
+            const oldSlide = slides[currentSlide];
+            const newSlide = slides[index];
+
+            slides.forEach(slide => { 
+                slide.classList.remove('active', 'is-next', 'is-exiting'); 
+                slide.style.zIndex = 1; 
+            });
+
+            if (direction === 'next') {
+                oldSlide.style.zIndex = 10;
+                newSlide.style.zIndex = 11;
+                newSlide.classList.add('is-next');
+                requestAnimationFrame(() => { 
+                    newSlide.classList.add('active'); 
+                    newSlide.classList.remove('is-next'); 
+                });
+            } else {
+                oldSlide.style.zIndex = 11;
+                newSlide.style.zIndex = 10;
+                newSlide.classList.add('active');
+                oldSlide.classList.add('is-exiting');
+            }
+
+            currentSlide = index;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+
+            // Navigation Contrast
+            const isDarkSlide = slides[index].id === 'slide1' || slides[index].classList.contains('solid-teal-bg');
+            if (isDarkSlide) {
+                prevBtn.style.backgroundColor = 'rgba(255,255,255,0.2)'; 
+                nextBtn.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                prevBtn.style.color = 'white';
+                nextBtn.style.color = 'white';
+            } else {
+                prevBtn.style.backgroundColor = '#f2c140'; 
+                nextBtn.style.backgroundColor = '#f2c140';
+                prevBtn.style.color = '#222';
+                nextBtn.style.color = '#222';
+            }
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlide + direction;
+            if (newIndex >= 0 && newIndex < slides.length) {
+                showSlide(newIndex, direction === 1 ? 'next' : 'prev');
+            }
+        }
+
+        // Quiz Logic
+        const quizData = [
+            {
+                q: "Mengapa kita menggunakan Pretrained Model hari ini?",
+                opts: ["A. Karena training sendiri terlalu lama", "B. Agar model AI kita sudah pintar sejak awal", "C. Karena robotnya mau istirahat"],
+                ans: 1,
+                exp: "Betul! Pretrained model adalah model yang sudah dilatih dengan sangat banyak data oleh ahlinya."
+            },
+            {
+                q: "Blok apa yang kita gunakan untuk mendeteksi kalimat buruk?",
+                opts: ["A. Switch Costume", "B. Toxicity Extension", "C. Sound Block"],
+                ans: 1,
+                exp: "Tepat! Kita menggunakan extension Toxicity untuk mendeteksi probabilitas kalimat buruk."
+            },
+            {
+                q: "Apa yang harus kita lakukan jika program kita masih sering salah menebak?",
+                opts: ["A. Menangis", "B. Menambahkan lebih banyak data atau menggunakan model yang lebih kuat", "C. Menghapus komputernya"],
+                ans: 1,
+                exp: "Benar! AI selalu bisa dikembangkan lebih baik dengan data atau model yang lebih canggih."
+            }
+        ];
+
+        let currentQIdx = 0;
+        function checkQuiz(btn, isCorrectIdx) {
+            const opts = document.querySelectorAll('#slide15 .quiz-opt');
+            opts.forEach(o => o.disabled = true);
+
+            const qData = quizData[currentQIdx];
+            const isCorrect = Array.from(opts).indexOf(btn) === qData.ans;
+            const feedback = document.getElementById('q-feedback');
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+                feedback.style.color = '#22c55e';
+                feedback.textContent = qData.exp;
+            } else {
+                btn.classList.add('wrong');
+                opts[qData.ans].classList.add('correct');
+                feedback.style.color = '#ef4444';
+                feedback.textContent = "Kurang tepat. " + qData.exp;
+            }
+            
+            if(currentQIdx < quizData.length - 1) {
+                document.getElementById('q-next').style.display = 'inline-block';
+            } else {
+                setTimeout(() => {
+                    feedback.style.color = '#008080';
+                    feedback.textContent = "Luar biasa! Kamu sudah paham materi hari ini!";
+                    document.getElementById('q-next').style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function nextQuiz() {
+            currentQIdx++;
+            const qData = quizData[currentQIdx];
+            document.getElementById('q-text').textContent = (currentQIdx+1) + ". " + qData.q;
+            
+            const optsDiv = document.getElementById('q-options');
+            optsDiv.innerHTML = '';
+            qData.opts.forEach((optText, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt';
+                btn.textContent = optText;
+                btn.onclick = () => checkQuiz(btn);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById('q-feedback').textContent = '';
+            document.getElementById('q-next').style.display = 'none';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') changeSlide(1);
+            else if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(0);
+        });
+    </script>
+</body>
+</html>
