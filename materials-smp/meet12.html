@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUANGGURU CODING - MEET 12 SMP</title>
+    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #4a8b8b;
+            --secondary: #f2c140;
+            --dark: #1a2424;
+            --light: #ffffff;
+            --accent: #78a3a3;
+            --success: #00e676;
+            --danger: #ff5252;
+            --orange: #ffab19;
+            --card-bg: rgba(0, 0, 0, 0.2);
+        }
+
+        body { 
+            margin: 0; padding: 0; 
+            font-family: 'Outfit', sans-serif; 
+            background: url('https://i.imgur.com/z221jXz.png') center/cover fixed no-repeat;
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; overflow: hidden; 
+            color: var(--light);
+        }
+
+        .presentation-container { 
+            width: 80vw; height: 80vh; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); 
+            border-radius: 20px; overflow: hidden; 
+            display: flex; flex-direction: column; position: relative; 
+            background: #202b2b;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slide { 
+            width: 100%; height: 100%; 
+            padding: 40px 60px; box-sizing: border-box; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            position: absolute; top: 0; left: 0; 
+            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1); 
+            background: linear-gradient(135deg, #2b3a3a 0%, #1a2424 100%);
+            visibility: hidden; opacity: 0; 
+        }
+
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+
+        /* Logos */
+        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; }
+        .slide-logo-left img { height: 40px; width: auto; }
+        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; }
+        .slide-logo-right img { height: 40px; width: auto; }
+
+        .nav-button { background-color: var(--secondary); color: #222; border: none; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        #prevBtn { left: 20px; } 
+        #nextBtn { right: 20px; }
+        .nav-button:hover:not(:disabled) { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px var(--secondary); }
+        .nav-button:disabled { background-color: #555; color: #888; cursor: not-allowed; opacity: 0.5; }
+
+        /* Typography */
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .agenda-title { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-align: center; border-left: 10px solid var(--primary); padding-left: 20px; line-height: 1; }
+        .cover-title { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; text-align: center; }
+        .cover-subtitle { font-size: 1.4rem; color: var(--accent); font-weight: 400; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
+        .highlight { color: var(--secondary); font-weight: 800; }
+
+        /* Elements */
+        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; backdrop-filter: blur(10px); text-align: center; width: 100%; box-sizing: border-box; }
+        .huge-btn { background: var(--primary); color: white; padding: 15px 35px; border-radius: 15px; font-weight: 800; font-size: 1.2rem; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; display: inline-block; box-shadow: 0 10px 20px rgba(74, 139, 139, 0.3); }
+        .huge-btn:hover { background: var(--accent); transform: translateY(-3px); }
+
+        .float { animation: floatSprite 2s infinite alternate ease-in-out; }
+        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+
+        .placeholder-gif { width: 100%; height: 200px; background: rgba(0,0,0,0.3); border-radius: 15px; border: 2px dashed var(--accent); display: flex; justify-content: center; align-items: center; overflow: hidden; margin-top: 15px; }
+        .placeholder-gif img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* Interactive Lab */
+        .lab-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 800px; }
+        .data-pool { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 20px; min-height: 100px; }
+        .data-item { padding: 10px 20px; background: white; color: #222; border-radius: 12px; font-weight: 800; cursor: grab; box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
+        .bin-zones { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+        .bin-zone { flex: 1; height: 150px; border: 3px dashed rgba(255,255,255,0.2); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.3s; }
+        .bin-zone.drag-over { background: rgba(255,255,255,0.1); border-color: var(--secondary); }
+
+        .card img { max-width: 100%; height: auto; border-radius: 10px; object-fit: contain; }
+    </style>
+</head>
+<body>
+    <div class="slide-logo-left">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="RG">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="DH">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="DS">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Juara">
+    </div>
+    <div class="slide-logo-right">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="RG Coding">
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active" id="slide1">
+            <h1 class="cover-title">ML: IMAGE RECOGNITION <br><span style="color: var(--secondary);">CHAMELEON PROJECT (PART 3)</span></h1>
+            <p class="cover-subtitle">MEET 12: EVALUATION & ACCURACY</p>
+            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-top: 20px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 120px;">
+                <div style="font-size: 3rem;">➕</div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 120px;">
+            </div>
+            <div style="font-size: 6rem; margin-top: 40px;" class="float">🦎⚖️⚙️</div>
+        </div>
+
+        <!-- Slide 2: Recall -->
+        <div class="slide" id="slide2">
+            <h2 class="agenda-title">Kemarin Kita Mencoba Apa? 🧠</h2>
+            <div class="card" style="text-align: left; max-width: 700px;">
+                <ul style="font-size: 1.4rem; line-height: 1.8; list-style: none; padding: 0;">
+                    <li>🎨 Mendesain kostum Red, Green, dan Blue untuk bunglon.</li>
+                    <li>🔌 Menghubungkan Machine Learning for Kids ke Scratch.</li>
+                    <li>🔄 Membuat logika deteksi otomatis menggunakan loop <i>forever</i>.</li>
+                    <li>💻 Mencoba deteksi tanpa webcam menggunakan sprite "Webcam".</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 3: Today's Mission -->
+        <div class="slide" id="slide3">
+            <h2 class="agenda-title">Misi Hari Ini 🎯</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                <div class="card">
+                    <div style="font-size: 3rem;">🧪</div>
+                    <h4>Evaluation</h4>
+                    <p>Mengevaluasi kenapa AI kita terkadang salah menebak.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 3rem;">🛠️</div>
+                    <h4>Accuracy Up</h4>
+                    <p>Meningkatkan akurasi model dengan re-training data.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 3rem;">🔊</div>
+                    <h4>Final Touch</h4>
+                    <p>Menambahkan fitur interaktif Sound dan Say!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: AI is Not Perfect -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">Kenapa AI Bisa Salah? 🤔</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 8rem;" class="float">📉</div>
+                </div>
+                <div style="flex: 2; text-align: left;">
+                    <p style="font-size: 1.3rem;">AI bukanlah sihir, ia belajar dari data. Jika AI salah menebak, biasanya karena:</p>
+                    <div class="card" style="border-left: 8px solid var(--danger); background: rgba(255, 82, 82, 0.1);">
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li><b>Cahaya Terlalu Gelap:</b> Kamera tidak bisa melihat warna dengan jelas.</li>
+                            <li><b>Jarak Terlalu Jauh:</b> AI kesulitan membedakan benda kecil di kejauhan.</li>
+                            <li><b>Data Berantakan:</b> Foto yang dimasukkan sebagai dataset nge-blur atau tidak fokus.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Accuracy Doctor -->
+        <div class="slide" id="slideDoctor">
+            <h2 class="agenda-title">Accuracy Lab 🧪</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Diagnosis data kamu! Pisahkan mana yang <span class="highlight">SEHAT</span> dan mana yang <span class="highlight">RUSAK</span>.</p>
+            
+            <div class="lab-container">
+                <div class="data-pool" id="dataPool">
+                    <!-- Dinamis via JS -->
+                </div>
+                
+                <div class="bin-zones">
+                    <div class="bin-zone" id="bin-good" data-type="good">
+                        <div style="font-size: 2.5rem;">✅</div>
+                        <div style="font-weight: 800; color: var(--success);">DATA SEHAT</div>
+                        <div class="items-in-zone" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;"></div>
+                    </div>
+                    <div class="bin-zone" id="bin-bad" data-type="bad">
+                        <div style="font-size: 2.5rem;">❌</div>
+                        <div style="font-weight: 800; color: var(--danger);">DATA RUSAK</div>
+                        <div class="items-in-zone" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="labFeedback" style="margin-top: 20px; font-weight: 800; font-size: 1.3rem;"></div>
+        </div>
+
+        <!-- Slide 6: Step 1 Environment Test -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title">Step 1: Environment Test 🔦</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%;">
+                <div class="card">
+                    <h3 class="highlight">Uji Cahaya 💡</h3>
+                    <p>Pastikan ruangan terang dan benda tidak memantulkan cahaya berlebih.</p>
+                    <div class="placeholder-gif"><img src="https://cdn.dribbble.com/userupload/41920017/file/original-1bae3a16551799b69ee23e2e0626246b.gif" alt="Lighting Test Placeholder"></div>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">Uji Jarak 📏</h3>
+                    <p>Arahkan benda sekitar 20-30 cm di depan kamera agar terlihat utuh.</p>
+                    <div class="placeholder-gif"><img src="https://cdn.dribbble.com/userupload/42436659/file/original-a784b5df9106cc901f6a5b402d9df340.gif" alt="Distance Test Placeholder"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Step 2 Re-Training -->
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title">Step 2: Re-Training 🛠️</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.5;">
+                    <div class="card" style="padding: 10px; background: white;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/1f46967f-5293-427e-bdec-5596885182b8.png" alt="Re-Training Guide" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="card" style="text-align: left;">
+                        <h3 class="highlight">Instruksi:</h3>
+                        <ol style="line-height: 1.6;">
+                            <li>Kembali ke tab <b>Train</b> di ML4K.</li>
+                            <li>Hapus foto yang nge-blur/berantakan.</li>
+                            <li>Tambahkan <b>10-20 foto baru</b> yang lebih bersih.</li>
+                            <li>Klik <b>Train Model</b> kembali!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Interactive Features -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Interactive Features 🔊💬</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%;">
+                <div class="card" style="display: flex; flex-direction: column; align-items: center;">
+                    <h3 class="highlight">Fitur Sound 🎵</h3>
+                    <p>Tambahkan blok <b>start sound</b> agar bunglon mengeluarkan suara saat berubah!</p>
+                    <div class="placeholder-gif" style="max-width: 320px;"><img src="https://codingireland.blob.core.windows.net/images/steps%5Cscryose%20rename%20sound.gif" alt="Sound Feature Placeholder"></div>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column; align-items: center;">
+                    <h3 class="highlight">Fitur Say 💬</h3>
+                    <p>Gunakan blok <b>say [Red!]</b> agar AI memberitahu hasil deteksinya.</p>
+                    <div class="placeholder-gif" style="max-width: 320px;"><img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/1570912/settings_images/lPraKBoSJaWXmoHB26Uq_scratch-cat-hello-world.gif" alt="Say Feature Placeholder"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Testing & Encouragement -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title">Ayo Coba Lagi! 🚀</h2>
+            <div style="text-align: center;">
+                <div style="font-size: 8rem; margin-bottom: 20px;" class="float">🛡️</div>
+                <p style="font-size: 1.5rem;">Coba jalankan project-mu yang sudah di-update!</p>
+                <div class="card" style="margin-top: 20px; border-left: 10px solid var(--success);">
+                    <p style="font-size: 1.3rem;">Jangan sedih kalau masih salah. Belajar AI adalah proses trial and error yang seru! Kamu sudah belajar cara memperbaikinya hari ini.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Save Project -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title">Jangan Lupa Simpan! 💾</h2>
+            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 10rem;" class="float">📁</div>
+                </div>
+                <div style="flex: 1.5;">
+                    <div class="card" style="text-align: left; padding: 40px;">
+                        <h3 class="highlight">File -> Save to your computer</h3>
+                        <p style="font-size: 1.2rem;">Simpan project <b>.sb3</b> kamu agar tidak hilang. Kita akan menggunakannya lagi di pertemuan depan!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Quiz -->
+        <div class="slide" id="slideQuiz">
+            <h2 class="agenda-title">Quick Quiz ⏱️</h2>
+            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; width: 100%; max-width: 750px; border: 2px solid rgba(255,255,255,0.1);">
+                <div id="q-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--accent);">
+                    <span id="q-progress">Pertanyaan 1/3</span>
+                </div>
+                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; line-height: 1.4; margin-bottom: 25px;">...</h3>
+                <div id="q-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                <div id="q-feedback" style="margin-top: 25px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid;">
+                    <strong id="feedback-status" style="font-size: 1.2rem; display: block; margin-bottom: 5px;"></strong>
+                    <span id="feedback-hint" style="font-size: 1rem;"></span>
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                    <button id="q-next-btn" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Feedback -->
+        <div class="slide" id="slideFeedback">
+            <h2 class="agenda-title">Session Feedback 💖</h2>
+            <div style="display: flex; gap: 50px; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 20px;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp12" style="width: 200px;">
+                </div>
+                <div style="text-align: left;">
+                    <h3>Kerja Bagus Hari Ini!</h3>
+                    <p style="margin-bottom: 30px;">Sekarang AI-mu sudah jauh lebih akurat dan interaktif. Sampai jumpa di Meet 13!</p>
+                    <a href="https://bit.ly/feedback-smp12" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = index;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+
+            if (slides[index].id === 'slideDoctor') initLab();
+            if (slides[index].id === 'slideQuiz') initQuiz();
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlide + direction;
+            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex);
+        }
+
+        // --- Accuracy Doctor Lab ---
+        const labDataSet = [
+            { id: 'ld1', val: 'Foto Terang & Jelas', type: 'good' },
+            { id: 'ld2', val: 'Foto Nge-blur Parah', type: 'bad' },
+            { id: 'ld3', val: 'Benda Terlihat Utuh', type: 'good' },
+            { id: 'ld4', val: 'Cahaya Sangat Gelap', type: 'bad' },
+            { id: 'ld5', val: 'Background Rapi', type: 'good' },
+            { id: 'ld6', val: 'Foto Terpotong/Crop', type: 'bad' }
+        ];
+
+        function initLab() {
+            const pool = document.getElementById('dataPool');
+            const feedback = document.getElementById('labFeedback');
+            pool.innerHTML = '';
+            feedback.textContent = '';
+            
+            labDataSet.forEach(data => {
+                const el = document.createElement('div');
+                el.className = 'data-item';
+                el.textContent = data.val;
+                el.draggable = true;
+                el.id = data.id;
+                el.dataset.type = data.type;
+                el.ondragstart = (e) => e.dataTransfer.setData('text', e.target.id);
+                pool.appendChild(el);
+            });
+
+            document.querySelectorAll('.bin-zone').forEach(zone => {
+                zone.ondragover = (e) => { e.preventDefault(); zone.classList.add('drag-over'); };
+                zone.ondragleave = () => zone.classList.remove('drag-over');
+                zone.ondrop = (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const id = e.dataTransfer.getData('text');
+                    const dragged = document.getElementById(id);
+                    if (dragged.dataset.type === zone.dataset.type) {
+                        zone.querySelector('.items-in-zone').appendChild(dragged);
+                        dragged.draggable = false;
+                        dragged.style.opacity = '0.5';
+                        checkLabComplete();
+                    } else {
+                        feedback.textContent = "Hati-hati! Data rusak bisa bikin AI bingung! ❌";
+                        feedback.style.color = "var(--danger)";
+                    }
+                };
+            });
+        }
+
+        function checkLabComplete() {
+            const pool = document.getElementById('dataPool');
+            const feedback = document.getElementById('labFeedback');
+            if (pool.children.length === 0) {
+                feedback.textContent = "Diagnosis Sukses! Kamu bisa melakukan diagnosa dnegan baik! 🩺✨";
+                feedback.style.color = "var(--success)";
+            }
+        }
+
+        // --- Quiz Logic ---
+        const quizData = [
+            {
+                q: "Apa yang paling berpengaruh agar kamera bisa mendeteksi warna dengan akurat?",
+                opts: ["A. Harga laptop yang mahal", "B. Pencahayaan ruangan yang terang", "C. Kecepatan mengetik"],
+                ans: 1,
+                hint: "Sama seperti mata kita, kamera butuh cahaya yang cukup untuk melihat warna dengan benar."
+            },
+            {
+                q: "Apa yang harus kita lakukan jika AI sering salah menebak?",
+                opts: ["A. Menghapus seluruh project", "B. Menambah dataset yang lebih bersih dan fokus", "C. Membiarkannya saja"],
+                ans: 1,
+                hint: "AI belajar dari contoh. Semakin banyak contoh yang bagus, semakin pintar AI-nya."
+            },
+            {
+                q: "Kenapa foto yang 'nge-blur' tidak bagus untuk dataset?",
+                opts: ["A. Karena bikin AI pusing", "B. Karena AI kesulitan mengenali pola warna yang jelas", "C. Tidak masalah, AI tetap pintar"],
+                ans: 1,
+                hint: "Data yang kabur memberikan informasi yang salah ke model AI, sehingga akurasinya turun."
+            }
+        ];
+
+        let currentQIdx = 0;
+        function initQuiz() {
+            const data = quizData[currentQIdx];
+            document.getElementById('q-progress').textContent = `Pertanyaan ${currentQIdx + 1}/${quizData.length}`;
+            document.getElementById('q-text').textContent = data.q;
+            const optsDiv = document.getElementById('q-options');
+            optsDiv.innerHTML = '';
+            data.opts.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.style.cssText = "background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; text-align: left; transition: 0.3s;";
+                btn.innerHTML = opt;
+                btn.onclick = () => checkQuiz(i, btn);
+                optsDiv.appendChild(btn);
+            });
+            document.getElementById('q-feedback').style.display = 'none';
+            document.getElementById('q-next-btn').style.display = 'none';
+        }
+
+        function checkQuiz(idx, btn) {
+            const data = quizData[currentQIdx];
+            const feedback = document.getElementById('q-feedback');
+            const status = document.getElementById('feedback-status');
+            const hint = document.getElementById('feedback-hint');
+            const nBtn = document.getElementById('q-next-btn');
+            
+            if (idx === data.ans) {
+                btn.style.background = "rgba(0, 230, 118, 0.2)";
+                status.textContent = "BENAR! 🎉";
+                feedback.style.color = "#00e676";
+            } else {
+                btn.style.background = "rgba(255, 82, 82, 0.2)";
+                status.textContent = "KURANG TEPAT ❌";
+                feedback.style.color = "#ff5252";
+            }
+            hint.textContent = data.hint;
+            feedback.style.display = 'block';
+            nBtn.style.display = 'block';
+            if (currentQIdx === quizData.length - 1) {
+                nBtn.textContent = "SELESAI 🏁";
+                nBtn.onclick = () => changeSlide(1);
+            }
+        }
+
+        function nextQuiz() { currentQIdx++; initQuiz(); }
+
+        window.onload = () => {
+            showSlide(0);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') changeSlide(1);
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+            });
+        };
+    </script>
+</body>
+</html>
