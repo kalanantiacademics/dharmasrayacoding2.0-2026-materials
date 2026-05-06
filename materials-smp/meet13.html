@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUANGGURU CODING - MEET 13 SMP</title>
+    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #4a8b8b;
+            --secondary: #f2c140;
+            --dark: #1a2424;
+            --light: #ffffff;
+            --accent: #78a3a3;
+            --success: #00e676;
+            --danger: #ff5252;
+            --orange: #ffab19;
+            --card-bg: rgba(0, 0, 0, 0.2);
+        }
+
+        body { 
+            margin: 0; padding: 0; 
+            font-family: 'Outfit', sans-serif; 
+            background: url('https://i.imgur.com/z221jXz.png') center/cover fixed no-repeat;
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; overflow: hidden; 
+            color: var(--light);
+        }
+
+        .presentation-container { 
+            width: 80vw; height: 80vh; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); 
+            border-radius: 20px; overflow: hidden; 
+            display: flex; flex-direction: column; position: relative; 
+            background: #202b2b;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slide { 
+            width: 100%; height: 100%; 
+            padding: 40px 60px; box-sizing: border-box; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            position: absolute; top: 0; left: 0; 
+            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1); 
+            background: linear-gradient(135deg, #2b3a3a 0%, #1a2424 100%);
+            visibility: hidden; opacity: 0; 
+        }
+
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+
+        /* Logos */
+        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; }
+        .slide-logo-left img { height: 40px; width: auto; }
+        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; }
+        .slide-logo-right img { height: 40px; width: auto; }
+
+        .nav-button { background-color: var(--secondary); color: #222; border: none; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        #prevBtn { left: 20px; } 
+        #nextBtn { right: 20px; }
+        .nav-button:hover:not(:disabled) { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px var(--secondary); }
+        .nav-button:disabled { background-color: #555; color: #888; cursor: not-allowed; opacity: 0.5; }
+
+        /* Typography */
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .agenda-title { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-align: center; border-left: 10px solid var(--primary); padding-left: 20px; line-height: 1; }
+        .cover-title { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; text-align: center; }
+        .cover-subtitle { font-size: 1.4rem; color: var(--accent); font-weight: 400; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
+        .highlight { color: var(--secondary); font-weight: 800; }
+
+        /* Elements */
+        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; backdrop-filter: blur(10px); text-align: center; width: 100%; box-sizing: border-box; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .huge-btn { background: var(--primary); color: white; padding: 15px 35px; border-radius: 15px; font-weight: 800; font-size: 1.2rem; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; display: inline-block; box-shadow: 0 10px 20px rgba(74, 139, 139, 0.3); text-align: center; }
+        .huge-btn:hover { background: var(--accent); transform: translateY(-3px); }
+
+        .float { animation: floatSprite 2s infinite alternate ease-in-out; }
+        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+
+        .placeholder-img { width: 100%; height: 220px; background: rgba(0,0,0,0.3); border: 2px dashed var(--accent); border-radius: 15px; display: flex; justify-content: center; align-items: center; color: var(--accent); overflow: hidden; margin-top: 10px; }
+        .placeholder-img img { width: 100%; height: 100%; object-fit: contain; }
+
+        .comparison-container { display: flex; gap: 20px; width: 100%; }
+        .comparison-box { flex: 1; padding: 20px; border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body>
+    <div class="slide-logo-left">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="RG">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="DH">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="DS">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Juara">
+    </div>
+    <div class="slide-logo-right">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="RG Coding">
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active" id="slide1">
+            <h1 class="cover-title">ML: VOICE & FACE RECOGNITION <br><span style="color: var(--secondary);">LASER EYES (PART 1)</span></h1>
+            <p class="cover-subtitle">MEET 13: MULTI-MODEL AI & TRAINING</p>
+            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-top: 20px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 100px;">
+                <div style="font-size: 3rem;">➕</div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 100px;">
+            </div>
+            <div style="font-size: 5rem; margin-top: 30px;" class="float">🎤🔊🖼️</div>
+        </div>
+
+        <!-- Slide 2: Recall -->
+        <div class="slide" id="slide2">
+            <h2 class="agenda-title">Review Project Chameleon 🦎</h2>
+            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 8rem;" class="float">📸🎨</div>
+                </div>
+                <div style="flex: 1.5;">
+                    <div class="card" style="text-align: left; padding: 30px; border-left: 10px solid var(--success);">
+                        <ul style="font-size: 1.4rem; line-height: 1.8; list-style: none; padding: 0;">
+                            <li>✅ Melatih AI untuk mengenali warna (Image Recognition).</li>
+                            <li>✅ Mengatur kostum berdasarkan hasil prediksi AI.</li>
+                            <li>✅ Meningkatkan akurasi dengan data training yang bersih.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Mission Today -->
+        <div class="slide" id="slide3">
+            <h2 class="agenda-title">Misi Hari Ini 🎯</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                <div class="card">
+                    <div style="font-size: 3rem;">🛰️</div>
+                    <h4>Face Detection</h4>
+                    <p>Mencoba model AI yang sudah terlatih untuk wajah.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 3rem;">🎤</div>
+                    <h4>Voice Control</h4>
+                    <p>Membuat perintah suara agar Laser bisa ditembakkan.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 3rem;">📍</div>
+                    <h4>Landmarks</h4>
+                    <p>Mengetahui koordinat mata kita di depan kamera.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Preview -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">Preview: Laser Eyes! 💥</h2>
+            <div class="card" style="max-width: 650px; padding: 15px; display: flex; flex-direction: column; align-items: center;">
+                <div class="placeholder-img" style="height: 350px; background: #000; border: 2px solid var(--primary);">
+                    <img src="https://cdn-web.ruangguru.com/file-uploader/cc88e087-cf06-40cf-912b-eaf2ff21bf6a.gif" alt="Laser Eyes GIF">
+                </div>
+                <p style="margin-top: 20px; font-size: 1.2rem;">Katakan <b>"Laser Eyes!"</b> dan mata kamu akan menembakkan laser ke layar!</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Trained vs Pre-trained -->
+        <div class="slide" id="slide5">
+            <h2 class="agenda-title">Trained vs Pre-trained Model 🧠</h2>
+            <div class="comparison-container">
+                <div class="comparison-box" style="border-top: 5px solid var(--orange);">
+                    <div style="font-size: 4rem;">🏋️‍♂️</div>
+                    <h3>Trained Model</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">Model yang kita buat sendiri. Kita harus kasih contoh data (seperti project Chameleon kemarin) supaya AI belajar.</p>
+                </div>
+                <div style="display: flex; align-items: center; font-size: 2rem;">VS</div>
+                <div class="comparison-box" style="border-top: 5px solid var(--success);">
+                    <div style="font-size: 4rem;">🤖</div>
+                    <h3>Pre-trained Model</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">Model yang sudah pintar dari awal! AI ini sudah dilatih oleh ahli menggunakan jutaan data, jadi kita tinggal pakai saja.</p>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 25px; background: rgba(0,230,118,0.1); border-color: var(--success);">
+                <p style="font-size: 1.2rem; margin: 0;">Hari ini kita akan pakai <b>Pre-trained Model</b> untuk deteksi wajah di Scratch!</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Open Scratch -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title">Mari Buka Scratch ML4K! 🚀</h2>
+            <div style="text-align: center;">
+                <div style="font-size: 8rem; margin-bottom: 30px;" class="float">💻</div>
+                <p style="font-size: 1.4rem; margin-bottom: 40px;">Klik tombol di bawah ini untuk langsung menuju Scratch Machine Learning for Kids:</p>
+                <a href="https://machinelearningforkids.co.uk/scratch/" target="_blank" class="huge-btn" style="padding: 20px 60px; font-size: 1.5rem;">BUKA SCRATCH ML4K ➜</a>
+            </div>
+        </div>
+
+        <!-- Slide 7: Facial Landmarks -->
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title">Apa itu Facial Landmarks? 📍👤</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1;">
+                    <div class="card" style="padding: 10px; background: #fff;">
+                        <img src="https://b2633864.smushcdn.com/2633864/wp-content/uploads/2017/04/realtime_facial_landmarks_demo.gif?lossy=2&strip=1&webp=1" alt="Facial Landmarks Mesh" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+                <div style="flex: 1.2; text-align: left;">
+                    <p style="font-size: 1.3rem;">AI melihat wajah kita sebagai kumpulan titik-titik koordinat (Landmarks).</p>
+                    <div class="card" style="background: rgba(255, 255, 255, 0.05); border-left: 8px solid var(--primary); text-align: left;">
+                        <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                            <li><b>Left Eye:</b> Koordinat mata kiri.</li>
+                            <li><b>Right Eye:</b> Koordinat mata kanan.</li>
+                            <li><b>Nose/Mouth:</b> Titik tengah wajah.</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 15px;">Kita akan gunakan titik ini untuk menaruh sprite laser tepat di mata!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Step 1: Preparing Project -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Step 1: Menyiapkan Project 🛠️</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                <div class="card" style="padding: 15px;">
+                    <h4 class="highlight">1. Ambil Template</h4>
+                    <p style="font-size: 0.9rem;">Cari dan buka project template <b>Laser Eyes</b>.</p>
+                    <div class="placeholder-img"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/5114cfbe-7d0e-4d22-a827-24d12a342e7c.png"></div>
+                </div>
+                <div class="card" style="padding: 15px;">
+                    <h4 class="highlight">2. Tambah Ekstensi</h4>
+                    <p style="font-size: 0.9rem;">Pasang <b>Speech to Text</b> dan <b>Face Detection</b>.</p>
+                    <div class="placeholder-img"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f58cfdac-e98d-435f-ac77-add0bbabc5d3.png"></div>
+                </div>
+                <div class="card" style="padding: 15px;">
+                    <h4 class="highlight">3. Cek Backdrop</h4>
+                    <p style="font-size: 0.9rem;">Klik backdrop karena kita akan coding di sana dulu.</p>
+                    <div class="placeholder-img"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/fde247fc-ae8d-4bbf-83da-bc244fd0490e.png"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: No Webcam? -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title">Tidak Ada Webcam? 🚫📸</h2>
+            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 10rem;" class="float">🤔</div>
+                </div>
+                <div style="flex: 2;">
+                    <div class="card" style="text-align: left; padding: 40px; border-left: 10px solid var(--orange);">
+                        <h3 class="highlight">Jangan Khawatir!</h3>
+                        <p style="font-size: 1.3rem; line-height: 1.6;">Jika komputermu tidak ada webcam, kita akan siapkan program alternatif (No Webcam) setelah ini.</p>
+                        <p style="font-size: 1.1rem; color: var(--accent);">Untuk sekarang, kita akan fokus pelajari program menggunakan webcam dulu ya!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Step 2: Voice Program -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title">Step 2: Deteksi Suara 🎙️💥</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.5;">
+                    <div class="card" style="background: white; padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/0d385a62-c326-404a-891d-b7552d818377.png" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <h3 class="highlight">Cara Kerja:</h3>
+                    <ul style="line-height: 1.6; font-size: 1.1rem;">
+                        <li>Gunakan blok <b>turn video on</b> agar kamera menyala.</li>
+                        <li><b>Listen and wait</b>: AI akan menunggu suara kamu.</li>
+                        <li>Jika suara yang didengar adalah "laser eyes", kirim pesan (broadcast) untuk tembak!</li>
+                    </ul>
+                    <p style="color: var(--danger); font-size: 0.9rem;">⚠️ Pastikan blok <b>turn video on</b> terpasang agar bisa di-test!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Step 3: Testing -->
+        <div class="slide" id="slide11">
+            <h2 class="agenda-title">Step 3: Uji Coba! 🧪🚩</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 8rem;" class="float">🚩🗣️</div>
+                </div>
+                <div style="flex: 1.5;">
+                    <div class="card" style="text-align: left; padding: 30px; border-left: 10px solid var(--primary);">
+                        <ol style="font-size: 1.3rem; line-height: 2;">
+                            <li>Klik <b>Green Flag</b> (Bendera Hijau).</li>
+                            <li>Dekatkan wajah ke kamera.</li>
+                            <li>Coba teriak: <b>"Laser Eyes!"</b>.</li>
+                        </ol>
+                        <p style="margin-top: 20px; color: var(--accent);">Sprite Laser akan muncul, tapi posisinya mungkin masih berantakan. Tenang, kita perbaiki sekarang!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Face Coordinates -->
+        <div class="slide" id="slide12">
+            <h2 class="agenda-title">Cek Koordinat Wajah 🔍👤</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.2;">
+                    <div class="card" style="background: white; padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/6b850f8f-f68d-4a36-862a-f55412bf050f.png" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <p style="font-size: 1.2rem; line-height: 1.6;">Gunakan blok <b>Face Detection</b> untuk mencari posisi mata kamu:</p>
+                    <div class="card" style="background: rgba(255,255,255,0.05); text-align: left; padding: 20px;">
+                        <p>AI akan mendeteksi nilai <b>X</b> dan <b>Y</b> dari <b>mata kanan</b> dan <b>mata kiri</b> secara real-time dari webcam kamu!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: No Webcam Preparation -->
+        <div class="slide" id="slide13">
+            <h2 class="agenda-title">Persiapan Tanpa Webcam 🖼️</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.2;">
+                    <div class="card" style="background: white; padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/5c188c4c-133f-493e-b83e-f6d05d97b0ae.png" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <h3 class="highlight">Gunakan Gambar Pengganti:</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">Jika tidak ada webcam, kita akan menggunakan gambar orang sebagai objek deteksi:</p>
+                    <ol style="line-height: 1.8; margin-bottom: 20px;">
+                        <li>Download gambar wajah di bawah ini.</li>
+                        <li>Import sebagai <b>Backdrop</b> atau <b>Costume Stage</b>.</li>
+                        <li>Pastikan ada minimal 3 gambar berbeda untuk testing.</li>
+                    </ol>
+                    <a href="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/e9a9b1a1-d633-40c5-9136-0a73c0b3c277.png" download="laser-eyes-test-faces.png" target="_blank" class="huge-btn" style="padding: 12px 30px; font-size: 1rem;">DOWNLOAD IMAGE ⬇️</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: No Webcam Program -->
+        <div class="slide" id="slide14">
+            <h2 class="agenda-title">Program Tanpa Webcam 💻🛡️</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.5;">
+                    <div class="card" style="background: white; padding: 15px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/0fa60711-d6d9-4e4d-89a8-ca6cfd136cea.png" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <h3 class="highlight">Coding di Backstage:</h3>
+                    <ul style="line-height: 1.6; font-size: 1.1rem;">
+                        <li>Ganti blok <b>turn video on</b> menjadi <b>turn video off</b>.</li>
+                        <li>Gunakan <b>When [space] key pressed</b> untuk ganti costume backdrop.</li>
+                        <li>AI tetap akan mendeteksi wajah dari gambar yang muncul di layar!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Encouragement -->
+        <div class="slide" id="slide15">
+            <h2 class="agenda-title">Luar Biasa! 🔥🌟</h2>
+            <div style="text-align: center;">
+                <div style="font-size: 8rem; margin-bottom: 20px;" class="float">🛡️🐱</div>
+                <h1 style="color: var(--secondary);">Berhasil Menyelesaikan Project!</h1>
+                <p style="font-size: 1.5rem; max-width: 700px; margin: 0 auto;">Kamu sudah berhasil menghubungkan deteksi wajah dan deteksi suara dalam satu project! Ini adalah dasar dari teknologi AI yang sangat canggih.</p>
+                <div style="margin-top: 30px; font-size: 1.2rem; color: var(--accent);">Kira kira apa yang bisa kita tambahakan di program?</div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Save Project -->
+        <div class="slide" id="slide16">
+            <h2 class="agenda-title">Jangan Lupa Simpan! 💾</h2>
+            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 10rem;" class="float">📁</div>
+                </div>
+                <div style="flex: 1.5;">
+                    <div class="card" style="text-align: left; padding: 40px;">
+                        <h3 class="highlight">File -> Save to your computer</h3>
+                        <p style="font-size: 1.2rem; line-height: 1.6;">Simpan project kamu dengan format <b>.sb3</b> ke komputer (local storage). Kita akan menyempurnakannya di pertemuan depan!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Quiz -->
+        <div class="slide" id="slide17">
+            <h2 class="agenda-title">Quick Quiz ⏱️</h2>
+            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; width: 100%; max-width: 750px; border: 2px solid rgba(255,255,255,0.1);">
+                <div id="q-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--accent);">
+                    <span id="q-progress">Pertanyaan 1/3</span>
+                </div>
+                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; line-height: 1.4; margin-bottom: 25px;">...</h3>
+                <div id="q-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                <div id="q-feedback" style="margin-top: 25px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid;">
+                    <strong id="feedback-status" style="font-size: 1.2rem; display: block; margin-bottom: 5px;"></strong>
+                    <span id="feedback-hint" style="font-size: 1rem;"></span>
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                    <button id="q-next-btn" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Summary -->
+        <div class="slide" id="slide18">
+            <h2 class="agenda-title">Rangkuman Meet 13 📋</h2>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
+                <div class="card" style="border-top: 5px solid var(--secondary);">
+                    <h4>🤖 Pre-trained Model</h4>
+                    <p>Model AI yang sudah pintar dan siap pakai (Face Detection).</p>
+                </div>
+                <div class="card" style="border-top: 5px solid var(--primary);">
+                    <h4>📍 Landmarks</h4>
+                    <p>Titik koordinat di wajah untuk menentukan posisi mata.</p>
+                </div>
+                <div class="card" style="border-top: 5px solid var(--accent);">
+                    <h4>🎙️ Voice Control</h4>
+                    <p>Menggunakan Speech to Text untuk memicu aksi di Scratch.</p>
+                </div>
+                <div class="card" style="border-top: 5px solid var(--success);">
+                    <h4>💾 Saving</h4>
+                    <p>Menyimpan hasil kerja dalam format .sb3 untuk sesi berikutnya.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Feedback -->
+        <div class="slide" id="slide19">
+            <h2 class="agenda-title">Session Feedback 💖</h2>
+            <div style="display: flex; gap: 50px; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 20px;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp13" style="width: 200px;">
+                </div>
+                <div style="text-align: left;">
+                    <h3>Satu Langkah Lagi!</h3>
+                    <p style="margin-bottom: 30px;">Pertemuan depan kita akan membuat laser menempel tepat di mata dan menghancurkan target!</p>
+                    <a href="https://bit.ly/feedback-smp13" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = index;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+
+            if (slides[index].id === 'slide17') initQuiz();
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlide + direction;
+            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex);
+        }
+
+        // --- Quiz Logic ---
+        const quizData = [
+            {
+                q: "Apa perbedaan utama Pre-trained Model dengan model yang kita latih sendiri?",
+                opts: ["A. Pre-trained model sudah dilatih oleh ahli dan siap pakai", "B. Pre-trained model lebih lemot", "C. Pre-trained model harus bayar"],
+                ans: 0,
+                hint: "Pre-trained model seperti Face Detection sudah memiliki kecerdasan bawaan dari jutaan data."
+            },
+            {
+                q: "Blok apa yang kita gunakan untuk mendeteksi koordinat mata kita?",
+                opts: ["A. Motion blocks", "B. Face Detection blocks", "C. Sound blocks"],
+                ans: 1,
+                hint: "Ekstensi Face Detection memberikan kita akses ke posisi X dan Y dari bagian wajah."
+            },
+            {
+                q: "Mengapa program kita butuh blok 'turn video on'?",
+                opts: ["A. Agar AI bisa melihat wajah dan mendeteksi landmarks", "B. Agar Scratch terlihat bagus", "C. Agar suara terdengar keras"],
+                ans: 0,
+                hint: "Kamera (video) adalah input utama bagi model AI deteksi wajah."
+            }
+        ];
+
+        let currentQIdx = 0;
+        function initQuiz() {
+            const data = quizData[currentQIdx];
+            document.getElementById('q-progress').textContent = `Pertanyaan ${currentQIdx + 1}/${quizData.length}`;
+            document.getElementById('q-text').textContent = data.q;
+            const optsDiv = document.getElementById('q-options');
+            optsDiv.innerHTML = '';
+            data.opts.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.style.cssText = "background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; text-align: left; transition: 0.3s;";
+                btn.innerHTML = opt;
+                btn.onclick = () => checkQuiz(i, btn);
+                optsDiv.appendChild(btn);
+            });
+            document.getElementById('q-feedback').style.display = 'none';
+            document.getElementById('q-next-btn').style.display = 'none';
+        }
+
+        function checkQuiz(idx, btn) {
+            const data = quizData[currentQIdx];
+            const feedback = document.getElementById('q-feedback');
+            const status = document.getElementById('feedback-status');
+            const hint = document.getElementById('feedback-hint');
+            const nBtn = document.getElementById('q-next-btn');
+            
+            if (idx === data.ans) {
+                btn.style.background = "rgba(0, 230, 118, 0.2)";
+                status.textContent = "BENAR! 🎉";
+                feedback.style.color = "#00e676";
+            } else {
+                btn.style.background = "rgba(255, 82, 82, 0.2)";
+                status.textContent = "KURANG TEPAT ❌";
+                feedback.style.color = "#ff5252";
+            }
+            hint.textContent = data.hint;
+            feedback.style.display = 'block';
+            nBtn.style.display = 'block';
+            if (currentQIdx === quizData.length - 1) {
+                nBtn.textContent = "SELESAI 🏁";
+                nBtn.onclick = () => changeSlide(1);
+            }
+        }
+
+        function nextQuiz() { currentQIdx++; initQuiz(); }
+
+        window.onload = () => {
+            showSlide(0);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') changeSlide(1);
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+            });
+        };
+    </script>
+</body>
+</html>
