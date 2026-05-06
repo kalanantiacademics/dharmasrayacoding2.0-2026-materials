@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUANGGURU CODING - MEET 11 SMP</title>
+    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary: #4a8b8b;
+            --secondary: #f2c140;
+            --dark: #1a2424;
+            --light: #ffffff;
+            --accent: #78a3a3;
+            --success: #00e676;
+            --danger: #ff5252;
+            --orange: #ffab19;
+            --card-bg: rgba(0, 0, 0, 0.2);
+            
+            /* Scratch Block Colors */
+            --b-event: #FFBF00;
+            --b-look: #9966FF;
+            --b-control: #FFAB19;
+            --b-motion: #4C97FF;
+            --b-sensing: #4CBFE6;
+            --b-op: #59C059;
+            --b-ai: #008080;
+        }
+
+        body { 
+            margin: 0; padding: 0; 
+            font-family: 'Outfit', sans-serif; 
+            background: url('https://i.imgur.com/z221jXz.png') center/cover fixed no-repeat;
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; overflow: hidden; 
+            color: var(--light);
+        }
+
+        .presentation-container { 
+            width: 80vw; height: 80vh; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); 
+            border-radius: 20px; overflow: hidden; 
+            display: flex; flex-direction: column; position: relative; 
+            background: #202b2b;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .slide { 
+            width: 100%; height: 100%; 
+            padding: 40px 60px; box-sizing: border-box; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            position: absolute; top: 0; left: 0; 
+            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1); 
+            background: linear-gradient(135deg, #2b3a3a 0%, #1a2424 100%);
+            visibility: hidden; opacity: 0; 
+        }
+
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+
+        /* Logos */
+        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; }
+        .slide-logo-left img { height: 40px; width: auto; }
+        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; }
+        .slide-logo-right img { height: 40px; width: auto; }
+
+        .nav-button { background-color: var(--secondary); color: #222; border: none; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        #prevBtn { left: 20px; } 
+        #nextBtn { right: 20px; }
+        .nav-button:hover:not(:disabled) { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px var(--secondary); }
+        .nav-button:disabled { background-color: #555; color: #888; cursor: not-allowed; opacity: 0.5; }
+
+        /* Typography */
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .agenda-title { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-align: center; border-left: 10px solid var(--primary); padding-left: 20px; line-height: 1; }
+        .cover-title { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; text-align: center; }
+        .cover-subtitle { font-size: 1.4rem; color: var(--accent); font-weight: 400; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
+        .highlight { color: var(--secondary); font-weight: 800; }
+
+        /* Elements */
+        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; backdrop-filter: blur(10px); text-align: center; }
+        .card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.1); border-color: var(--primary); }
+        .huge-btn { background: var(--primary); color: white; padding: 15px 35px; border-radius: 15px; font-weight: 800; font-size: 1.2rem; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; display: inline-block; box-shadow: 0 10px 20px rgba(74, 139, 139, 0.3); }
+        .huge-btn:hover { background: var(--accent); transform: translateY(-3px); }
+
+        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+        .float { animation: floatSprite 2s infinite alternate ease-in-out; }
+        
+        .placeholder-img { width: 100%; height: 180px; background: rgba(255,255,255,0.05); border: 2px dashed var(--accent); border-radius: 15px; display: flex; justify-content: center; align-items: center; color: var(--accent); overflow: hidden; }
+        .placeholder-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .card img { max-width: 100%; height: auto; border-radius: 10px; object-fit: contain; }
+    </style>
+</head>
+<body>
+    <div class="slide-logo-left">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="RG">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="DH">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="DS">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Juara">
+    </div>
+    <div class="slide-logo-right">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="RG Coding">
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Cover -->
+        <div class="slide active" id="slide1">
+            <h1 class="cover-title">ML: IMAGE RECOGNITION <br><span style="color: var(--secondary);">CHAMELEON PROJECT (PART 2)</span></h1>
+            <p class="cover-subtitle">MEET 11: DESIGN & PROGRAMMING</p>
+            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-top: 20px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 120px;">
+                <div style="font-size: 3rem;">➕</div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 120px;">
+            </div>
+            <div style="font-size: 6rem; margin-top: 40px;" class="float">🦎💻✨</div>
+        </div>
+
+        <!-- Slide 2: Last Week Recall -->
+        <div class="slide" id="slide2">
+            <h2 class="agenda-title">Kemarin Belajar Apa? 🧠</h2>
+            <div style="display: flex; gap: 40px; width: 100%; align-items: center;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 8rem;" class="float">📸⚙️</div>
+                </div>
+                <div style="flex: 1.5;">
+                    <div class="card" style="text-align: left; padding: 30px; border-left: 10px solid var(--primary);">
+                        <h3 style="color: var(--primary);">Meet 10: Training Data</h3>
+                        <p style="font-size: 1.4rem;">Kita sudah berhasil melatih model AI untuk mengenali warna (Red, Green, Blue) melalui ML4K.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Today's Mission -->
+        <div class="slide" id="slide3">
+            <h2 class="agenda-title">Misi Hari Ini 🎯</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                <div class="card">
+                    <div style="font-size: 3rem;">🎨</div>
+                    <h4>Design Costumes</h4>
+                    <p>Mendesain sprite bunglon dengan 3 warna berbeda.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 3rem;">🔌</div>
+                    <h4>Connect ML4K</h4>
+                    <p>Menghubungkan model AI kita ke dalam Scratch.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 3rem;">🔄</div>
+                    <h4>AI Logic</h4>
+                    <p>Menggunakan forever loop untuk deteksi kamera otomatis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Project Showcase -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">The Project Preview 🎬</h2>
+            <div class="card" style="width: 100%; max-width: 600px; padding: 15px; display: flex; flex-direction: column; align-items: center;">
+                <img src="https://cdn-web.ruangguru.com/file-uploader/e2d7b21d-4ae9-4723-a6ed-9715a41b6208.gif" alt="Project Preview GIF" style="width: 100%; max-height: 350px; border-radius: 15px; background: #000; display: block; object-fit: contain;">
+                <p style="margin-top: 15px; color: var(--accent); font-size: 0.9rem; margin-bottom: 0;">Bunglon digital yang berubah warna secara otomatis!</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Open Project Steps -->
+        <div class="slide" id="slide5">
+            <h2 class="agenda-title">Mulai Koding di Scratch 🐱💻</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%;">
+                <div class="card">
+                    <span class="highlight">1. Buka Project</span>
+                    <div class="placeholder-img"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b8b3569f-5a11-4c9a-8e57-4aa434fef737.png" alt=""></div>
+                    <p style="font-size: 0.8rem;">Klik project <b>chameleon</b> di ML4K.</p>
+                </div>
+                <div class="card">
+                    <span class="highlight">2. Click Make</span>
+                    <div class="placeholder-img"><img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" alt=""></div>
+                    <p style="font-size: 0.8rem;">Pilih menu <b>Make</b> -> <b>Scratch 3</b>.</p>
+                </div>
+                <div class="card">
+                    <span class="highlight">3. Open Scratch</span>
+                    <div class="placeholder-img"><img src="https://roboguru-forum-cdn.ruangguru.com//image/3379679f-269d-444e-9652-d2d505d255ac.png" alt=""></div>
+                    <p style="font-size: 0.8rem;">Klik tombol <b>Open in Scratch 3</b>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Templates -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title">Gunakan Template Chameleon 🦎</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%;">
+                <div class="card">
+                    <h3 class="highlight">1. Klik Project Templates</h3>
+                    <div class="placeholder-img" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/53dbd90f-83df-46d6-a9df-ea04ba8175d6.png" alt=""></div>
+                </div>
+                <div class="card">
+                    <h3 class="highlight">2. Cari "Chameleon"</h3>
+                    <div class="placeholder-img" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/29743992-52c0-4eff-9cd9-415457a55d3c.png" alt=""></div>
+                </div>
+            </div>
+            <p style="margin-top: 15px; color: var(--accent);">Ini akan menyiapkan sprite bunglon dan aset yang diperlukan!</p>
+        </div>
+
+        <!-- Slide 7: Assets Overview -->
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title">Cek Aset Kamu 🔎</h2>
+            <div class="card" style="width: 100%; max-width: 650px; padding: 15px;">
+                <div class="placeholder-img" style="height: 300px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/1e7ce36b-0417-41c1-93ad-887fedcb0ced.png" alt="Assets Overview"></div>
+                <p style="margin-top: 15px;">Pastikan kamu sudah memiliki sprite <b>Chameleon</b> dan blok ML4K di bagian bawah!</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Designing Costumes -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Langkah 1: Siapkan Kostum 🎨</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.5;">
+                    <div class="placeholder-img" style="height: 350px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/5aa1ff6e-a919-48d0-8005-3105c3a2c1d7.png" alt=""></div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="card" style="text-align: left;">
+                        <h3 class="highlight">Instruksi:</h3>
+                        <ol style="line-height: 1.8;">
+                            <li>Klik tab <b>Costumes</b>.</li>
+                            <li>Klik kanan dan <b>Duplicate</b> costume bunglon.</li>
+                            <li>Beri nama: <br><b>red, green, blue, background</b>.</li>
+                            <li>Gunakan <b>Fill Tool</b> untuk merubah warnanya!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Coding Logic -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title">Langkah 2: Program Utama 🧠💻</h2>
+            <p style="margin-bottom: 20px;">Susun blok di bawah ini pada sprite <b>Chameleon</b>:</p>
+            <div class="card" style="padding: 15px; background: white; width: 100%; max-width: 650px; border-radius: 20px;">
+                <div class="placeholder-img" style="height: 320px; border: none; background: transparent;">
+                    <img src="./chameleon/assets/blocks_logic.png" alt="Coding Blocks">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div style="background: var(--b-event); padding: 5px 15px; border-radius: 5px; color: #000; font-size: 0.8rem;">Events</div>
+                <div style="background: var(--b-look); padding: 5px 15px; border-radius: 5px; font-size: 0.8rem;">Looks</div>
+                <div style="background: var(--b-control); padding: 5px 15px; border-radius: 5px; font-size: 0.8rem;">Control</div>
+                <div style="background: var(--b-ai); padding: 5px 15px; border-radius: 5px; font-size: 0.8rem;">Images (ML4K)</div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Testing Webcam -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title">Ayo Testing! 🚀📸</h2>
+            <div style="text-align: center;">
+                <div style="font-size: 8rem; margin-bottom: 20px;" class="float">🚩</div>
+                <p style="font-size: 1.5rem;">Klik <b>Bendera Hijau</b> dan arahkan benda berwarna ke depan kamera!</p>
+                <div class="card" style="margin-top: 20px; border-left: 10px solid var(--success);">
+                    <p>Apakah si bunglon sudah berubah warna mengikuti benda kamu?</p>
+                </div>
+                <p style="margin-top: 20px; color: var(--accent);">Tidak punya webcam? Jangan khawatir, lanjut ke slide berikutnya!</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: No Webcam Solution - Step 1 -->
+        <div class="slide" id="slide11">
+            <h2 class="agenda-title">Solusi Tanpa Webcam - Step 1 🖥️💡</h2>
+            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
+                <div style="flex: 1.5;">
+                    <div class="placeholder-img" style="height: 350px;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/92c97d1a-6207-47b3-ad62-4c12ecd93681.png" alt="Painting Sprite">
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="card" style="text-align: left;">
+                        <h3 class="highlight">1. Buat Sprite "Webcam"</h3>
+                        <p>Klik <b>Paint</b> untuk membuat sprite baru. Beri nama sprite ini: <b>Webcam</b>.</p>
+                        <p>Gambar kotak besar di tengah layar. Beri 3 kostum dengan warna yang sama dengan dataset (Red, Green, Blue).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: No Webcam Solution - Step 2 -->
+        <div class="slide" id="slide12">
+            <h2 class="agenda-title">Solusi Tanpa Webcam - Step 2 ⚙️💻</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;">
+                <div class="card" style="background: white; padding: 10px;">
+                    <h4 style="color: var(--dark); margin-bottom: 10px;">Program Chameleon</h4>
+                    <div class="placeholder-img" style="height: 250px; border: none; background: transparent;">
+                        <img src="./chameleon/assets/no_webcam_logic_1.png" alt="Chameleon Blocks">
+                    </div>
+                </div>
+                <div class="card" style="background: white; padding: 10px;">
+                    <h4 style="color: var(--dark); margin-bottom: 10px;">Program Webcam Sprite</h4>
+                    <div class="placeholder-img" style="height: 250px; border: none; background: transparent;">
+                        <img src="./chameleon/assets/no_webcam_logic_2.png" alt="Webcam Blocks">
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="margin-top: 15px; width: 100%; border-left: 8px solid var(--orange);">
+                <p style="margin: 0;">Tekan tombol <b>SPACE</b> untuk mengganti warna, dan bunglon akan mendeteksi warna dari sprite tersebut!</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Encouragement -->
+        <div class="slide" id="slide13">
+            <h2 class="agenda-title">Masih Ada yang Salah? 🤔</h2>
+            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
+                <div style="flex: 1; text-align: center;">
+                    <div style="font-size: 10rem;" class="float">🛠️</div>
+                </div>
+                <div style="flex: 2; text-align: left;">
+                    <p style="font-size: 1.5rem; line-height: 1.6;">Tidak masalah! Koding dan AI memang butuh ketelitian. Periksa kembali nama kostummu agar sama persis dengan label di ML4K.</p>
+                    <div class="card" style="background: rgba(242, 193, 64, 0.1); border-left: 8px solid var(--secondary);">
+                        <p style="font-size: 1.3rem; margin: 0;">Jika masih belum pas, di pertemuan berikutnya kita akan belajar cara meningkatkan akurasi AI-nya agar lebih pintar!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Hebat -->
+        <div class="slide" id="slide14">
+            <div style="font-size: 8rem;" class="animate__animated animate__tada">🏆</div>
+            <h1 class="cover-title" style="color: var(--success);">KERJA BAGUS!</h1>
+            <p style="font-size: 1.8rem; text-align: center;">Kamu sudah berhasil membangun program AI yang bisa "Melihat"!</p>
+            <div class="card" style="margin-top: 30px;">
+                <p style="font-size: 1.3rem;">Penyamaran bunglon digitalmu sekarang sudah berfungsi secara otomatis.</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Quiz -->
+        <div class="slide" id="slideQuiz">
+            <h2 class="agenda-title">Quick Quiz ⏱️</h2>
+            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; width: 100%; max-width: 750px; border: 2px solid rgba(255,255,255,0.1);">
+                <div id="q-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--accent);">
+                    <span id="q-progress">Pertanyaan 1/3</span>
+                </div>
+                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; line-height: 1.4; margin-bottom: 25px;">...</h3>
+                <div id="q-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                <div id="q-feedback" style="margin-top: 25px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid;">
+                    <strong id="feedback-status" style="font-size: 1.2rem; display: block; margin-bottom: 5px;"></strong>
+                    <span id="feedback-hint" style="font-size: 1rem;"></span>
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                    <button id="q-next-btn" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Feedback -->
+        <div class="slide" id="slideFeedback">
+            <h2 class="agenda-title">Session Feedback 💖</h2>
+            <div style="display: flex; gap: 50px; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 20px;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp11" style="width: 200px;">
+                </div>
+                <div style="text-align: left;">
+                    <h3>Luar Biasa!</h3>
+                    <p style="margin-bottom: 30px;">Sekarang project Chameleon-mu sudah hampir selesai. Sampai jumpa di sesi evaluasi!</p>
+                    <a href="https://bit.ly/feedback-smp11" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlide = index;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+
+            if (slides[index].id === 'slideQuiz') initQuiz();
+        }
+
+        function changeSlide(direction) {
+            const newIndex = currentSlide + direction;
+            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex);
+        }
+
+        // --- Quiz Logic ---
+        const quizData = [
+            {
+                q: "Apa fungsi dari blok 'forever' dalam program Chameleon?",
+                opts: ["A. Agar program jalan sekali saja", "B. Agar AI terus-menerus mendeteksi kamera", "C. Menghapus program"],
+                ans: 1,
+                hint: "Sama seperti mata kita, AI butuh terus 'melihat' setiap detik agar tahu kapan warna berubah."
+            },
+            {
+                q: "Mengapa nama costume harus sama persis dengan label di ML4K?",
+                opts: ["A. Agar terlihat rapi", "B. Agar blok 'switch costume' bisa mengenali hasil prediksi AI", "C. Tidak ada fungsinya"],
+                ans: 1,
+                hint: "Blok AI mengeluarkan teks hasil prediksi. Jika teksnya 'red', Scratch akan mencari kostum bernama 'red'."
+            },
+            {
+                q: "Jika tidak ada webcam, gambar apa yang digunakan oleh blok 'recognise image'?",
+                opts: ["A. Gambar dari internet", "B. Gambar dari sprite (Costume image)", "C. Tidak bisa jalan"],
+                ans: 1,
+                hint: "Kita bisa memalsukan kamera menggunakan gambar dari kostum sprite lain sebagai input AI."
+            }
+        ];
+
+        let currentQIdx = 0;
+        function initQuiz() {
+            const data = quizData[currentQIdx];
+            document.getElementById('q-progress').textContent = `Pertanyaan ${currentQIdx + 1}/${quizData.length}`;
+            document.getElementById('q-text').textContent = data.q;
+            const optsDiv = document.getElementById('q-options');
+            optsDiv.innerHTML = '';
+            data.opts.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.style.cssText = "background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; text-align: left; transition: 0.3s;";
+                btn.innerHTML = opt;
+                btn.onclick = () => checkQuiz(i, btn);
+                optsDiv.appendChild(btn);
+            });
+            document.getElementById('q-feedback').style.display = 'none';
+            document.getElementById('q-next-btn').style.display = 'none';
+        }
+
+        function checkQuiz(idx, btn) {
+            const data = quizData[currentQIdx];
+            const feedback = document.getElementById('q-feedback');
+            const status = document.getElementById('feedback-status');
+            const hint = document.getElementById('feedback-hint');
+            const nextBtn = document.getElementById('q-next-btn');
+            
+            if (idx === data.ans) {
+                btn.style.background = "rgba(0, 230, 118, 0.2)";
+                status.textContent = "BENAR! 🎉";
+                feedback.style.color = "#00e676";
+            } else {
+                btn.style.background = "rgba(255, 82, 82, 0.2)";
+                status.textContent = "KURANG TEPAT ❌";
+                feedback.style.color = "#ff5252";
+            }
+            hint.textContent = data.hint;
+            feedback.style.display = 'block';
+            nextBtn.style.display = 'block';
+            if (currentQIdx === quizData.length - 1) {
+                nextBtn.textContent = "SELESAI 🏁";
+                nextBtn.onclick = () => changeSlide(1);
+            }
+        }
+
+        function nextQuiz() { currentQIdx++; initQuiz(); }
+
+        window.onload = () => {
+            showSlide(0);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') changeSlide(1);
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+            });
+        };
+    </script>
+</body>
+</html>
