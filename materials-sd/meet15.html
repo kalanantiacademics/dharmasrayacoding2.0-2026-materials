@@ -52,6 +52,15 @@
         .floating { animation: float 3s ease-in-out infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulsing { animation: pulse 2s infinite; }
+        @keyframes floatSprite {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
 
         /* Step Styles */
         .img-container { flex: 1; width: 100%; background: #f5f5f5; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; margin-top: 10px; }
@@ -67,12 +76,13 @@
         .txt-yellow { color: #f2c140; font-weight: 800; }
         .txt-red { color: #ff6b6b; font-weight: 800; }
 
-        /* Text Input Activity */
-        .ide-input { width: 100%; max-width: 600px; padding: 20px; border: 3px solid #008080; border-radius: 20px; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; margin-bottom: 20px; outline: none; transition: 0.3s; }
-        .ide-input:focus { border-color: #f2c140; box-shadow: 0 0 15px rgba(242, 193, 64, 0.3); }
-
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: none; }
-        .custom-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 30px; z-index: 1001; text-align: center; width: 100%; max-width: 500px; display: none; }
+        /* Checklist */
+        .checklist-item { display: flex; align-items: center; gap: 15px; background: white; padding: 15px 25px; border-radius: 15px; margin-bottom: 10px; width: 100%; max-width: 600px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .checklist-item input[type="checkbox"] { width: 25px; height: 25px; cursor: pointer; }
+        .checklist-item label { font-size: 1.1rem; cursor: pointer; }
+        
+        /* Custom Bold Text Style */
+        .highlight-text { color: #f2c140; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -91,290 +101,203 @@
         <div class="slide active" id="slide1">
             <h1 class="cover-title">
                 <div style="line-height: 1.1; text-align: center;">
-                    <span class="game-title-gradient" style="font-size: 6.5rem;">SHY PANDA</span><br>
-                    <span style="font-size: 2.5rem; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">IMAGE RECOGNITION</span>
+                    <span class="game-title-gradient" style="font-size: 5.5rem;">ML: INNOVATION PROJECT</span><br>
+                    <span style="font-size: 2.5rem; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">BUILD, TEST, AND DEMO</span>
                 </div>
             </h1>
             
             <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px auto; z-index: 3;">
-                <div style="font-size: 8rem;" class="floating">🐼🔍✨</div>
+                <div style="font-size: 8rem;" class="floating">🛠️🧪🎤</div>
             </div>
 
-            <p class="cover-subtitle">SESI 15: EVALUASI PROGRAM</p>
+            <p class="cover-subtitle">SESI 15: PENYELESAIAN DAN PRESENTASI</p>
         </div>
 
         <!-- Slide 2: Review Sesi 14 -->
         <div class="slide" id="slide2">
-            <h2 class="agenda-title">Apa yang Kita Lakukan Kemarin? 📽️</h2>
+            <h2 class="agenda-title">Persiapan Selesai! 📽️</h2>
             <div class="grid-container" style="max-width: 900px;">
                 <div class="card">
-                    <div class="card-icon">🖥️</div>
-                    <h3 class="txt-teal">Susun Block</h3>
-                    <p>Kita sudah menyusun logika di sprite <strong>Window</strong> di Scratch.</p>
+                    <div class="card-icon">💡</div>
+                    <h3 class="txt-teal">Ide Project</h3>
+                    <p>Kamu sudah menentukan tema, karakter utama, dan latar belakang project-mu.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon">🎭</div>
-                    <h3 class="txt-teal">Reaksi Sprite</h3>
-                    <p>Panda sudah bisa berhenti saat melihat kita dan menari saat kita pergi.</p>
+                    <div class="card-icon">📝</div>
+                    <h3 class="txt-teal">Rencana Matang</h3>
+                    <p>Tujuan kemenangan, aksi koding, dan efek suara sudah tertulis di lembar rencana.</p>
                 </div>
             </div>
-            <p style="margin-top: 30px; font-weight: bold; color: #555; font-size: 1.4rem;">Hari ini adalah sesi final! Mari kita sempurnakan. 🏆</p>
+            <p style="margin-top: 30px; font-weight: bold; color: #555; font-size: 1.4rem;">Sekarang waktunya eksekusi! Mari kita selesaikan koding dan Scratch milikmu. 🏆</p>
         </div>
 
-        <!-- Slide 3: Today's Agenda -->
+        <!-- Slide 3: Agenda Hari Ini -->
         <div class="slide" id="slide3">
-            <h2 class="agenda-title">Agenda Final Kita! 🚀</h2>
+            <h2 class="agenda-title">Agenda Hari Ini! 🚀</h2>
             <div style="display: flex; gap: 20px; width: 100%; max-width: 1000px;">
                 <div class="card" style="flex: 1;">
                     <div class="step-num">1</div>
-                    <h4 class="txt-teal">Evaluasi</h4>
-                    <p>Cek akurasi Panda.</p>
+                    <h4 class="txt-teal">Build Project</h4>
+                    <p>Melanjutkan koding Scratch.</p>
                 </div>
                 <div class="card" style="flex: 1;">
                     <div class="step-num">2</div>
-                    <h4 class="txt-teal">Re-Training</h4>
-                    <p>Perbaiki kalau masih salah.</p>
+                    <h4 class="txt-teal">Testing & Fix</h4>
+                    <p>Menguji & memperbaiki bagian eror.</p>
                 </div>
                 <div class="card" style="flex: 1;">
                     <div class="step-num">3</div>
-                    <h4 class="txt-teal">Diskusi</h4>
-                    <p>Beda teks vs gambar.</p>
-                </div>
-                <div class="card" style="flex: 1;">
-                    <div class="step-num">4</div>
-                    <h4 class="txt-teal">Ideation</h4>
-                    <p>Rancang AI buatanmu!</p>
+                    <h4 class="txt-teal">Refleksi</h4>
+                    <p>Evaluasi apa saja yang dipelajari.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Diskusi Kendala -->
-        <div class="slide solid-teal-bg" id="slide4">
-            <h2 class="agenda-title" style="color: #f2c140;">Gimana Shy Pandanya? 🤔</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-                <div style="font-size: 8rem;">🐼❓🧐</div>
-                <p style="font-size: 1.5rem; text-align: center; max-width: 800px;">
-                    Coba ceritakan! Ada yang Pandanya masih "bingung"? <br>
-                    Atau ada yang blok kodingnya belum jalan?
+        <!-- Slide 4: Waktunya Koding! -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">Waktunya Menyelesaikan Project! 💻</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 900px;">
+                <div style="font-size: 6rem;" class="floating">🖥️🏗️✨</div>
+                <p style="font-size: 1.5rem; text-align: center; margin: 0; color: #444;">
+                    Yuk, fokus menyelesaikan 3 target utama final project kita hari ini:
                 </p>
-                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 20px; border: 2px dashed white; max-width: 700px;">
-                    <ul style="font-size: 1.2rem; margin: 0; text-align: left;">
-                        <li>Apakah Pandanya sering salah tebak?</li>
-                        <li>Apakah kameranya terasa lambat?</li>
-                        <li>Apakah kalian sudah klik bendera hijau?</li>
-                    </ul>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+                    <div class="card" style="padding: 20px;">
+                        <span style="font-size: 2.5rem; margin-bottom: 10px;">🏗️</span>
+                        <h4 class="txt-teal" style="margin: 5px 0;">1. Lanjutkan Koding</h4>
+                        <p style="font-size: 0.95rem; margin: 5px 0 0 0; color: #666;">Susun blok-blok Scratch sampai semua mekanisme koding yang direncanakan berjalan aktif.</p>
+                    </div>
+                    <div class="card" style="padding: 20px;">
+                        <span style="font-size: 2.5rem; margin-bottom: 10px;">🧪</span>
+                        <h4 class="txt-teal" style="margin: 5px 0;">2. Tes & Uji Coba</h4>
+                        <p style="font-size: 0.95rem; margin: 5px 0 0 0; color: #666;">Coba mainkan game-mu berulang kali dan pastikan semua tombol dan fitur berjalan lancar!</p>
+                    </div>
+                    <div class="card" style="padding: 20px;">
+                        <span style="font-size: 2.5rem; margin-bottom: 10px;">✍️</span>
+                        <h4 class="txt-teal" style="margin: 5px 0;">3. Beri Instruksi</h4>
+                        <p style="font-size: 0.95rem; margin: 5px 0 0 0; color: #666;">Tambahkan tulisan panduan singkat cara bermain di dalam project agar mudah dicoba orang lain.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: Re-Training Instructions -->
-        <div class="slide" id="slide5" style="justify-content: flex-start; padding-top: 50px;">
-            <h2 class="agenda-title" style="margin-bottom: 10px;">Masih Salah Tebak? Yuk Training Lagi! 📸</h2>
-            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; width: 100%;">
-                <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.1rem; margin-bottom: 15px;">Kalau Panda masih bingung, tandanya <strong>kurang foto</strong>!</p>
-                    <ul class="step-list" style="list-style: none; padding:0;">
-                        <li style="background: white; padding: 12px; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 6px solid #008080; font-size: 0.95rem;">
-                            <strong>1. Ambil Foto Lagi 📸</strong><br>Tambah 10-20 foto baru di setiap label.
-                        </li>
-                        <li style="background: white; padding: 12px; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 6px solid #f2c140; font-size: 0.95rem;">
-                            <strong>2. Ubah Posisi 🔄</strong><br>Foto dari samping atau lebih dekat.
-                        </li>
-                        <li style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 6px solid #4c97ff; font-size: 0.95rem;">
-                            <strong>3. Upload File 📁</strong><br>Tambahkan gambar jika tidak ada kamera.
-                        </li>
-                    </ul>
-                </div>
-                <div style="flex: 1;">
-                    <div class="img-container" style="height: 250px; max-width: 450px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f730d50f-b296-4a0b-9578-a8ccad94f370.png" alt="Adding more photos in ML4K"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6: Learn and Train Again -->
-        <div class="slide" id="slide6" style="justify-content: flex-start; padding-top: 50px;">
-            <h2 class="agenda-title" style="margin-bottom: 10px;">Latih Ulang AI Kamu 🧠</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%;">
-                <p style="font-size: 1.1rem; margin: 0;">Setelah tambah foto, jangan lupa klik:</p>
-                <div style="background: #e0f2f1; padding: 15px 30px; border-radius: 20px; border: 3px solid #008080; text-align: center; margin: 5px 0;">
-                    <h3 class="txt-teal" style="font-size: 1.6rem; margin: 0;">"Train new machine learning model"</h3>
-                </div>
-                <div class="img-container" style="height: 180px; max-width: 600px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/12ea5fe4-429b-47e5-a2f8-073c6ed32b97.png" alt="Train new model button in ML4K"></div>
-                <p style="color: #ff6b6b; font-weight: bold; font-size: 1rem;">Tunggu sampai statusnya "Available" ya!</p>
-            </div>
-        </div>
-
-        <!-- Slide 7: Load Project in Scratch -->
-        <div class="slide" id="slide7">
-            <h2 class="agenda-title">Cara Load Project Kemarin 📂</h2>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 1080px;">
-                <div class="card" style="padding: 15px; height: 350px; justify-content: flex-start;">
-                    <div class="step-num" style="margin: 0 auto 5px auto;">1</div>
-                    <h4 class="txt-teal">Buka Scratch</h4>
-                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 40px;">Masuk ke Scratch via tombol <strong>Make</strong> di ML4K.</p>
-                    <div class="img-container"><img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" alt="Step click make"></div>
-                </div>
-                <div class="card" style="padding: 15px; height: 350px; justify-content: flex-start;">
-                    <div class="step-num" style="margin: 0 auto 5px auto;">2</div>
-                    <h4 class="txt-teal">Load from Computer</h4>
-                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 40px;">Klik <strong>File</strong> -> <strong>Load from your computer</strong>.</p>
-                    <div class="img-container"><img src="https://roboguru-forum-cdn.ruangguru.com//image/b95ee38c-8380-45b4-b4a8-cb3cbcafa9b4.png" alt="Step load from computer"></div>
-                </div>
-                <div class="card" style="padding: 15px; height: 350px; justify-content: flex-start;">
-                    <div class="step-num" style="margin: 0 auto 5px auto;">3</div>
-                    <h4 class="txt-teal">Pilih File</h4>
-                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 40px;">Pilih file <strong>.sb3</strong> yang kamu simpan kemarin.</p>
-                    <div class="img-container"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/8ecb675f-39c4-4907-8522-95ee4cb51834.png" alt="Step select file"></div>
+        <!-- Slide 5: Pantang Menyerah & Selalu Uji Coba! -->
+        <div class="slide solid-teal-bg" id="slide5" style="justify-content: center; padding: 40px 60px;">
+            <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+                <div style="font-size: 4rem;" class="floating">💪🧪🙋‍♂️</div>
+                <h2 style="font-size: 3.2rem; margin-bottom: 20px; color: #f2c140; text-shadow: 0 4px 8px rgba(0,0,0,0.3);">Pantang Menyerah & Selalu Uji Coba!</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 850px; text-align: left; margin-top: 20px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; border-left: 6px solid #f2c140;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 1.3rem; color: #f2c140;">🛠️ Jangan Takut Eror!</h4>
+                        <p style="margin: 0; font-size: 1rem; color: white; line-height: 1.4;">Eror itu biasa, perbaiki pelan-pelan ya!</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; border-left: 6px solid #5ce1e6;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 1.3rem; color: #5ce1e6;">🔄 Tes Setiap Koding!</h4>
+                        <p style="margin: 0; font-size: 1rem; color: white; line-height: 1.4;">Klik bendera hijau untuk langsung uji coba hasilnya.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; border-left: 6px solid #ff70a6;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 1.3rem; color: #ff70a6;">🙋‍♂️ Bingung? Tanya Guru!</h4>
+                        <p style="margin: 0; font-size: 1rem; color: white; line-height: 1.4;">Cukup angkat tanganmu jika butuh bantuan.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; border-left: 6px solid #b9fbc0;">
+                        <h4 style="margin: 0 0 10px 0; font-size: 1.3rem; color: #b9fbc0;">💾 Jangan Lupa Save!</h4>
+                        <p style="margin: 0; font-size: 1rem; color: white; line-height: 1.4;">Simpan project-mu ke dalam komputer secara berkala.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 8: Final Testing -->
-        <div class="slide" id="slide8">
-            <h2 class="agenda-title">Testing Final! 🧪✨</h2>
-            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; width: 100%;">
-                <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.2rem;">Coba tes dengan berbagai gaya:</p>
-                    <ul style="font-size: 1.1rem; line-height: 2;">
-                        <li>😎 Pakai kacamata / tutup satu mata.</li>
-                        <li>💡 Coba matikan lampu atau geser posisi duduk.</li>
-                        <li>🏃 Coba bergerak cepat di depan kamera.</li>
-                    </ul>
-                    <p style="font-weight: bold; color: #008080; font-size: 1.3rem; margin-top: 20px;">Apakah AI-nya tetap pintar?</p>
-                </div>
-                <div style="flex: 1;">
-                    <div style="font-size: 5rem;" class="pulsing">🐼🎯🔥</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Encouragement -->
-        <div class="slide solid-teal-bg" id="slide9">
-            <div style="text-align: center;">
-                <div style="font-size: 7rem; margin-bottom: 20px;">🎯🏆</div>
-                <h2 style="font-size: 3.5rem; margin-bottom: 20px; color: #f2c140;">Belum Sempurna? Gak Apa-apa!</h2>
-                <p style="font-size: 1.5rem; max-width: 800px; line-height: 1.6;">
-                    Ingat, AI butuh waktu untuk belajar. Yang paling penting adalah kamu sudah tahu <strong>caranya melatih AI</strong> sendiri! <br><br>
-                    Kamu sudah belajar tentang <strong>Labels, Dataset, dan Training</strong>. Itu bekal koding yang hebat! 🚀
-                </p>
-            </div>
-        </div>
-
-        <!-- Slide 10: Comparison Discussion 1 -->
-        <div class="slide" id="slide10">
-            <h2 class="agenda-title">Beda Teks vs Gambar? 🧠</h2>
-            <div style="display: flex; gap: 30px; width: 100%;">
-                <div class="card" style="flex: 1; background: #e3f2fd;">
-                    <h3 class="txt-teal">Text (Owl Wiki)</h3>
-                    <p>AI membaca <strong>kata-kata</strong> dan mencari keyword.</p>
-                    <div style="font-size: 3rem; margin-top: 10px;">💬</div>
-                </div>
-                <div class="card" style="flex: 1; background: #fdf2f2;">
-                    <h3 class="txt-red">Image (Shy Panda)</h3>
-                    <p>AI melihat <strong>pixel/pola</strong> warna dan bentuk di wajah kita.</p>
-                    <div style="font-size: 3rem; margin-top: 10px;">🖼️</div>
-                </div>
-            </div>
-            <p style="margin-top: 30px; font-size: 1.2rem; text-align: center; max-width: 800px;">
-                Menurutmu, mana yang lebih sulit dilatih oleh komputer?
+        <!-- Slide 6: Cek Sebelum Tampil! -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title">Cek Sebelum Tampil! 🧪</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 25px; color: #555; text-align: center; max-width: 800px;">
+                Setelah selesai membuat project, kita akan saling berbagi dan menunjukkan project seru buatanmu! <br>
+                Yuk, periksa checklist di bawah ini untuk memastikan program-mu siap dijalankan:
             </p>
-        </div>
-
-        <!-- Slide 11: Comparison Discussion 2 (Preference) -->
-        <div class="slide" id="slide11">
-            <h2 class="agenda-title">Kamu Pilih yang Mana? 🗳️</h2>
-            <div style="display: flex; gap: 40px; justify-content: center; width: 100%;">
-                <div class="card pulsing" style="padding: 30px; cursor: pointer; width: 300px;" onclick="changeSlide(1)">
-                    <div style="font-size: 5rem;">🤖💬</div>
-                    <h3 class="txt-teal">Suka Text AI</h3>
-                    <p>Bisa bikin Chatbot yang pinter ngomong!</p>
+            <div style="display: flex; flex-direction: column; gap: 15px; width: 100%; max-width: 700px; margin: 0 auto;">
+                <div class="checklist-item" style="border-left: 6px solid #008080; display: flex; align-items: center; justify-content: flex-start; text-align: left; max-width: 100%;">
+                    <input type="checkbox" id="check1" style="transform: scale(1.3); margin-right: 15px;">
+                    <label for="check1" style="font-weight: 500; font-size: 1.15rem; color: #333;">Apakah program berjalan lancar tanpa macet? 👾</label>
                 </div>
-                <div class="card pulsing" style="padding: 30px; cursor: pointer; width: 300px;" onclick="changeSlide(1)">
-                    <div style="font-size: 5rem;">🖼️🔍</div>
-                    <h3 class="txt-teal">Suka Image AI</h3>
-                    <p>Bisa bikin program yang bisa "Melihat"!</p>
+                <div class="checklist-item" style="border-left: 6px solid #f2c140; display: flex; align-items: center; justify-content: flex-start; text-align: left; max-width: 100%;">
+                    <input type="checkbox" id="check2" style="transform: scale(1.3); margin-right: 15px;">
+                    <label for="check2" style="font-weight: 500; font-size: 1.15rem; color: #333;">Apakah semua tombol kodingan merespon dengan benar? 🤖</label>
                 </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: Interactive Ideation Activity -->
-        <div class="slide" id="slide12">
-            <h2 class="agenda-title">Kalau Kamu Jadi Pencipta AI... 🧙‍♂️</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                <p style="font-size: 1.3rem; margin-bottom: 20px;">AI apa yang ingin kamu buat di masa depan?</p>
-                <textarea class="ide-input" id="aiIdea" placeholder="Tulis ide hebatmu di sini..."></textarea>
-                <button class="huge-btn" onclick="submitIde()">KIRIM IDE SAYA ➜</button>
-            </div>
-        </div>
-
-        <!-- Slide 13: Quick Quiz -->
-        <div class="slide solid-teal-bg" id="slide13">
-            <h2 class="agenda-title" style="color: #f2c140; margin-bottom: 15px;">Kuis Kilat! ⏱️</h2>
-            <div style="background: white; color: #333; padding: 25px; border-radius: 20px; width: 100%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; color: #008080; line-height: 1.3; margin-bottom: 20px;">1. Jika AI salah menebak gambar, apa hal paling dasar yang harus dilakukan?</h3>
-                <div id="q-options" style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">A. Menghapus seluruh project</button>
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">B. Menambah dataset foto dan re-training</button>
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">C. Mematikan komputer</button>
+                <div class="checklist-item" style="border-left: 6px solid #ff6b6b; display: flex; align-items: center; justify-content: flex-start; text-align: left; max-width: 100%;">
+                    <input type="checkbox" id="check3" style="transform: scale(1.3); margin-right: 15px;">
+                    <label for="check3" style="font-weight: 500; font-size: 1.15rem; color: #333;">Apakah ada instruksi cara bermain di dalam project? 📝</label>
                 </div>
-                <div id="q-feedback" style="margin-top: 15px; font-weight: bold; font-size: 1.2rem; min-height: 30px; text-align: center;"></div>
-                <div style="display: flex; justify-content: center; margin-top: 10px;">
-                    <button id="q-next" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">Soal Berikutnya ➜</button>
+                <div class="checklist-item" style="border-left: 6px solid #22c55e; display: flex; align-items: center; justify-content: flex-start; text-align: left; max-width: 100%;">
+                    <input type="checkbox" id="check4" style="transform: scale(1.3); margin-right: 15px;">
+                    <label for="check4" style="font-weight: 500; font-size: 1.15rem; color: #333;">Apakah file project sudah disimpan ke dalam komputermu? 💾</label>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 14: Summary -->
-        <div class="slide" id="slide18">
-            <h2 class="agenda-title">Ringkasan Sesi Final 📝</h2>
-            <div class="grid-container" style="max-width: 1000px; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-                <div class="card" style="padding: 25px; border-left: 10px solid #008080; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="font-size: 3rem;">🔍</div>
-                        <h4 class="txt-teal" style="margin: 0;">Evaluation</h4>
-                    </div>
-                    <p style="font-size: 1rem; margin-top: 10px;">Menganalisis kenapa AI bisa salah tebak (faktor cahaya, posisi, dan jumlah data).</p>
+        <!-- Slide 7: Tips Presentasi yang Keren! -->
+        <div class="slide solid-teal-bg" id="slide7">
+            <h2 class="agenda-title" style="color: #f2c140; margin-bottom: 20px;">Tips Presentasi yang baik! 🎤</h2>
+            <p style="font-size: 1.3rem; max-width: 800px; color: white; text-align: center; margin-bottom: 25px;">
+                Fokus utama kita hari ini adalah <b>menyelesaikan dan menunjukkan project buatanmu sendiri!</b><br>
+                Saat tiba giliran presentasi, ceritakan 4 poin mudah ini:
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 900px;">
+                <div class="card" style="padding: 20px; text-align: left; align-items: flex-start;">
+                    <h3 class="txt-teal" style="margin-top: 0; font-size: 1.3rem;">👋 1. Perkenalan Diri</h3>
+                    <p style="font-size: 1rem; margin: 0; color: #555;">Sapa teman-teman: <i>"Halo semuanya, nama saya [Nama] dan hari ini saya ingin menunjukkan project saya..."</i></p>
                 </div>
-                <div class="card" style="padding: 25px; border-left: 10px solid #f2c140; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="font-size: 3rem;">🔄</div>
-                        <h4 class="txt-yellow" style="margin: 0;">Re-Training</h4>
-                    </div>
-                    <p style="font-size: 1rem; margin-top: 10px;">Belajar bahwa AI selalu bisa diperbaiki dengan memberikan data yang lebih baik.</p>
+                <div class="card" style="padding: 20px; text-align: left; align-items: flex-start;">
+                    <h3 class="txt-teal" style="margin-top: 0; font-size: 1.3rem;">💡 2. Ide & Cara Main</h3>
+                    <p style="font-size: 1rem; margin: 0; color: #555;">Jelaskan cara memainkannya: <i>"Di game ini, pemain harus menggerakkan sprite menggunakan tombol untuk..."</i></p>
                 </div>
-                <div class="card" style="padding: 25px; border-left: 10px solid #4c97ff; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="font-size: 3rem;">🆚</div>
-                        <h4 class="txt-blue" style="margin: 0;">Text vs Image</h4>
-                    </div>
-                    <p style="font-size: 1rem; margin-top: 10px;">Memahami perbedaan cara komputer mengolah data teks dan data visual.</p>
+                <div class="card" style="padding: 20px; text-align: left; align-items: flex-start;">
+                    <h3 class="txt-teal" style="margin-top: 0; font-size: 1.3rem;">🎬 3. Demo Singkat</h3>
+                    <p style="font-size: 1rem; margin: 0; color: #555;">Tunjukkan project-mu yang sedang dimainkan dan biarkan tombol/game bereaksi sesuai instruksi yang kamu buat!</p>
                 </div>
-                <div class="card" style="padding: 25px; border-left: 10px solid #ff6b6b; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="font-size: 3rem;">🎬</div>
-                        <h4 class="txt-red" style="margin: 0;">AI Creator</h4>
-                    </div>
-                    <p style="font-size: 1rem; margin-top: 10px;">Kamu sekarang bukan cuma pengguna AI, tapi sudah jadi <strong>Pencipta AI!</strong></p>
+                <div class="card" style="padding: 20px; text-align: left; align-items: flex-start;">
+                    <h3 class="txt-teal" style="margin-top: 0; font-size: 1.3rem;">💖 4. Ungkapan Penutup</h3>
+                    <p style="font-size: 1rem; margin: 0; color: #555;">Ucapkan terima kasih: <i>"Sekian presentasi dari saya, terima kasih banyak! Apakah ada pertanyaan?"</i></p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 15: Feedback -->
-        <div class="slide" id="slide19">
-            <h2 class="agenda-title" style="margin-bottom: 10px;">Terima Kasih Semuanya! 💖</h2>
-            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; width: 100%; max-width: 950px; position: relative;">
-                <div id="feedbackForm" style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                    <div style="flex: 1; text-align: center;">
-                        <div style="font-size: 8rem; animation: bounce 2s infinite alternate;">🎓✨</div>
-                        <p style="font-size: 1.4rem; color: #555; font-weight: 600; margin-top: 10px;">Sampai jumpa di petualangan koding berikutnya!</p>
-                    </div>
-                    <div style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px;">
-                        <h3 style="color: #008080; margin: 0 0 20px 0; font-size: 1.8rem;">Scan QR Code</h3>
-                        <div style="width: 160px; height: 160px; border: 4px solid #333; border-radius: 20px; padding: 10px; margin: 0 auto 20px auto; background: white;">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=http://bit.ly/feedback_class_dms" style="width: 100%;">
-                        </div>
-                        <a href="http://bit.ly/feedback_class_dms" target="_blank" class="huge-btn" style="padding: 12px 30px; font-size: 1.2rem;">Kirim Feedback ➜</a>
-                    </div>
+        <!-- Slide 8: Reflection & Congratulations -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Selamat, Kamu Hebat! 🎓</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="flex: 1.2; text-align: left;">
+                    <p style="font-size: 1.3rem; margin-top: 0;">Hari ini kamu sudah berhasil melalui petualangan seru:</p>
+                    <ul style="font-size: 1.2rem; line-height: 2; color: #444;">
+                        <li>🚀 <b>Memikirkan Ide Sendiri</b> (Ide Project)</li>
+                        <li>🏗️ <b>Menyusun Program</b> (Coding & Blocks)</li>
+                    </ul>
+                    <p style="font-weight: bold; color: #008080; font-size: 1.4rem; margin-top: 20px;">Kamu sekarang resmi menjadi Creative Programmer! Keep coding! 🌟</p>
+                </div>
+                <div style="flex: 0.8; display: flex; justify-content: center;">
+                    <div style="font-size: 3rem;" class="floating">🏆✨🎓</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Final Feedback -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1.5s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🎒</div>
+                    <h3 style="color: #008080; margin: 0 0 10px 0; font-size: 1.8rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
@@ -382,15 +305,6 @@
         <!-- Navigation -->
         <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
         <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
-    </div>
-
-    <!-- Modals -->
-    <div class="overlay" id="overlay"></div>
-    <div class="custom-modal" id="ideModal">
-        <div style="font-size: 5rem;">🌟</div>
-        <h3 class="txt-teal">IDE YANG HEBAT!</h3>
-        <p id="ideFeedbackText">Wah, itu ide yang sangat keren! Kamu punya bakat jadi insinyur AI masa depan!</p>
-        <button class="huge-btn" style="margin-top: 20px;" onclick="closeModal()">SAMA-SAMA! ➜</button>
     </div>
 
     <script>
@@ -444,98 +358,6 @@
             if (newIndex >= 0 && newIndex < slides.length) {
                 showSlide(newIndex, direction === 1 ? 'next' : 'prev');
             }
-        }
-
-        // Ideation Logic
-        function submitIde() {
-            const idea = document.getElementById('aiIdea').value;
-            if (idea.trim() === "") {
-                alert("Tulis idemu dulu ya!");
-                return;
-            }
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('ideModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('ideModal').style.display = 'none';
-            changeSlide(1);
-        }
-
-        // Quiz Logic
-        const quizData = [
-            {
-                q: "Jika AI salah menebak gambar, apa hal paling dasar yang harus dilakukan?",
-                opts: ["A. Menghapus seluruh project", "B. Menambah dataset foto dan re-training", "C. Mematikan komputer"],
-                ans: 1,
-                exp: "Benar! Menambah data membantu AI belajar lebih baik."
-            },
-            {
-                q: "Kenapa cahaya ruangan penting dalam Image Recognition?",
-                opts: ["A. Agar komputer tidak gelap", "B. Agar AI bisa melihat fitur wajah dengan jelas", "C. Agar layar tidak rusak"],
-                ans: 1,
-                exp: "Tepat! Cahaya yang baik membuat pola wajah lebih mudah dikenali."
-            },
-            {
-                q: "Apa perbedaan utama melatih Text AI dan Image AI?",
-                opts: ["A. Tidak ada bedanya", "B. Text AI pakai kata-kata, Image AI pakai pola visual", "C. Image AI tidak butuh dataset"],
-                ans: 1,
-                exp: "Benar! Setiap tipe AI membutuhkan jenis data yang berbeda."
-            }
-        ];
-
-        let currentQIdx = 0;
-        function checkQuiz(btn) {
-            const quizSlideId = slides[currentSlide].id;
-            const opts = document.querySelectorAll(`#${quizSlideId} .quiz-opt`);
-            const qNext = document.getElementById('q-next');
-            const feedback = document.getElementById('q-feedback');
-            
-            opts.forEach(o => o.disabled = true);
-            const qData = quizData[currentQIdx];
-            const isCorrect = Array.from(opts).indexOf(btn) === qData.ans;
-
-            if (isCorrect) {
-                btn.classList.add('correct');
-                feedback.style.color = '#22c55e';
-                feedback.textContent = qData.exp;
-            } else {
-                btn.classList.add('wrong');
-                opts[qData.ans].classList.add('correct');
-                feedback.style.color = '#ef4444';
-                feedback.textContent = "Kurang tepat. " + qData.exp;
-            }
-            
-            if (currentQIdx < quizData.length - 1) {
-                qNext.style.display = 'inline-block';
-                qNext.textContent = "Soal Berikutnya ➜";
-            } else {
-                qNext.style.display = 'inline-block';
-                qNext.textContent = "Selesai! Lanjut ke Slide ➜";
-                qNext.onclick = () => changeSlide(1);
-            }
-        }
-
-        function nextQuiz() {
-            currentQIdx++;
-            const qData = quizData[currentQIdx];
-            const qNext = document.getElementById('q-next');
-            
-            document.getElementById('q-text').textContent = (currentQIdx + 1) + ". " + qData.q;
-            const optsDiv = document.getElementById('q-options');
-            optsDiv.innerHTML = '';
-            
-            qData.opts.forEach((optText, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-opt';
-                btn.textContent = optText;
-                btn.onclick = () => checkQuiz(btn);
-                optsDiv.appendChild(btn);
-            });
-            
-            document.getElementById('q-feedback').textContent = '';
-            qNext.style.display = 'none';
         }
 
         document.addEventListener('keydown', (e) => {

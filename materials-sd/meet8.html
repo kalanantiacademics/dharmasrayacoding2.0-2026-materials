@@ -168,102 +168,194 @@
                 <div class="card">
                     <div class="card-icon">🏗️</div>
                     <h3 class="txt-teal">Setup ML4K</h3>
-                    <p>Membuat project baru dan menyiapkan label di website Machine Learning for Kids.</p>
+                    <p>Mempersiapkan project baru di website Machine Learning for Kids.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🧠</div>
-                    <h3 class="txt-purple">Training Model</h3>
-                    <p>Memberikan contoh kata-kata (Datasets) agar robot bisa mengenali perasaan kita.</p>
+                    <h3 class="txt-purple">Proses Training</h3>
+                    <p>Memasukkan data contoh (dataset) agar paham cara melatih komputer.</p>
                 </div>
             </div>
-            <p style="font-size: 1.3rem; margin-top: 30px; text-align: center; font-weight: 600; color: #555;">
-                Nah, sekarang otak robotnya sudah ada! Waktunya kita gunakan di Scratch! 🚀
+            <p style="font-size: 1.25rem; margin-top: 25px; text-align: center; font-weight: 600; color: #555; max-width: 800px; line-height: 1.4;">
+                Kemarin kita melatih AI dengan sedikit data agar paham <strong>cara kerja training</strong>.<br>
+                Hari ini kita pakai model yang berbeda agar langsung pintar. Kenapa ya? Yuk simak! 👇
             </p>
         </div>
 
-        <!-- Slide 3: Objectives -->
+        <!-- Slide 3: Simulasi vs Latihan Sungguhan -->
         <div class="slide" id="slide3">
-            <h2 class="agenda-title">Hari Ini Kita Akan Belajar... 🎯</h2>
-            <div class="grid-container" style="max-width: 750px; gap: 15px;">
-                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 20px;">
-                    <div class="card-icon" style="font-size: 2.5rem; margin: 0;">🧩</div>
-                    <div>
-                        <h4 class="txt-blue" style="margin: 0; font-size: 1.2rem;">Memasukkan Blok AI</h4>
-                        <p style="margin: 0; font-size: 1rem;">Membuka Scratch khusus yang sudah ada blok cerdas buatanmu.</p>
-                    </div>
-                </div>
-                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 20px;">
-                    <div class="card-icon" style="font-size: 2.5rem; margin: 0;">🎭</div>
-                    <div>
-                        <h4 class="txt-pink" style="margin: 0; font-size: 1.2rem;">Menyusun Logika</h4>
-                        <p style="margin: 0; font-size: 1rem;">Mengatur kostum wajah agar berubah sesuai pesan yang diterima.</p>
-                    </div>
-                </div>
-                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 20px; grid-column: span 2;">
-                    <div class="card-icon" style="font-size: 2.5rem; margin: 0;">💬</div>
-                    <div>
-                        <h4 class="txt-green" style="margin: 0; font-size: 1.2rem;">Blok [Ask] & Testing</h4>
-                        <p style="margin: 0; font-size: 1rem;">Menguji model secara langsung dengan mengetik pesan ke robot.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4: Penjelasan Pretrained -->
-        <div class="slide" id="slide4">
-            <h2 class="agenda-title">AI: Dari Latihan ke Model! 🧠</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 1000px;">
-                <div style="flex: 1; text-align: left; background: #f0fdf4; padding: 30px; border-radius: 25px; border: 4px dashed #a8c368;">
-                    <p style="font-size: 1.4rem; line-height: 1.6; color: #333;">
-                        Kemarin kita sudah mencoba <strong>Training</strong> model sendiri. Keren kan? Itu adalah latihan agar kita tahu cara robot belajar! 🤖<br><br>
-                        Tapi, melatih AI agar benar-benar pintar itu butuh ribuan data dan waktu yang lama. Agar project kita hari ini berjalan super lancar, kita akan menggunakan <strong>Pretrained Model</strong> (Model yang sudah sangat pintar) yang sudah disediakan ML4K!
+            <h2 class="agenda-title">Simulasi vs Latihan Sungguhan 🤖</h2>
+            <div style="display: flex; gap: 30px; width: 100%; max-width: 950px; justify-content: center;">
+                <div class="card" style="flex: 1; border-top: 8px solid #f2c140; padding: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🧪</div>
+                    <h3 class="txt-yellow" style="margin-top: 0; margin-bottom: 10px;">Latihan Kemarin</h3>
+                    <p style="font-size: 1.1rem; color: #444; margin: 0;">
+                        Memasukkan 5-10 data kemarin hanyalah <strong>simulasi</strong> agar tahu caranya.
+                    </p>
+                    <p style="font-size: 1rem; color: #666; margin-top: 10px; font-weight: bold;">
+                        Training model sungguhan akan kita pelajari di pertemuan depan!
                     </p>
                 </div>
-                <div style="flex: 0.8; text-align: center;">
-                    <div style="font-size: 8rem;">🎓✨</div>
-                    <p style="font-weight: 700; color: #008080;">Model di ML4K sudah "belajar" sangat lama!</p>
+                <div class="card" style="flex: 1; border-top: 8px solid #008080; padding: 20px; background: #f0fdf4;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">⚡</div>
+                    <h3 class="txt-teal" style="margin-top: 0; margin-bottom: 10px;">Hari Ini (Pre-trained)</h3>
+                    <p style="font-size: 1.1rem; color: #444; margin: 0;">
+                        Melatih AI yang sangat pintar butuh <strong>jutaan data</strong> dan waktu berhari-hari.
+                    </p>
+                    <p style="font-size: 1rem; color: #008080; margin-top: 10px; font-weight: bold;">
+                        Kita pakai model pintar siap pakai agar game kita langsung bisa dimainkan!
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: Open ML4K -->
+        <!-- Slide 4: Objectives -->
+        <div class="slide" id="slide4">
+            <h2 class="agenda-title">Hari Ini Kita Akan Belajar... 🎯</h2>
+            <div class="grid-container" style="max-width: 800px; gap: 15px; grid-template-columns: repeat(2, 1fr);">
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 15px;">
+                    <div class="card-icon" style="font-size: 2.2rem; margin: 0;">🆚</div>
+                    <div>
+                        <h4 class="txt-yellow" style="margin: 0; font-size: 1.1rem;">Trained vs Pre-trained</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">Melihat beda model AI buatan sendiri & buatan pabrik.</p>
+                    </div>
+                </div>
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 15px;">
+                    <div class="card-icon" style="font-size: 2.2rem; margin: 0;">🧩</div>
+                    <div>
+                        <h4 class="txt-blue" style="margin: 0; font-size: 1.1rem;">Memasukkan Blok AI</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">Membuka Scratch khusus yang punya blok cerdas ML4K.</p>
+                    </div>
+                </div>
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 15px;">
+                    <div class="card-icon" style="font-size: 2.2rem; margin: 0;">🎭</div>
+                    <div>
+                        <h4 class="txt-pink" style="margin: 0; font-size: 1.1rem;">Menyusun Logika</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">Mengatur wajah emoji berubah sesuai ketikan pesan.</p>
+                    </div>
+                </div>
+                <div class="card" style="padding: 15px; flex-direction: row; text-align: left; gap: 15px;">
+                    <div class="card-icon" style="font-size: 2.2rem; margin: 0;">💬</div>
+                    <div>
+                        <h4 class="txt-green" style="margin: 0; font-size: 1.1rem;">Blok [Ask] & Testing</h4>
+                        <p style="margin: 0; font-size: 0.9rem;">Menguji robot secara langsung dengan mengetik pesan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Penjelasan Pre-trained Model -->
         <div class="slide" id="slide5">
-            <h2 class="agenda-title">Langkah 1: Masuk ke Editor Scratch 🌐</h2>
-            <div class="step-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 1000px; gap: 20px;">
-                <div class="step-card">
-                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">1</div> Menu Pretrained</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/3eec3c37-e65b-44b6-ae93-a3000012a056.png" alt="Langkah 1" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Buka menu <strong>Pretrained</strong> di bagian atas.</p>
+            <h2 class="agenda-title">Apa itu Pre-trained Model? 🧠</h2>
+            <div style="display: flex; gap: 30px; align-items: stretch; justify-content: center; width: 100%; max-width: 950px;">
+                <div style="flex: 1.1; text-align: left; background: #f0fdf4; padding: 20px; border-radius: 20px; border: 3px dashed #a8c368; display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 1.2rem; line-height: 1.5; color: #333; margin: 0;">
+                        <strong>Pre-trained Model</strong> adalah model AI yang <strong>sudah pintar sejak awal</strong> karena dilatih oleh para ahli menggunakan jutaan data sebelum kita pakai.
+                    </p>
+                </div>
+                <div class="card" style="flex: 0.9; background: #e3f2fd; border-color: #4c97ff; padding: 20px; justify-content: center;">
+                    <h4 class="txt-blue" style="margin-top: 0; font-size: 1.15rem; margin-bottom: 10px;">Analogi: Robot Penolong 🤖🛒</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.4; margin: 0; color: #444; text-align: left;">
+                        <strong>Trained Model:</strong> Mengajari robot dari awal. Menunjukkan apel & pisang satu per satu.<br><br>
+                        <strong>Pre-trained Model:</strong> Beli robot pintar siap pakai. Dia langsung tahu semua buah karena diprogram di pabrik!
+                    </p>
+                    <div style="font-size: 2.2rem; margin-top: 10px; text-align: center;">🤖🍎🍌✨</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Banyak Digunakan di Dunia Nyata -->
+        <div class="slide" id="slide6">
+            <h2 class="agenda-title">Banyak Digunakan di Dunia Nyata! 🌍</h2>
+            <p style="font-size: 1.2rem; font-weight: 600; color: #555; margin-bottom: 20px; margin-top: 0;">
+                Aplikasi favorit kalian juga memakai Pre-trained Model lho!
+            </p>
+            <div class="grid-container" style="max-width: 900px; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                <div class="card" style="padding: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🎭</div>
+                    <h4 class="txt-pink" style="margin: 0; font-size: 1.1rem;">Filter Wajah</h4>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Instagram/TikTok langsung tahu di mana letak mata & mulut kita.</p>
+                </div>
+                <div class="card" style="padding: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🗣️</div>
+                    <h4 class="txt-teal" style="margin: 0; font-size: 1.1rem;">Google Translate</h4>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Menerjemahkan bahasa asing secara instan tanpa diajari dari nol.</p>
+                </div>
+                <div class="card" style="padding: 15px;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🎙️</div>
+                    <h4 class="txt-blue" style="margin: 0; font-size: 1.1rem;">Google / Siri</h4>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 5px;">Asisten pintar yang langsung mengerti ketukan atau suara perintah kita.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Perbandingan Trained vs Pre-trained -->
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title">Perbandingan: Trained vs Pre-trained 🆚</h2>
+            <div style="display: flex; gap: 20px; width: 100%; max-width: 950px; justify-content: center;">
+                <div class="card" style="flex: 1; border-top: 8px solid #9966ff; padding: 20px; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 5px;">🛠️🤖</div>
+                        <h3 class="txt-purple" style="margin-top: 0; margin-bottom: 5px; font-size: 1.3rem;">Trained Model</h3>
+                        <p style="font-size: 0.95rem; font-weight: bold; color: #777; margin-bottom: 10px;">Dilatih Sendiri</p>
+                        <ul style="text-align: left; font-size: 0.9rem; line-height: 1.4; padding-left: 15px; color: #555; margin: 0;">
+                            <li>Kita masukkan contoh data satu per satu.</li>
+                            <li><strong>Kelebihan:</strong> AI mengenali hal khusus yang kita mau.</li>
+                            <li><strong>Tantangan:</strong> Butuh banyak waktu dan data.</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f3e5f5; padding: 8px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; color: #7b1fa2; margin-top: 10px; width: 100%; box-sizing: border-box;">
+                        Mengajari robot dari bayi 👶🔧
                     </div>
                 </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">2</div> Pilih Toxicity</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/965ebfe7-2c62-4c81-b0a4-0f1ce9a098b8.png" alt="Langkah 2" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Cari model bernama <strong>Toxicity</strong>.</p>
+                
+                <div class="card" style="flex: 1; border-top: 8px solid #008080; padding: 20px; background: #f0fdf4; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 5px;">🚀🎓</div>
+                        <h3 class="txt-teal" style="margin-top: 0; margin-bottom: 5px; font-size: 1.3rem;">Pre-trained Model</h3>
+                        <p style="font-size: 0.95rem; font-weight: bold; color: #008080; margin-bottom: 10px;">Sudah Pintar Siap Pakai</p>
+                        <ul style="text-align: left; font-size: 0.9rem; line-height: 1.4; padding-left: 15px; color: #444; margin: 0;">
+                            <li>Dibuat oleh ahli memakai jutaan data.</li>
+                            <li><strong>Kelebihan:</strong> Sangat akurat dan langsung bisa dipakai.</li>
+                            <li><strong>Tantangan:</strong> Kita tidak bisa mengubah datanya sendiri.</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">3</div> Get Started</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/2b460641-fec3-4bb2-a32d-fb3c97f14e92.png" alt="Langkah 3" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Klik tombol <strong>Get Started</strong>.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">4</div> Ke Scratch</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/bb9649d6-bc7b-40c2-bb5d-76b46ab3281a.png" alt="Langkah 4" style="width: 100%; height: 180px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Klik <strong>Scratch 3</strong> -> <strong>Open</strong>.</p>
+                    <div style="background: #e0f2f1; padding: 8px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; color: #00796b; margin-top: 10px; width: 100%; box-sizing: border-box;">
+                        Beli robot pintar siap pakai 🤖✨
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: Tambah Extension -->
-        <div class="slide" id="slide6">
-            <h2 class="agenda-title">Langkah Tambahan: Tambah Extension 📂</h2>
+        <div class="slide" id="slide16">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Project: Make Me Happy 😐😢😄</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Ini adalah project yang akan kita buat menggunakan Template dan Pretrained Model!</p>
+            <div style="width: 500px; height: 415px; background: #ffffff; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border: 5px solid #008080; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                <img src="https://cdn-web.ruangguru.com/file-uploader/4bd204de-9b2b-41e5-a5b1-77232ecf5341.gif" alt="Make Me Happy Demo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+        </div>
+
+        <!-- Slide 8: Masuk ke Editor Scratch -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Langkah 1: Masuk ke Editor Scratch 🌐</h2>
+            <div style="background: white; padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.06); border: 2px solid #e0f2f1; text-align: center; max-width: 650px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 45px; object-fit: contain;">
+                    <span style="font-size: 2rem; font-weight: bold; color: #ccc;">+</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 45px; object-fit: contain; background: #008080; padding: 5px; border-radius: 8px;">
+                </div>
+                <p style="font-size: 1.15rem; color: #555; margin-bottom: 25px; font-weight: 600; line-height: 1.4;">
+                    Kita akan membuat program cerdas di editor Scratch khusus<br>yang sudah terintegrasi dengan Machine Learning!
+                </p>
+                <a href="https://machinelearningforkids.co.uk/scratch/" target="_blank" class="huge-btn" style="background: linear-gradient(135deg, #008080 0%, #a8c368 100%); border: 3px solid white; box-shadow: 0 8px 20px rgba(0,128,128,0.3); font-size: 1.5rem; padding: 15px 35px; border-radius: 50px; display: inline-flex; align-items: center; gap: 12px; color: white; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; font-weight: 700;">
+                    🚀 BUKA SCRATCH ML4K
+                </a>
+            </div>
+        </div>
+
+        <!-- Slide 9: Tambah Extension -->
+        <div class="slide" id="slide9">
+            <h2 class="agenda-title">Langkah 2: Tambah Extension 📂</h2>
             <div class="step-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1200px; gap: 20px;">
                 <div class="step-card">
                     <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">1</div> Add Extension</div>
@@ -289,9 +381,9 @@
             </div>
         </div>
 
-        <!-- Slide 7: Create Sprite & Costumes -->
-        <div class="slide" id="slide7">
-            <h2 class="agenda-title">Langkah 2: Siapkan Sprite Emoji 🎨</h2>
+        <!-- Slide 10: Siapkan Sprite -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title">Langkah 3: Siapkan Sprite Emoji 🎨</h2>
             <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
                 <div style="background: #f9f9f9; padding: 25px; border-radius: 25px; border: 3px solid #eee; text-align: center;">
                     <div style="font-size: 6rem; margin-bottom: 10px;">😐</div>
@@ -312,12 +404,12 @@
             </p>
         </div>
 
-        <!-- Slide 8: The Coding -->
-        <div class="slide" id="slide8">
-            <h2 class="agenda-title">Langkah 3: Rangkai Kode Sprite! 🧩</h2>
+        <!-- Slide 11: Rangkai Kode -->
+        <div class="slide" id="slide11">
+            <h2 class="agenda-title">Langkah 4: Rangkai Kode Sprite! 🧩</h2>
             <div style="display: flex; gap: 40px; align-items: flex-start; justify-content: center; width: 100%;">
                 <div class="block-stack" style="transform: scale(1.0);">
-                    <div class="block block-event">when <img src="https://scratch.mit.edu/static/blocks-media/green-flag.svg" style="height: 15px;"> clicked</div>
+                    <div class="block block-event">when <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Greenflag.svg/960px-Greenflag.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail" style="height: 15px;"> clicked</div>
                     <div class="block block-looks">switch costume to <span class="input-white">not sure ▾</span></div>
                     <div class="block block-control">forever</div>
                     <div class="block-indent" style="min-height: 200px;">
@@ -328,7 +420,7 @@
                             <div class="block block-looks">switch costume to <span class="input-white">sad ▾</span></div>
                         </div>
                         <div class="block-cap"></div>
-
+ 
                         <div class="block block-if">if <span class="input-shape" style="background: #a8c368; color: #333; font-size: 0.8rem;">probability that <span class="input-white" style="background: #4c97ff; color: white;">answer</span> is NOT toxic ▾ > 70</span> then</div>
                         <div class="block-indent" style="margin-left: 20px; border-left-color: #ffab19;">
                             <div class="block block-looks">switch costume to <span class="input-white">happy ▾</span></div>
@@ -349,8 +441,8 @@
             </div>
         </div>
 
-        <!-- Slide 9: Testing -->
-        <div class="slide" id="slide9">
+        <!-- Slide 12: Testing -->
+        <div class="slide" id="slide12">
             <h2 class="agenda-title">Waktunya Testing! 🧪</h2>
             <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
                 <div style="font-size: 10rem; animation: floatSprite 2s infinite alternate;">💭⌨️</div>
@@ -369,24 +461,24 @@
             </div>
         </div>
 
-        <!-- Slide 10: Encouragement -->
-        <div class="slide" id="slide10">
-            <h2 class="agenda-title">Sadar Gak Ada Kata yang Gak Sesuai? 🤔</h2>
+        <!-- Slide 13: Encouragement -->
+        <div class="slide" id="slide13">
+            <h2 class="agenda-title">Kok AI-nya Kadang Salah? 🤔</h2>
             <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 850px;">
                 <div style="font-size: 6rem; margin-bottom: 20px;">🧐🤖💬❓</div>
-                <p style="font-size: 1.6rem; line-height: 1.6;">
+                <p style="font-size: 1.5rem; line-height: 1.6;">
                     Mungkin kalian sadar, AI ini kadang masih salah menebak kata-kata tertentu. Kenapa ya?
                 </p>
                 <div style="background: #fff8e1; padding: 20px 40px; border-radius: 20px; border: 2px dashed #f2c140; margin-top: 20px; text-align: left;">
-                    <p style="margin: 0; font-size: 1.2rem; color: #333;">
-                        Melatih AI itu tidak semudah yang kita bayangkan! Butuh ribuan data yang sangat rapi. Pretrained model yang kita pakai ini sudah hebat, tapi tetap saja ada batasannya. Itulah serunya AI, kita selalu punya ruang untuk memperbaikinya!
+                    <p style="margin: 0; font-size: 1.15rem; color: #333; line-height: 1.5;">
+                        Melatih AI itu butuh ribuan data yang rapi. Model yang kita pakai ini sudah hebat, tapi tetap ada batasannya. Itulah serunya AI, kita selalu bisa memperbaikinya nanti!
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11: Save Project -->
-        <div class="slide" id="slide11">
+        <!-- Slide 14: Simpan Project -->
+        <div class="slide" id="slide14">
             <h2 class="agenda-title">PENTING: Simpan Project Kamu! 💾</h2>
             <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
                 <div style="background: white; padding: 25px; border-radius: 25px; border: 3px solid #eee; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
@@ -408,8 +500,8 @@
             </div>
         </div>
 
-        <!-- Slide 12: Success Celebration -->
-        <div class="slide" id="slide12">
+        <!-- Slide 15: Success -->
+        <div class="slide" id="slide15">
             <h1 class="game-title-gradient" style="font-size: 5rem; margin-bottom: 20px;">HEBAT! 🎉</h1>
             <div style="font-size: 8rem; animation: bounce 1s infinite alternate; margin-bottom: 20px;">🙌🥳✨</div>
             <p style="font-size: 2rem; text-align: center; max-width: 800px; color: #333; font-weight: 700;">
@@ -417,8 +509,8 @@
             </p>
         </div>
 
-        <!-- Slide 13: Rangkuman -->
-        <div class="slide" id="slide13">
+        <!-- Slide 16: Rangkuman -->
+        <div class="slide" id="slide16">
             <h2 class="agenda-title">Rangkuman Materi Hari Ini 📝</h2>
             <div class="grid-container" style="max-width: 900px; grid-template-columns: repeat(2, 1fr);">
                 <div class="card" style="padding: 20px;">
@@ -444,22 +536,22 @@
             </div>
         </div>
 
-        <!-- Slide 14: What's Next -->
-        <div class="slide" id="slide14" style="background: linear-gradient(135deg, #008080 0%, #004d4d 100%); color: white;">
+        <!-- Slide 17: What's Next -->
+        <div class="slide" id="slide17">
             <h2 class="agenda-title" style="color: #f2c140;">Apa Selanjutnya? 🔜</h2>
             <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 850px;">
                 <div style="font-size: 6rem; margin-bottom: 20px;">🎨🚀✨</div>
                 <p style="font-size: 1.8rem; line-height: 1.6; font-weight: 600;">
                     Program kita sudah pintar, tapi tampilannya masih "biasa saja" kan?
                 </p>
-                <p style="font-size: 1.3rem; margin-top: 15px; opacity: 0.9;">
-                    Di pertemuan berikutnya, kita akan belajar cara <strong>mempercantik program</strong> kita! Kita akan tambahkan animasi yang lebih keren, latar belakang yang hidup, dan respon teks yang lebih menarik. Jangan sampai ketinggalan ya!
+                <p style="font-size: 1.25rem; margin-top: 15px; opacity: 0.9;">
+                    Di project berikutnya, kita akan belajar cara <strong>mempercantik program</strong> kita! Kita akan tambahkan animasi, latar belakang, dan respon teks yang menarik.
                 </p>
             </div>
         </div>
 
-        <!-- Slide 15: Quick Quiz -->
-        <div class="slide solid-teal-bg" id="slide15">
+        <!-- Slide 18: Quiz -->
+        <div class="slide solid-teal-bg" id="slide18">
             <h2 class="agenda-title" style="color: #f2c140;">Kuis Kilat! ⏱️</h2>
             <div style="background: white; color: #333; padding: 30px; border-radius: 20px; width: 100%; max-width: 700px; margin-top: 20px;">
                 <h3 id="q-text" style="font-size: 1.5rem; margin-top: 0; color: #008080;">1. Mengapa kita menggunakan Pretrained Model hari ini?</h3>
@@ -473,8 +565,8 @@
             </div>
         </div>
 
-        <!-- Slide 16: Feedback -->
-        <div class="slide" id="slide16">
+        <!-- Slide 19: Feedback -->
+        <div class="slide" id="slide19">
             <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
             <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
                 Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
@@ -487,14 +579,10 @@
                     <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
                     <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
                 </div>
-                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
-                    <h3 style="color: #008080; margin: 0 0 20px 0;">QR Code Feedback</h3>
-                    <div style="width: 150px; height: 150px; border: 4px solid #333; border-radius: 10px; padding: 5px; margin-bottom: 20px;">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://bit.ly/feedback_class_dms" style="width: 100%;">
-                    </div>
-                    <div style="background: #e0f2f1; padding: 10px 20px; border-radius: 30px; border: 2px solid #008080;">
-                        <a href="http://bit.ly/feedback_class_dms" target="_blank" style="color: #008080; font-weight: bold; text-decoration: none; font-size: 1.1rem;">bit.ly/feedback_class_dms</a>
-                    </div>
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🎒</div>
+                    <h3 style="color: #008080; margin: 0 0 10px 0; font-size: 1.8rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
@@ -586,7 +674,7 @@
 
         let currentQIdx = 0;
         function checkQuiz(btn, isCorrectIdx) {
-            const opts = document.querySelectorAll('#slide15 .quiz-opt');
+            const opts = document.querySelectorAll('#q-options .quiz-opt');
             opts.forEach(o => o.disabled = true);
 
             const qData = quizData[currentQIdx];
