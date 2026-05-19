@@ -39,9 +39,8 @@
         
         .game-title-gradient { background: linear-gradient(135deg, #f2c140 0%, #ffffff 50%, #00f2fe 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(242, 193, 64, 0.4)); display: inline-block; }
         
-        /* Grid Cards */
         .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; max-width: 900px; }
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.05); border: 2px solid #f0f0f0; transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.05); border: 2px solid #f0f0f0; transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; overflow: hidden; }
         .card:hover { transform: translateY(-5px); border-color: #008080; }
         .card-icon { font-size: 3.5rem; margin-bottom: 15px; }
         .huge-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(to right, #008080, #f2c140); color: white; text-decoration: none; font-size: 1.5rem; font-weight: 700; padding: 15px 40px; border-radius: 50px; cursor: pointer; border: none; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0,128,128,0.3); }
@@ -54,10 +53,9 @@
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         .pulsing { animation: pulse 2s infinite; }
 
-        /* Camera Styles */
-        #video-container { width: 100%; max-width: 500px; height: 350px; background: #000; border-radius: 20px; border: 5px solid #008080; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
-        #webcam-video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); display: none; }
-        .camera-placeholder { color: white; text-align: center; padding: 20px; }
+        /* Step Styles */
+        .img-container { flex: 1; width: 100%; background: #f5f5f5; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; margin-top: 10px; }
+        .img-container img { width: 100%; height: 100%; object-fit: contain; }
 
         /* Quiz */
         .quiz-opt { background: white; border: 2px solid #ccc; padding: 15px 20px; border-radius: 15px; font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-align: left; margin-bottom: 10px; width: 100%; max-width: 550px; font-family: 'Fredoka', sans-serif; }
@@ -65,15 +63,16 @@
         .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; }
         .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; }
 
-        /* Modal */
-        .custom-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.7); background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); z-index: 1000; text-align: center; visibility: hidden; opacity: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); width: 400px; }
-        .custom-modal.active { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; visibility: hidden; opacity: 0; transition: 0.3s; }
-        .overlay.active { visibility: visible; opacity: 1; }
-
         .txt-teal { color: #008080; font-weight: 800; }
         .txt-yellow { color: #f2c140; font-weight: 800; }
         .txt-red { color: #ff6b6b; font-weight: 800; }
+
+        /* Text Input Activity */
+        .ide-input { width: 100%; max-width: 600px; padding: 20px; border: 3px solid #008080; border-radius: 20px; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; margin-bottom: 20px; outline: none; transition: 0.3s; }
+        .ide-input:focus { border-color: #f2c140; box-shadow: 0 0 15px rgba(242, 193, 64, 0.3); }
+
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; display: none; }
+        .custom-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 30px; z-index: 1001; text-align: center; width: 100%; max-width: 500px; display: none; }
     </style>
 </head>
 <body>
@@ -98,358 +97,253 @@
             </h1>
             
             <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px auto; z-index: 3;">
-                <div style="font-size: 8rem;" class="floating">🐼📷✨</div>
+                <div style="font-size: 8rem;" class="floating">🐼🔍✨</div>
             </div>
 
-            <p class="cover-subtitle">SESI 13: TRAINING PENGENALAN GAMBAR</p>
+            <p class="cover-subtitle">SESI 13: EVALUASI PROGRAM</p>
         </div>
 
-        <!-- Slide 2: Recall -->
+        <!-- Slide 2: Review Sesi 14 -->
         <div class="slide" id="slide2">
-            <h2 class="agenda-title">Ingat Apa yang Sudah Kita Pelajari? 🧠</h2>
+            <h2 class="agenda-title">Apa yang Kita Lakukan Kemarin? 📽️</h2>
             <div class="grid-container" style="max-width: 900px;">
                 <div class="card">
-                    <div class="card-icon">🤖</div>
-                    <h3 class="txt-teal">AI & ML</h3>
-                    <p>Mesin yang bisa belajar seperti manusia.</p>
+                    <div class="card-icon">🖥️</div>
+                    <h3 class="txt-teal">Susun Block</h3>
+                    <p>Kita sudah menyusun logika di sprite <strong>Window</strong> di Scratch.</p>
                 </div>
                 <div class="card">
-                    <div class="card-icon">💬</div>
-                    <h3 class="txt-teal">Chatbot</h3>
-                    <p>Program yang bisa bicara dan mencari data (Wikipedia).</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📂</div>
-                    <h3 class="txt-teal">Pre-trained Data</h3>
-                    <p>Model yang datanya sudah disiapkan oleh orang lain.</p>
-                </div>
-                <div class="card" style="border: 4px solid #f2c140;">
-                    <div class="card-icon pulsing">🆕</div>
-                    <h3 class="txt-yellow">Data Sendiri</h3>
-                    <p>Hari ini kita akan buat data sendiri menggunakan GAMBAR!</p>
+                    <div class="card-icon">🎭</div>
+                    <h3 class="txt-teal">Reaksi Sprite</h3>
+                    <p>Panda sudah bisa berhenti saat melihat kita dan menari saat kita pergi.</p>
                 </div>
             </div>
+            <p style="margin-top: 30px; font-weight: bold; color: #555; font-size: 1.4rem;">Hari ini adalah sesei terkahir di Image Recognition! Mari kita sempurnakan. 🏆</p>
         </div>
 
         <!-- Slide 3: Today's Agenda -->
         <div class="slide" id="slide3">
-            <h2 class="agenda-title">Rencana Kita Hari Ini 🚀</h2>
+            <h2 class="agenda-title">Agenda Kita! 🚀</h2>
             <div style="display: flex; gap: 20px; width: 100%; max-width: 1000px;">
                 <div class="card" style="flex: 1;">
                     <div class="step-num">1</div>
-                    <h4 class="txt-teal">Kenalan Sama IR</h4>
-                    <p>Belajar apa itu Image Recognition.</p>
+                    <h4 class="txt-teal">Evaluasi</h4>
+                    <p>Cek akurasi Panda.</p>
                 </div>
                 <div class="card" style="flex: 1;">
                     <div class="step-num">2</div>
-                    <h4 class="txt-teal">Cek Kamera</h4>
-                    <p>Siapkan webcam atau dataset gambar.</p>
+                    <h4 class="txt-teal">Re-Training</h4>
+                    <p>Perbaiki kalau masih salah.</p>
                 </div>
                 <div class="card" style="flex: 1;">
                     <div class="step-num">3</div>
-                    <h4 class="txt-teal">Training Model</h4>
-                    <p>Latih AI mengenali wajahmu!</p>
+                    <h4 class="txt-teal">Diskusi</h4>
+                    <p>Beda teks vs gambar.</p>
+                </div>
+                <div class="card" style="flex: 1;">
+                    <div class="step-num">4</div>
+                    <h4 class="txt-teal">Ideation</h4>
+                    <p>Rancang AI buatanmu!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: IR Introduction -->
-        <div class="slide" id="slide4">
-            <h2 class="agenda-title">Pernah Lihat Ini? 🧐</h2>
-            <div class="grid-container" style="max-width: 950px; grid-template-columns: repeat(3, 1fr);">
-                <div class="card">
-                    <div style="font-size: 5rem;">🤳</div>
-                    <p style="font-weight: bold; margin-top: 15px;">Filter Wajah</p>
-                    <p style="font-size: 0.9rem;">Menambah telinga kucing otomatis di HP.</p>
-                </div>
-                <div class="card">
-                    <div style="font-size: 5rem;">🔓</div>
-                    <p style="font-weight: bold; margin-top: 15px;">Face Unlock</p>
-                    <p style="font-size: 0.9rem;">Buka kunci HP cuma pake muka!</p>
-                </div>
-                <div class="card">
-                    <div style="font-size: 5rem;">🚗</div>
-                    <p style="font-weight: bold; margin-top: 15px;">Mobil Otonom</p>
-                    <p style="font-size: 0.9rem;">Mobil yang bisa lihat jalan dan rambu.</p>
+        <!-- Slide 4: Diskusi Kendala -->
+        <div class="slide solid-teal-bg" id="slide4">
+            <h2 class="agenda-title" style="color: #f2c140;">Gimana Shy Pandanya? 🤔</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
+                <div style="font-size: 8rem;">🐼❓🧐</div>
+                <p style="font-size: 1.5rem; text-align: center; max-width: 800px;">
+                    Coba ceritakan! Ada yang Pandanya masih "bingung"? <br>
+                    Atau ada yang blok kodingnya belum jalan?
+                </p>
+                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 20px; border: 2px dashed white; max-width: 700px;">
+                    <ul style="font-size: 1.2rem; margin: 0; text-align: left;">
+                        <li>Apakah Pandanya sering salah tebak?</li>
+                        <li>Apakah kameranya terasa lambat?</li>
+                        <li>Apakah kalian sudah klik bendera hijau?</li>
+                    </ul>
                 </div>
             </div>
-            <p style="font-size: 1.5rem; margin-top: 30px; font-weight: 800; color: #008080;">Itu semua adalah <strong>Image Recognition</strong>!</p>
         </div>
 
-        <!-- Slide 5: How does it work? -->
-        <div class="slide" id="slide5">
-            <h2 class="agenda-title">Bagaimana Bisa Ya Komputer Tahu? 🤔</h2>
-            <div style="display: flex; align-items: center; gap: 50px;">
-                <div style="font-size: 5rem;" class="floating">🤨🤖❔</div>
-                <div style="max-width: 500px; text-align: left;">
-                    <p style="font-size: 1.5rem; line-height: 1.4;">
-                        Kira-kira gimana ya kamera bisa tahu kalau itu adalah wajah kamu, atau itu adalah kucing?
+        <!-- Slide 5: Re-Training Instructions -->
+        <div class="slide" id="slide5" style="justify-content: center; padding: 40px 60px;">
+            <h2 class="agenda-title" style="margin-bottom: 20px; font-size: 2.5rem;">Masih Salah Tebak? Yuk Training Lagi! 📸</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 1100px;">
+                <div style="flex: 1; text-align: left;">
+                    <p style="font-size: 1.4rem; margin-bottom: 20px; font-weight: 500;">Kalau Panda masih bingung, tandanya <strong>kurang foto</strong>! 🐼</p>
+                    <ul class="step-list" style="list-style: none; padding:0; display: flex; flex-direction: column; gap: 15px;">
+                        <li style="background: white; padding: 18px 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-left: 8px solid #008080; font-size: 1.2rem; line-height: 1.5;">
+                            <strong>1. Ambil Foto Lagi 📸</strong><br>Tambah 10-20 foto baru di setiap label.
+                        </li>
+                        <li style="background: white; padding: 18px 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-left: 8px solid #f2c140; font-size: 1.2rem; line-height: 1.5;">
+                            <strong>2. Ubah Posisi Wajah 🔄</strong><br>Foto dari samping, menengadah, atau lebih dekat.
+                        </li>
+                        <li style="background: white; padding: 18px 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-left: 8px solid #4c97ff; font-size: 1.2rem; line-height: 1.5;">
+                            <strong>3. Upload File Baru 📁</strong><br>Tambahkan gambar jika kamu tidak memiliki webcam.
+                        </li>
+                    </ul>
+                </div>
+                <div style="flex: 1.2; display: flex; justify-content: center;">
+                    <div class="img-container" style="height: 380px; width: 100%; max-width: 550px; border: 3px solid #008080; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); background: white;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f730d50f-b296-4a0b-9578-a8ccad94f370.png" alt="Adding more photos in ML4K" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Learn and Train Again -->
+        <div class="slide" id="slide6" style="justify-content: center; padding: 40px 60px;">
+            <h2 class="agenda-title" style="margin-bottom: 25px; font-size: 2.5rem;">Latih Ulang AI Kamu 🧠</h2>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 1050px;">
+                <div style="flex: 1; text-align: left; display: flex; flex-direction: column; gap: 20px;">
+                    <p style="font-size: 1.4rem; margin: 0; line-height: 1.6;">
+                        Setelah foto baru ditambahkan, kita harus menyuruh komputer untuk belajar lagi! 💻✨
+                    </p>
+                    
+                    <div style="background: #e0f2f1; padding: 25px; border-radius: 20px; border-left: 10px solid #008080; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                        <h4 style="margin: 0 0 10px 0; color: #008080; font-size: 1.3rem;">👉 Klik Tombol ini:</h4>
+                        <div style="background: white; padding: 12px 20px; border-radius: 12px; border: 2.5px solid #008080; text-align: center; font-weight: bold; font-size: 1.25rem; color: #008080;">
+                            "Train new machine learning model"
+                        </div>
+                    </div>
+                    
+                    <p style="color: #ff6b6b; font-weight: bold; font-size: 1.2rem; margin: 0; display: flex; align-items: center; gap: 8px;">
+                        ⚠️ Tunggu sampai statusnya berubah menjadi "Available" ya!
                     </p>
                 </div>
+                
+                <div style="flex: 1.1; display: flex; flex-direction: column; align-items: center;">
+                    <div class="img-container" style="height: 260px; width: 100%; max-width: 520px; border: 3px solid #008080; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); background: white;">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/12ea5fe4-429b-47e5-a2f8-073c6ed32b97.png" alt="Train new model button in ML4K" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 6: Training IR -->
-        <div class="slide solid-teal-bg" id="slide6">
-            <h2 class="agenda-title" style="color: #f2c140;">Kuncinya adalah... DILATIH! 🎓</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-                <div style="font-size: 10rem;">🏫👨‍🏫💻</div>
-                <p style="font-size: 1.8rem; text-align: center; max-width: 800px;">
-                    Komputer atau kamera bisa mengenali sesuatu karena sebelumnya mereka sudah <strong>DILATIH</strong> untuk mengenali benda tersebut berkali-kali.
-                </p>
-            </div>
-        </div>
-
-        <!-- Slide 7: Datasets -->
+        <!-- Slide 7: Load Project in Scratch -->
         <div class="slide" id="slide7">
-            <h2 class="agenda-title">Dilatih Pakai Apa? 📂</h2>
-            <div style="display: flex; align-items: center; gap: 40px;">
-                <div class="card pulsing" style="padding: 40px; border: 5px solid #008080; border-radius: 30px;">
-                    <h1 style="font-size: 5rem; color: #008080; margin: 0;">DATASETS</h1>
-                </div>
-                <div style="font-size: 3rem;">⬅️</div>
-                <p style="font-size: 1.5rem; text-align: left; max-width: 400px;">
-                    Ya bener banget! Pakai dataset yang sudah kita pelajari sebelumnya.
-                </p>
-            </div>
-        </div>
-
-        <!-- Slide 8: Image Dataset -->
-        <div class="slide" id="slide8">
-            <h2 class="agenda-title">Bentuk Dataset-nya Apa? 🖼️</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-                <div style="display: flex; gap: 20px;">
-                    <div class="card" style="width: 150px; height: 150px;"><div style="font-size: 4rem;">🖼️</div></div>
-                    <div class="card" style="width: 150px; height: 150px;"><div style="font-size: 4rem;">📸</div></div>
-                    <div class="card" style="width: 150px; height: 150px;"><div style="font-size: 4rem;">🤳</div></div>
-                </div>
-                <p style="font-size: 2rem; font-weight: 800; color: #008080;">IMAGE (GAMBAR)!</p>
-                <p style="font-size: 1.2rem; text-align: center; max-width: 700px; opacity: 0.8;">
-                    Kalau mau melatih <strong>Image Recognition</strong>, bentuk dataset yang dikumpulkan harus berupa kumpulan <strong>Gambar</strong>.
-                </p>
-            </div>
-        </div>
-
-        <!-- Slide 9: Create Own Dataset -->
-        <div class="slide" id="slide9">
-            <h2 class="agenda-title">Bikin Dataset Sendiri! 🎨</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
-                <div style="font-size: 5rem;">👨‍🎨🤳🖼️</div>
-                <div style="max-width: 600px; text-align: left;">
-                    <p style="font-size: 1.4rem; line-height: 1.6;">
-                        Kali ini kita akan membuat project yang menggunakan <strong>Image</strong> sebagai dataset.
-                    </p>
-                    <div style="background: #e0f2f1; padding: 20px; border-radius: 20px; border-left: 10px solid #008080; margin-top: 20px;">
-                        <p style="margin: 0; font-size: 1.3rem; font-weight: 800; color: #008080;">KITA AKAN MENCIPTAKAN DATASET SENDIRI!</p>
-                        <p style="margin: 5px 0 0; font-size: 1rem;">Gak pakai pre-trained model lagi, keren kan?</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Webcam Check -->
-        <div class="slide" id="slide10">
-            <h2 class="agenda-title">Cek Webcam Kamu! 📸</h2>
-            <div id="video-container">
-                <video id="webcam-video" autoplay playsinline></video>
-                <div class="camera-placeholder" id="placeholder-text">
-                    <div style="font-size: 4rem; margin-bottom: 15px;">📷</div>
-                    <p style="font-size: 1.2rem;">Klik tombol di bawah untuk menguji kamera kamu!</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 20px; margin-top: 30px;">
-                <button class="huge-btn" onclick="startWebcam()">ALLOW CAMERA ➜</button>
-                <button class="huge-btn" style="background: #ff6b6b;" onclick="showNoCamera()">KAMERA TIDAK ADA</button>
-            </div>
-
-            <!-- Modals -->
-            <div class="overlay" id="overlay"></div>
-            <div class="custom-modal" id="successModal">
-                <div style="font-size: 5rem;">🎉</div>
-                <h3 class="txt-teal">BERHASIL!</h3>
-                <p>Wah, kamera kamu siap dipakai untuk training! Keren banget!</p>
-                <button class="huge-btn" style="margin-top: 20px;" onclick="closeModal()">OKE! ➜</button>
-            </div>
-            <div class="custom-modal" id="failModal">
-                <div style="font-size: 5rem;">😊</div>
-                <h3 class="txt-yellow">GAK APA-APA!</h3>
-                <p>Tenang, kalau gak ada kamera, kita pakai dataset gambar yang sudah disiapkan ya!</p>
-                <button class="huge-btn" style="margin-top: 20px;" onclick="closeModal()">OKE! ➜</button>
-            </div>
-        </div>
-
-        <!-- Slide 11: Alternative Dataset -->
-        <div class="slide" id="slide11">
-            <h2 class="agenda-title">Gak Ada Webcam? Download Ini! 📥</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; width: 100%;">
-                <div style="display: flex; gap: 30px;">
-                    <div class="card" style="padding: 30px; border-bottom: 8px solid #008080;">
-                        <div style="font-size: 4rem;">👀</div>
-                        <h4 style="margin: 15px 0;">Dataset LOOKING</h4>
-                        <a href="https://drive.google.com/uc?export=download&id=1ciJ6SYDdv3EMyMApKQH8hs-AtQkh9ikO" class="huge-btn" style="padding: 10px 30px; font-size: 1rem;">DOWNLOAD ➜</a>
-                    </div>
-                    <div class="card" style="padding: 30px; border-bottom: 8px solid #ff6b6b;">
-                        <div style="font-size: 4rem;">🙈</div>
-                        <h4 style="margin: 15px 0;">Dataset NOT LOOKING</h4>
-                        <a href="https://drive.google.com/uc?export=download&id=1YWiZzk60LrEKlHQA80BDHZuBx6yw84c5" class="huge-btn" style="padding: 10px 30px; font-size: 1rem; background: #ff6b6b;">DOWNLOAD ➜</a>
-                    </div>
-                </div>
-                <div style="background: #fff8e1; padding: 20px; border-radius: 20px; border: 2px dashed #f2c140; max-width: 700px;">
-                    <p style="margin: 0; font-weight: bold; color: #856404;">💡 Tips: Download keduanya ya! Nanti kita upload untuk training model. Minta tolong tutor kalau bingung.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: Ready to Train -->
-        <div class="slide" id="slide12">
-            <h2 class="agenda-title">Semua Siap? Ayo Training! 🏁</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 40px;">
-                <div style="display: flex; gap: 20px; align-items: center;">
-                    <div class="card pulsing" style="padding: 20px;"><div style="font-size: 3rem;">📸 OK!</div></div>
-                    <div style="font-size: 2rem;">+</div>
-                    <div class="card pulsing" style="padding: 20px;"><div style="font-size: 3rem;">🖼️ OK!</div></div>
-                </div>
-                <div style="font-size: 6rem; animation: bounce 1s infinite alternate;">🦾✨</div>
-                <p style="font-size: 2rem; font-weight: 800; color: #008080;">MARI MULAI TRAINING MODEL!</p>
-            </div>
-        </div>
-
-        <!-- Slide 13: Open ML4K -->
-        <div class="slide" id="slide13">
-            <h2 class="agenda-title">Langkah 1: Buka ML4K 🌐</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-                <div style="font-size: 6rem;">🌐💻</div>
-                <p style="font-size: 1.5rem; text-align: center;">Klik tombol di bawah untuk masuk ke website Machine Learning for Kids.</p>
-                <a href="https://machinelearningforkids.co.uk/" target="_blank" class="huge-btn" style="padding: 20px 60px; font-size: 2.2rem;">
-                    KE WEBSITE ML4K ➜
-                </a>
-            </div>
-        </div>
-
-        <!-- Slide 14: Step by Step -->
-        <div class="slide" id="slide14">
-            <h2 class="agenda-title">Langkah Membuat Project 🛠️</h2>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1080px;">
+            <h2 class="agenda-title" style="margin-bottom: 20px; font-size: 2.5rem;">Cara Load Project Kemarin 📂</h2>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; width: 100%; max-width: 1150px;">
                 <!-- Step 1 -->
-                <div class="card" style="padding: 20px; height: 380px; display: flex; flex-direction: column; align-items: center; background: white; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-                    <div class="step-num" style="margin-bottom: 10px;">1</div>
-                    <h4 class="txt-teal" style="margin: 5px 0; font-size: 1.2rem;">Add New Project</h4>
-                    <p style="font-size: 0.9rem; margin: 0 0 15px 0; color: #555; min-height: 45px;">Klik tombol <strong>"Add a new project"</strong> dan beri nama <strong>"Shy Panda"</strong></p>
-                    <div style="flex: 1; width: 100%; background: #f5f5f5; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #eee;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/cf2d2c27-47d1-4fcd-abba-f31e8484bcf4.png" alt="Step 1" style="width: 100%; height: 100%; object-fit: contain;">
-                    </div>
+                <div class="card" style="padding: 15px; height: 380px; justify-content: flex-start; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border-radius: 20px;">
+                    <div class="step-num" style="margin: 0 auto 5px auto;">1</div>
+                    <h4 class="txt-teal" style="font-size: 1.1rem; margin: 5px 0;">Buka Shy Panda</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 45px; color: #555; line-height: 1.4;">Klik project <strong>Shy Panda</strong> di dashboard ML4K.</p>
+                    <div class="img-container" style="border-radius: 12px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/d5c3950d-cfc4-4ac5-b76f-e022a53717b8.png" alt="Open Shy Panda project"></div>
                 </div>
                 <!-- Step 2 -->
-                <div class="card" style="padding: 20px; height: 380px; display: flex; flex-direction: column; align-items: center; background: white; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-                    <div class="step-num" style="margin-bottom: 10px;">2</div>
-                    <h4 class="txt-teal" style="margin: 5px 0; font-size: 1.2rem;">Pilih "Images"</h4>
-                    <p style="font-size: 0.9rem; margin: 0 0 15px 0; color: #555; min-height: 45px;">Pada bagian <strong>Recognizing</strong>, pilih tipe <strong>Images</strong></p>
-                    <div style="flex: 1; width: 100%; background: #f5f5f5; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #eee;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/d5c3950d-cfc4-4ac5-b76f-e022a53717b8.png" alt="Step 2" style="width: 100%; height: 100%; object-fit: contain;">
-                    </div>
+                <div class="card" style="padding: 15px; height: 380px; justify-content: flex-start; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border-radius: 20px;">
+                    <div class="step-num" style="margin: 0 auto 5px auto;">2</div>
+                    <h4 class="txt-teal" style="font-size: 1.1rem; margin: 5px 0;">Masuk Scratch</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 45px; color: #555; line-height: 1.4;">Klik tombol <strong>Make</strong>, lalu pilih <strong>Scratch 3</strong>.</p>
+                    <div class="img-container" style="border-radius: 12px;"><img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" alt="Step click make"></div>
                 </div>
                 <!-- Step 3 -->
-                <div class="card" style="padding: 20px; height: 380px; display: flex; flex-direction: column; align-items: center; background: white; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
-                    <div class="step-num" style="margin-bottom: 10px;">3</div>
-                    <h4 class="txt-teal" style="margin: 5px 0; font-size: 1.2rem;">Klik Train</h4>
-                    <p style="font-size: 0.9rem; margin: 0 0 15px 0; color: #555; min-height: 45px;">Buka projectmu dan klik menu <strong>Train</strong> untuk mulai</p>
-                    <div style="flex: 1; width: 100%; background: #f5f5f5; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #eee;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b4fe9dd7-630f-4736-b316-1294fe353879.png" alt="Step 3" style="width: 100%; height: 100%; object-fit: contain;">
-                    </div>
+                <div class="card" style="padding: 15px; height: 380px; justify-content: flex-start; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border-radius: 20px;">
+                    <div class="step-num" style="margin: 0 auto 5px auto;">3</div>
+                    <h4 class="txt-teal" style="font-size: 1.1rem; margin: 5px 0;">Load Project</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 45px; color: #555; line-height: 1.4;">Klik menu <strong>File</strong> di Scratch -> <strong>Load from your computer</strong>.</p>
+                    <div class="img-container" style="border-radius: 12px;"><img src="https://roboguru-forum-cdn.ruangguru.com//image/b95ee38c-8380-45b4-b4a8-cb3cbcafa9b4.png" alt="Step load from computer"></div>
+                </div>
+                <!-- Step 4 -->
+                <div class="card" style="padding: 15px; height: 380px; justify-content: flex-start; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border-radius: 20px;">
+                    <div class="step-num" style="margin: 0 auto 5px auto;">4</div>
+                    <h4 class="txt-teal" style="font-size: 1.1rem; margin: 5px 0;">Pilih File .sb3</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 10px; min-height: 45px; color: #555; line-height: 1.4;">Pilih file <strong>.sb3</strong> yang sudah kamu simpan sebelumnya.</p>
+                    <div class="img-container" style="border-radius: 12px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/8ecb675f-39c4-4907-8522-95ee4cb51834.png" alt="Step select file"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 15: Awareness -->
-        <div class="slide" id="slide15">
-            <h2 class="agenda-title" style="color: #ff6b6b;">PENTING: Gunakan Kamera Dengan Bijak! 🛡️</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
-                <div style="font-size: 10rem;">🛡️🤐📸</div>
-                <div style="max-width: 600px; text-align: left;">
-                    <p style="font-size: 1.3rem; line-height: 1.6;">
-                        Saat menggunakan Webcam, ingat hal ini:
-                    </p>
-                    <ul style="font-size: 1.1rem; line-height: 1.8;">
-                        <li>Hanya ambil foto <strong>wajah kamu</strong> saja.</li>
-                        <li>Jangan tunjukkan identitas seperti alamat atau sekolah.</li>
-                        <li>Pastikan kamu di tempat yang terang dan aman.</li>
-                    </ul>
-                    <p style="color: #666; font-size: 0.9rem; background: #eee; padding: 10px; border-radius: 10px;">Kita harus selalu peduli dengan keamanan data digital kita! ✨</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 16: Training Process -->
-        <div class="slide" id="slide16">
-            <h2 class="agenda-title">Waktunya Foto-Foto! 📸</h2>
-            <div class="grid-container" style="max-width: 800px;">
-                <div class="card" style="border: 4px solid #008080;">
-                    <div style="font-size: 4rem;">👀</div>
-                    <h3 class="txt-teal">Label: LOOKING</h3>
-                    <p>Ambil <strong>15+ foto</strong> saat kamu melihat ke layar/kamera.</p>
-                </div>
-                <div class="card" style="border: 4px solid #ff6b6b;">
-                    <div style="font-size: 4rem;">🙈</div>
-                    <h3 class="txt-red">Label: NOT LOOKING</h3>
-                    <p>Ambil <strong>15+ foto</strong> saat kamu TIDAK melihat ke layar/kamera.</p>
-                </div>
-            </div>
-            <div style="margin-top: 30px; background: #e3f2fd; padding: 20px; border-radius: 20px; text-align: center;">
-                <p style="margin:0; font-size: 1.2rem; font-weight: bold;">Jika gak ada webcam, silakan UPLOAD file dataset yang tadi di-download! 📁</p>
-            </div>
-        </div>
-
-        <!-- Slide 17: Learn & Test -->
-        <div class="slide" id="slide17">
-            <h2 class="agenda-title">Learn & Test! 🧪</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 1000px;">
+        <!-- Slide 8: Final Testing -->
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Testing! 🧪✨</h2>
+            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; width: 100%;">
                 <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.4rem; line-height: 1.6;">
-                        Kalau sudah punya 15 foto di setiap kotak, klik tombol <strong>"Back to project"</strong> lalu masuk ke menu <strong>Learn & Test</strong>.
-                    </p>
-                    <div style="background: #e0f2f1; padding: 25px; border-radius: 20px; border-left: 10px solid #008080; margin-top: 25px;">
-                        <p style="margin: 0; font-size: 1.1rem; line-height: 1.5;">
-                            Tunggu sebentar sampai komputer selesai belajar ya! Komputer akan mempelajari pola wajahmu di setiap label agar Panda kita jadi pintar. ⏳
-                        </p>
-                    </div>
+                    <p style="font-size: 1.2rem;">Coba tes dengan berbagai gaya:</p>
+                    <ul style="font-size: 1.1rem; line-height: 2;">
+                        <li>😎 Pakai kacamata / tutup satu mata.</li>
+                        <li>💡 Coba matikan lampu atau geser posisi duduk.</li>
+                        <li>🏃 Coba bergerak cepat di depan kamera.</li>
+                    </ul>
+                    <p style="font-weight: bold; color: #008080; font-size: 1.3rem; margin-top: 20px;">Apakah AI-nya tetap pintar?</p>
                 </div>
-                <!-- Image Container -->
-                <div style="flex: 0 0 450px; display: flex; flex-direction: column; align-items: center;">
-                    <div style="width: 100%; height: 320px; background: white; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 3px solid #008080; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f730d50f-b296-4a0b-9578-a8ccad94f370.png" 
-                             alt="Learn and Test Process" 
-                             style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
-                    </div>
-                    <p style="font-size: 1rem; color: #008080; font-weight: bold; margin-top: 15px; text-align: center; background: #e0f2f1; padding: 8px 20px; border-radius: 10px;">
-                        Klik "Train new machine learning model"
-                    </p>
+                <div style="flex: 1;">
+                    <div style="font-size: 5rem;" class="pulsing">🐼🎯🔥</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 18: Success Wrap -->
-        <div class="slide solid-teal-bg" id="slide18">
-            <h2 class="agenda-title" style="color: #f2c140;">YEY! KAMU BERHASIL! 🏆</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-                <div style="font-size: 5rem;" class="floating">🥳🐼🦾</div>
-                <p style="font-size: 2.2rem; font-weight: bold; text-align: center;">Training Model Sudah Selesai!</p>
-                <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; border: 2px dashed white; max-width: 800px;">
-                    <p style="margin: 0; font-size: 1.4rem; line-height: 1.6; text-align: center;">
-                        Minggu depan kita akan masuk ke tahap yang paling seru: <strong>MEMBUAT PROGRAMNYA</strong> di Scratch agar Panda kita bisa beraksi!
-                    </p>
+        <!-- Slide 9: Encouragement -->
+        <div class="slide solid-teal-bg" id="slide9">
+            <div style="text-align: center;">
+                <div style="font-size: 7rem; margin-bottom: 20px;">🎯🏆</div>
+                <h2 style="font-size: 3.5rem; margin-bottom: 20px; color: #f2c140;">Belum Sempurna? Gak Apa-apa!</h2>
+                <p style="font-size: 1.5rem; max-width: 800px; line-height: 1.6;">
+                    Ingat, AI butuh waktu untuk belajar. Yang paling penting adalah kamu sudah tahu <strong>caranya melatih AI</strong> sendiri! <br><br>
+                    Kamu sudah belajar tentang <strong>Labels, Dataset, dan Training</strong>. Itu bekal koding yang hebat! 🚀
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Comparison Discussion 1 -->
+        <div class="slide" id="slide10">
+            <h2 class="agenda-title">Beda Teks vs Gambar? 🧠</h2>
+            <div style="display: flex; gap: 30px; width: 100%;">
+                <div class="card" style="flex: 1; background: #e3f2fd;">
+                    <h3 class="txt-teal">Text (Owl Wiki)</h3>
+                    <p>AI membaca <strong>kata-kata</strong> dan mencari keyword.</p>
+                    <div style="font-size: 3rem; margin-top: 10px;">💬</div>
+                </div>
+                <div class="card" style="flex: 1; background: #fdf2f2;">
+                    <h3 class="txt-red">Image (Shy Panda)</h3>
+                    <p>AI melihat <strong>pixel/pola</strong> warna dan bentuk di wajah kita.</p>
+                    <div style="font-size: 3rem; margin-top: 10px;">🖼️</div>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 1.2rem; text-align: center; max-width: 800px;">
+                Menurutmu, mana yang lebih sulit dilatih oleh komputer?
+            </p>
+        </div>
+
+        <!-- Slide 11: Comparison Discussion 2 (Preference) -->
+        <div class="slide" id="slide11">
+            <h2 class="agenda-title">Kamu Pilih yang Mana? 🗳️</h2>
+            <div style="display: flex; gap: 40px; justify-content: center; width: 100%;">
+                <div class="card pulsing" style="padding: 30px; cursor: pointer; width: 300px;" onclick="changeSlide(1)">
+                    <div style="font-size: 5rem;">🤖💬</div>
+                    <h3 class="txt-teal">Suka Text AI</h3>
+                    <p>Bisa bikin Chatbot yang pinter ngomong!</p>
+                </div>
+                <div class="card pulsing" style="padding: 30px; cursor: pointer; width: 300px;" onclick="changeSlide(1)">
+                    <div style="font-size: 5rem;">🖼️🔍</div>
+                    <h3 class="txt-teal">Suka Image AI</h3>
+                    <p>Bisa bikin program yang bisa "Melihat"!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 19: Quick Quiz -->
-        <div class="slide solid-teal-bg" id="slide19">
+        <!-- Slide 12: Interactive Ideation Activity -->
+        <div class="slide" id="slide12">
+            <h2 class="agenda-title">Kalau Kamu Jadi Pencipta AI... 🧙‍♂️</h2>
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <p style="font-size: 1.3rem; margin-bottom: 20px;">AI apa yang ingin kamu buat di masa depan?</p>
+                <textarea class="ide-input" id="aiIdea" placeholder="Tulis ide hebatmu di sini..."></textarea>
+                <button class="huge-btn" onclick="submitIde()">KIRIM IDE SAYA ➜</button>
+            </div>
+        </div>
+
+        <!-- Slide 13: Quick Quiz -->
+        <div class="slide solid-teal-bg" id="slide13">
             <h2 class="agenda-title" style="color: #f2c140; margin-bottom: 15px;">Kuis Kilat! ⏱️</h2>
             <div style="background: white; color: #333; padding: 25px; border-radius: 20px; width: 100%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; color: #008080; line-height: 1.3; margin-bottom: 20px;">1. Tipe dataset apa yang kita gunakan untuk membuat Image Recognition?</h3>
+                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; color: #008080; line-height: 1.3; margin-bottom: 20px;">1. Jika AI salah menebak gambar, apa hal paling dasar yang harus dilakukan?</h3>
                 <div id="q-options" style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">A. Text (Tulisan)</button>
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">B. Images (Gambar)</button>
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">C. Numbers (Angka)</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">A. Menghapus seluruh project</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">B. Menambah dataset foto dan re-training</button>
+                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">C. Mematikan komputer</button>
                 </div>
                 <div id="q-feedback" style="margin-top: 15px; font-weight: bold; font-size: 1.2rem; min-height: 30px; text-align: center;"></div>
                 <div style="display: flex; justify-content: center; margin-top: 10px;">
@@ -458,65 +352,59 @@
             </div>
         </div>
 
-        <!-- Slide 20: Summary -->
-        <div class="slide" id="slide20">
-            <h2 class="agenda-title">Ringkasan Hari Ini 📝</h2>
-            <div class="grid-container" style="max-width: 1000px; grid-template-columns: repeat(2, 1fr); gap: 25px;">
-                <div class="card" style="padding: 30px; border-left: 12px solid #008080; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🖼️</div>
-                        <div>
-                            <h4 class="txt-teal" style="margin: 0; font-size: 1.5rem;">Image Recog</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Belajar cara komputer "melihat" dan mengenali benda.</p>
-                        </div>
+        <!-- Slide 14: Summary -->
+        <div class="slide" id="slide18">
+            <h2 class="agenda-title">Ringkasan Sesi 📝</h2>
+            <div class="grid-container" style="max-width: 1000px; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                <div class="card" style="padding: 25px; border-left: 10px solid #008080; align-items: flex-start; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="font-size: 3rem;">🔍</div>
+                        <h4 class="txt-teal" style="margin: 0;">Evaluation</h4>
                     </div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Menganalisis kenapa AI bisa salah tebak (faktor cahaya, posisi, dan jumlah data).</p>
                 </div>
-                <div class="card" style="padding: 30px; border-left: 12px solid #f2c140; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">📂</div>
-                        <div>
-                            <h4 class="txt-yellow" style="margin: 0; font-size: 1.5rem;">Own Dataset</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Menciptakan dataset sendiri pakai Webcam atau Upload.</p>
-                        </div>
+                <div class="card" style="padding: 25px; border-left: 10px solid #f2c140; align-items: flex-start; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="font-size: 3rem;">🔄</div>
+                        <h4 class="txt-yellow" style="margin: 0;">Re-Training</h4>
                     </div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Belajar bahwa AI selalu bisa diperbaiki dengan memberikan data yang lebih baik.</p>
                 </div>
-                <div class="card" style="padding: 30px; border-left: 12px solid #4c97ff; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🏷️</div>
-                        <div>
-                            <h4 class="txt-blue" style="margin: 0; font-size: 1.5rem;">Labeling</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Memberikan kategori Looking & Not Looking untuk AI.</p>
-                        </div>
+                <div class="card" style="padding: 25px; border-left: 10px solid #4c97ff; align-items: flex-start; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="font-size: 3rem;">🆚</div>
+                        <h4 class="txt-blue" style="margin: 0;">Text vs Image</h4>
                     </div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Memahami perbedaan cara komputer mengolah data teks dan data visual.</p>
                 </div>
-                <div class="card" style="padding: 30px; border-left: 12px solid #ff6b6b; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🛡️</div>
-                        <div>
-                            <h4 class="txt-red" style="margin: 0; font-size: 1.5rem;">Digital Literacy</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Peduli keamanan data saat menggunakan kamera.</p>
-                        </div>
+                <div class="card" style="padding: 25px; border-left: 10px solid #ff6b6b; align-items: flex-start; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="font-size: 3rem;">🎬</div>
+                        <h4 class="txt-red" style="margin: 0;">AI Creator</h4>
                     </div>
+                    <p style="font-size: 1rem; margin-top: 10px;">Kamu sekarang bukan cuma pengguna AI, tapi sudah jadi <strong>Pencipta AI!</strong></p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 21: Feedback -->
-        <div class="slide" id="slide21">
-            <h2 class="agenda-title" style="margin-bottom: 10px;">Bagaimana Kelas Hari Ini? 💖</h2>
-            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; width: 100%; max-width: 950px; position: relative;">
-                <div id="feedbackForm" style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                    <div style="flex: 1; text-align: center;">
-                        <div style="font-size: 8rem; animation: bounce 2s infinite alternate;">💖✨</div>
-                        <p style="font-size: 1.4rem; color: #555; font-weight: 600; margin-top: 10px;">Bantu kami menjadi lebih baik dengan mengisi form feedback!</p>
-                    </div>
-                    <div style="background: white; border-radius: 25px; padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px;">
-                        <h3 style="color: #008080; margin: 0 0 20px 0; font-size: 1.8rem;">Scan QR Code</h3>
-                        <div style="width: 160px; height: 160px; border: 4px solid #333; border-radius: 20px; padding: 10px; margin: 0 auto 20px auto; background: white;">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=http://bit.ly/feedback_class_dms" style="width: 100%;">
-                        </div>
-                        <a href="http://bit.ly/feedback_class_dms" target="_blank" class="huge-btn" style="padding: 12px 30px; font-size: 1.2rem;">Kirim Feedback ➜</a>
-                    </div>
+        <!-- Slide 15: Feedback -->
+        <div class="slide" id="slide19">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🎒</div>
+                    <h3 style="color: #008080; margin: 0 0 10px 0; font-size: 1.8rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
@@ -524,6 +412,15 @@
         <!-- Navigation -->
         <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
         <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <!-- Modals -->
+    <div class="overlay" id="overlay"></div>
+    <div class="custom-modal" id="ideModal">
+        <div style="font-size: 5rem;">🌟</div>
+        <h3 class="txt-teal">IDE YANG HEBAT!</h3>
+        <p id="ideFeedbackText">Wah, itu ide yang sangat keren! Kamu punya bakat jadi insinyur AI masa depan!</p>
+        <button class="huge-btn" style="margin-top: 20px;" onclick="closeModal()">SAMA-SAMA! ➜</button>
     </div>
 
     <script>
@@ -570,11 +467,6 @@
                 prevBtn.style.color = '#222';
                 nextBtn.style.color = '#222';
             }
-
-            // Reset webcam if not on camera slide
-            if (slides[index].id !== 'slide10') {
-                stopWebcam();
-            }
         }
 
         function changeSlide(direction) {
@@ -584,70 +476,42 @@
             }
         }
 
-        // Webcam Logic
-        let webcamStream = null;
-        async function startWebcam() {
-            try {
-                const video = document.getElementById('webcam-video');
-                const placeholder = document.getElementById('placeholder-text');
-                webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = webcamStream;
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-                
-                // Show success modal
-                document.getElementById('overlay').classList.add('active');
-                document.getElementById('successModal').classList.add('active');
-            } catch (err) {
-                console.error("Error accessing webcam: ", err);
-                showNoCamera();
+        // Ideation Logic
+        function submitIde() {
+            const idea = document.getElementById('aiIdea').value;
+            if (idea.trim() === "") {
+                alert("Tulis idemu dulu ya!");
+                return;
             }
-        }
-
-        function stopWebcam() {
-            if (webcamStream) {
-                webcamStream.getTracks().forEach(track => track.stop());
-                webcamStream = null;
-                const video = document.getElementById('webcam-video');
-                const placeholder = document.getElementById('placeholder-text');
-                if (video) {
-                    video.style.display = 'none';
-                    video.srcObject = null;
-                }
-                if (placeholder) placeholder.style.display = 'block';
-            }
-        }
-
-        function showNoCamera() {
-            document.getElementById('overlay').classList.add('active');
-            document.getElementById('failModal').classList.add('active');
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('ideModal').style.display = 'block';
         }
 
         function closeModal() {
-            document.getElementById('overlay').classList.remove('active');
-            document.getElementById('successModal').classList.remove('active');
-            document.getElementById('failModal').classList.remove('active');
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('ideModal').style.display = 'none';
+            changeSlide(1);
         }
 
         // Quiz Logic
         const quizData = [
             {
-                q: "Tipe dataset apa yang kita gunakan untuk membuat Image Recognition?",
-                opts: ["A. Text (Tulisan)", "B. Images (Gambar)", "C. Numbers (Angka)"],
+                q: "Jika AI salah menebak gambar, apa hal paling dasar yang harus dilakukan?",
+                opts: ["A. Menghapus seluruh project", "B. Menambah dataset foto dan re-training", "C. Mematikan komputer"],
                 ans: 1,
-                exp: "Benar! Untuk pengenalan gambar, kita harus melatih AI menggunakan dataset Gambar."
+                exp: "Benar! Menambah data membantu AI belajar lebih baik."
             },
             {
-                q: "Apa nama kategori/label yang kita buat untuk melatih wajah di Shy Panda?",
-                opts: ["A. Red dan Blue", "B. Happy dan Sad", "C. Looking dan Not Looking"],
-                ans: 2,
-                exp: "Tepat! Kita ingin AI tahu kapan kita melihat layar (Looking) dan tidak (Not Looking)."
+                q: "Kenapa cahaya ruangan penting dalam Image Recognition?",
+                opts: ["A. Agar komputer tidak gelap", "B. Agar AI bisa melihat fitur wajah dengan jelas", "C. Agar layar tidak rusak"],
+                ans: 1,
+                exp: "Tepat! Cahaya yang baik membuat pola wajah lebih mudah dikenali."
             },
             {
-                q: "Berapa minimal jumlah foto yang disarankan untuk setiap label agar AI belajar dengan baik?",
-                opts: ["A. 1 foto", "B. 5 foto", "C. 15 foto atau lebih"],
-                ans: 2,
-                exp: "Benar! Semakin banyak foto (dataset), AI akan semakin pintar mengenali wajahmu!"
+                q: "Apa perbedaan utama melatih Text AI dan Image AI?",
+                opts: ["A. Tidak ada bedanya", "B. Text AI pakai kata-kata, Image AI pakai pola visual", "C. Image AI tidak butuh dataset"],
+                ans: 1,
+                exp: "Benar! Setiap tipe AI membutuhkan jenis data yang berbeda."
             }
         ];
 
