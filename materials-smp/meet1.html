@@ -175,7 +175,7 @@
                 </div>
                 <div style="flex: 1; text-align: left;">
                     <h3 style="color: var(--secondary);">Top-Down Logic</h3>
-                    <p style="font-size: 1.2rem;">Ingat, komputer membaca kode kita secara linear dari **Atas ke Bawah**.</p>
+                    <p style="font-size: 1.2rem;">Ingat, komputer membaca kode kita secara linear dari <span style="color: var(--secondary); font-weight: bold;">Atas ke Bawah</span>.</p>
                     <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-top: 20px;">
                         <p style="margin: 0;">"Setiap blok adalah instruksi. Jika urutannya salah, hasilnya akan berantakan."</p>
                     </div>
@@ -187,7 +187,7 @@
         <div class="slide" id="slide4">
             <h1 style="font-size: 3rem; text-align: center;">"Urutan atau langkah-langkah sistematis untuk menyelesaikan masalah disebut apa?"</h1>
             <div style="margin-top: 50px;">
-                <button class="huge-btn pulsing" onclick="alert('Bener banget! Jawabannya: ALGORITMA')">TAHU JAWABANNYA? 💡</button>
+                <button class="huge-btn pulsing" style="font-size: 2rem; padding: 25px 60px; box-shadow: 0 0 30px var(--secondary);" onclick="showModal('answerModal')">CEK JAWABAN! 🎯</button>
             </div>
         </div>
 
@@ -238,10 +238,10 @@
         </div>
 
         <!-- Slide 7: Success Message -->
-        <div class="slide solid-teal-bg" id="slide7" style="background: #00e676;">
-            <div style="font-size: 10rem;">🏆</div>
-            <h1 style="font-size: 4rem;">AWESOME!</h1>
-            <p style="font-size: 2rem;">Logika algoritma kamu masih sangat tajam!</p>
+        <div class="slide solid-teal-bg" id="slide7" style="background: linear-gradient(135deg, #00e676, #00b0ff);">
+            <div style="font-size: 10rem;" class="float">🏆</div>
+            <h1 style="font-size: 5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);">LUAR BIASA!</h1>
+            <p style="font-size: 2.2rem; font-weight: bold; background: rgba(0,0,0,0.2); padding: 20px 40px; border-radius: 20px;">Kamu masih paham cara menyusun Algoritma! 🔥</p>
         </div>
 
         <!-- Slide 8: Today's Plan -->
@@ -250,15 +250,15 @@
             <div class="step-list" style="max-width: 800px;">
                 <div class="step-item">
                     <div class="step-number">01</div>
-                    <div><h4>Eksplorasi Ulang</h4><p>Login & Refresh fitur-fitur utama Scratch.</p></div>
+                    <div><h4>🔍 Eksplorasi Ulang</h4><p>Login & Refresh fitur-fitur utama Scratch.</p></div>
                 </div>
                 <div class="step-item">
                     <div class="step-number">02</div>
-                    <div><h4>Mastering Paint Editor</h4><p>Bikin karakter orisinal pakai fitur <strong>Reshape</strong> & <strong>Group</strong>.</p></div>
+                    <div><h4>🎨 Mastering Paint Editor</h4><p>Bikin karakter orisinal pakai fitur <strong>Reshape</strong> & <strong>Group</strong>.</p></div>
                 </div>
                 <div class="step-item">
                     <div class="step-number">03</div>
-                    <div><h4>Algoritma Dasar</h4><p>Menyusun urutan perintah untuk sistem satu semester ke depan.</p></div>
+                    <div><h4>⚙️ Algoritma Dasar</h4><p>Menyusun urutan perintah untuk sistem satu semester ke depan.</p></div>
                 </div>
             </div>
         </div>
@@ -266,6 +266,7 @@
         <!-- Slide 9: Login Security -->
         <div class="slide" id="slide9">
             <h2 class="agenda-title">Access Your Workspace 🔐</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 60px; margin-bottom: 20px;" alt="Scratch Logo">
             <div class="login-box">
                 <div class="input-group">
                     <label>Username</label>
@@ -273,9 +274,9 @@
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="passInput" placeholder="••••••••" oninput="showSecurityAlert()">
+                    <input type="password" id="passInput" placeholder="••••••••">
                 </div>
-                <button class="huge-btn" style="width: 100%; font-size: 1.2rem;" onclick="changeSlide(1)">LOGIN ➜</button>
+                <button class="huge-btn" style="width: 100%; font-size: 1.2rem;" onclick="checkLoginSecurity()">LOGIN ➜</button>
             </div>
         </div>
 
@@ -317,24 +318,24 @@
         <!-- Slide 11: Create Project Steps -->
         <div class="slide" id="slide11">
             <h2 class="agenda-title">Waktunya Buka Scratch! 🎨</h2>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
-                <div class="card">
-                    <div class="step-num" style="margin: 0 auto 10px auto;">1</div>
-                    <h4>Klik 'Create'</h4>
-                    <p style="font-size: 0.9rem;">Mulai lembar kerja baru.</p>
-                    <div class="img-container" style="height: 150px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/8d66c00f-bd56-45c5-ba42-fe1c8dd8bc5b.png"></div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; max-width: 1100px;">
+                <div class="card" style="padding: 40px;">
+                    <div class="step-num" style="background: var(--primary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 20px auto;">1</div>
+                    <h4 style="font-size: 1.8rem;">Klik 'Create'</h4>
+                    <p style="font-size: 1.2rem; color: #ddd; margin-bottom: 20px;">Mulai lembar kerja baru.</p>
+                    <div class="img-container" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/8d66c00f-bd56-45c5-ba42-fe1c8dd8bc5b.png" style="width: 100%; object-fit: contain;"></div>
                 </div>
-                <div class="card">
-                    <div class="step-num" style="margin: 0 auto 10px auto;">2</div>
-                    <h4>Beri Nama</h4>
-                    <p style="font-size: 0.9rem;">Contoh: "Welcome Back 1"</p>
-                    <div class="img-container" style="height: 150px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/7baf96b6-d7f5-414f-af1e-103021a624fa.png"></div>
+                <div class="card" style="padding: 40px;">
+                    <div class="step-num" style="background: var(--secondary); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 20px auto;">2</div>
+                    <h4 style="font-size: 1.8rem;">Beri Nama</h4>
+                    <p style="font-size: 1.2rem; color: #ddd; margin-bottom: 20px;">Contoh: "Welcome Back 1"</p>
+                    <div class="img-container" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/7baf96b6-d7f5-414f-af1e-103021a624fa.png" style="width: 100%; object-fit: contain;"></div>
                 </div>
-                <div class="card">
-                    <div class="step-num" style="margin: 0 auto 10px auto;">3</div>
-                    <h4>Hapus Kucing</h4>
-                    <p style="font-size: 0.9rem;">Kita akan pakai sprite sendiri.</p>
-                    <div class="img-container" style="height: 150px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/8b5d1917-5a9b-456f-b4a1-4cc4cfd38ddb.png"></div>
+                <div class="card" style="padding: 40px;">
+                    <div class="step-num" style="background: var(--danger); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; margin: 0 auto 20px auto;">3</div>
+                    <h4 style="font-size: 1.8rem;">Hapus Kucing</h4>
+                    <p style="font-size: 1.2rem; color: #ddd; margin-bottom: 20px;">Kita akan pakai sprite sendiri.</p>
+                    <div class="img-container" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/8b5d1917-5a9b-456f-b4a1-4cc4cfd38ddb.png" style="width: 100%; object-fit: contain;"></div>
                 </div>
             </div>
         </div>
@@ -345,10 +346,10 @@
             <div style="display: flex; gap: 40px; align-items: center;">
                 <div style="flex: 1; text-align: left;">
                     <ul style="font-size: 1.2rem; line-height: 1.8;">
-                        <li>🎨 **Original Character**: Gambar karaktermu sendiri di Paint Editor.</li>
-                        <li>🔧 **Reshape & Group**: Modifikasi bentuk sesukamu agar unik!</li>
-                        <li>🎭 **Multi-Costume**: Buat minimal 3 costume untuk animasi bergerak.</li>
-                        <li>💬 **Say Something**: Gabungkan animasi dengan blok [Say] untuk menyapa.</li>
+                        <li>🎨 <span style="color: var(--secondary); font-weight: bold;">Original Character</span>: Gambar karaktermu sendiri di Paint Editor.</li>
+                        <li>🔧 <span style="color: var(--secondary); font-weight: bold;">Reshape & Group</span>: Modifikasi bentuk sesukamu agar unik!</li>
+                        <li>🎭 <span style="color: var(--secondary); font-weight: bold;">Multi-Costume</span>: Buat minimal 3 costume untuk animasi bergerak.</li>
+                        <li>💬 <span style="color: var(--secondary); font-weight: bold;">Say Something</span>: Gabungkan animasi dengan blok [Say] untuk menyapa.</li>
                     </ul>
                 </div>
                 <div class="card" style="flex: 1; padding: 40px; background: rgba(74, 139, 139, 0.2);">
@@ -366,13 +367,21 @@
                     <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/48de8984-e2e2-41c6-a5f6-a178459872be.png" alt="Scratch Paint Editor">
                 </div>
                 <div style="flex: 1; text-align: left;">
-                    <h3>Gunakan Paint Tool:</h3>
-                    <ul style="font-size: 1.1rem; line-height: 1.8;">
-                        <li>Pilih <bold>Paint</bold> pada menu Choose Sprite.</li>
-                        <li>Gunakan <bold>Circle</bold> & <bold>Line</bold> untuk bentuk dasar.</li>
-                        <li>Gunakan <bold>Fill</bold> untuk mewarnai.</li>
-                        <li>Gunakan <bold>Select tool</bold>  untuk mengatur posisi.</li>
-                    </ul>
+                    <h3 style="font-size: 1.8rem;">Gunakan Paint Tool:</h3>
+                    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary);">
+                            Pilih <span style="color: var(--secondary); font-weight: bold;">Paint</span> pada menu Choose Sprite.
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary);">
+                            Gunakan <span style="color: var(--secondary); font-weight: bold;">Circle</span> & <span style="color: var(--secondary); font-weight: bold;">Line</span> untuk bentuk dasar.
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary);">
+                            Gunakan <span style="color: var(--secondary); font-weight: bold;">Fill</span> untuk mewarnai.
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; border-left: 5px solid var(--primary);">
+                            Gunakan <span style="color: var(--secondary); font-weight: bold;">Select tool</span> untuk mengatur posisi.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -382,9 +391,12 @@
             <h2 class="agenda-title">Langkah 2: Animasi Costume ✨</h2>
             <div style="display: flex; gap: 40px; align-items: center;">
                 <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.2rem;">Buat beberapa costume berbeda (misal: mata berkedip atau mulut terbuka) untuk menciptakan animasi.</p>
-                    <div style="background: #fff3e0; color: #333; padding: 20px; border-radius: 15px; margin-top: 20px;">
-                        <strong>💡 Tips:</strong> Klik kanan costume lalu **Duplicate** agar ukurannya tetap sama!
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; border-left: 5px solid var(--primary); margin-bottom: 20px;">
+                        <p style="font-size: 1.3rem; margin: 0;">Buat beberapa costume berbeda (misal: <span style="color: var(--secondary); font-weight: bold;">mata berkedip</span> atau <span style="color: var(--secondary); font-weight: bold;">mulut terbuka</span>) untuk menciptakan animasi.</p>
+                    </div>
+                    <div style="background: rgba(242, 193, 64, 0.2); color: #fff; padding: 20px; border-radius: 15px; border: 2px dashed var(--secondary);">
+                        <strong style="font-size: 1.2rem; color: var(--secondary);">💡 Tips:</strong><br>
+                        Klik kanan costume lalu <span style="color: var(--secondary); font-weight: bold;">Duplicate</span> agar ukurannya tetap sama!
                     </div>
                 </div>
                 <div class="img-container" style="flex: 1; height: 350px; background: white;">
@@ -401,10 +413,13 @@
                     <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/fd1d9c19-f651-44a7-bc04-917fe0883d74.png" alt="Scratch Animation Blocks">
                 </div>
                 <div style="flex: 1; text-align: left;">
-                    <h3>Animasi Berbicara:</h3>
-                    <p style="font-size: 1.1rem;">Gunakan urutan blok ini agar karaktermu terlihat seperti sedang berbicara!</p>
-                    <div style="background: rgba(242, 193, 64, 0.2); padding: 15px; border-radius: 10px; border-left: 5px solid var(--secondary);">
-                        Jangan lupa tambahkan blok **Wait** agar tidak terlalu cepat!
+                    <h3 style="color: var(--secondary); font-size: 2rem;">Animasi Berbicara:</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; border-left: 5px solid var(--primary); margin-bottom: 20px; margin-top: 15px;">
+                        <p style="font-size: 1.2rem; margin: 0;">Gunakan urutan blok ini agar karaktermu terlihat seperti <span style="color: var(--secondary); font-weight: bold;">sedang berbicara!</span></p>
+                    </div>
+                    <div style="background: rgba(242, 193, 64, 0.2); padding: 20px; border-radius: 10px; border-left: 5px solid var(--secondary);">
+                        <strong style="color: var(--secondary); font-size: 1.2rem;">⚠️ Perhatian:</strong><br>
+                        Jangan lupa tambahkan blok <span style="color: var(--secondary); font-weight: bold;">Wait</span> agar tidak terlalu cepat!
                     </div>
                 </div>
             </div>
@@ -428,10 +443,12 @@
         </div>
 
         <!-- Slide 17: Achievement -->
-        <div class="slide" id="slide17" style="background: linear-gradient(135deg, #4c97ff, #00d2ff);">
+        <div class="slide" id="slide17" style="background: linear-gradient(135deg, #1a237e, #4a148c);">
             <div style="font-size: 8rem;" class="float">🚀✨</div>
-            <h1 style="font-size: 4rem;">PROUD OF YOU!</h1>
-            <p style="font-size: 1.5rem;">Kamu sudah berhasil melakukan eksplorasi awal dengan sangat baik.</p>
+            <h1 style="font-size: 6rem; background: linear-gradient(to right, #f2c140, #ff5252); -webkit-background-clip: text; color: transparent; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">WELL DONE!</h1>
+            <div style="background: rgba(255,255,255,0.1); padding: 30px 50px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); margin-top: 20px;">
+                <p style="font-size: 1.8rem; margin: 0; color: #fff;">Kamu sudah berhasil melakukan eksplorasi awal dengan <span style="color: var(--success); font-weight: bold;">sangat baik!</span> 🌟</p>
+            </div>
         </div>
 
         <!-- Slide 18: Quiz -->
@@ -468,15 +485,20 @@
 
         <!-- Slide 20: Feedback -->
         <div class="slide" id="slide20">
-            <h2 class="agenda-title">Session Feedback 💖</h2>
-            <div style="display: flex; gap: 50px; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 20px;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp1" style="width: 200px;">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #ddd;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 250px; height: 250px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floating 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floating 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floating 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));" class="float">
                 </div>
-                <div style="text-align: left;">
-                    <h3>Bantu Kami Menjadi Lebih Baik!</h3>
-                    <p style="margin-bottom: 30px;">Scan QR atau klik tombol di bawah untuk memberikan masukan.</p>
-                    <a href="https://bit.ly/feedback-smp1" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--secondary); margin: 0 0 10px 0; font-size: 1.5rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #ddd; font-size: 1rem; margin-bottom: 20px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
@@ -488,11 +510,26 @@
 
     <!-- Modals -->
     <div class="overlay" id="overlay"></div>
+    
     <div class="modal" id="securityModal">
         <div style="font-size: 5rem;">🛑</div>
         <h2 style="color: var(--danger);">SECURITY ALERT!</h2>
-        <p>Hati-hati! Jangan pernah memberitahukan password kamu kepada siapapun, apalagi sembarang mengetikan nya di browser seperti ini.</p>
-        <button class="huge-btn" style="background: var(--danger); margin-top: 20px;" onclick="closeModal()">SAYA MENGERTI</button>
+        <p>Hati-hati! Jangan pernah memberitahukan password kamu kepada siapapun, apalagi sembarang mengetikannya di browser seperti ini.</p>
+        <button class="huge-btn" style="background: var(--danger); margin-top: 20px;" onclick="closeModal('securityModal')">SAYA MENGERTI</button>
+    </div>
+
+    <div class="modal" id="answerModal">
+        <div style="font-size: 5rem;">💡</div>
+        <h2 style="color: var(--secondary);">JAWABANNYA ADALAH:</h2>
+        <h1 style="font-size: 4rem; color: var(--success); margin: 20px 0;">ALGORITMA</h1>
+        <button class="huge-btn" style="background: var(--primary); margin-top: 20px;" onclick="closeModal('answerModal')">LANJUT! 🚀</button>
+    </div>
+
+    <div class="modal" id="alertModal">
+        <div id="alertIcon" style="font-size: 5rem;"></div>
+        <h2 id="alertTitle" style="color: var(--secondary); margin-top: 10px;"></h2>
+        <p id="alertMessage" style="font-size: 1.2rem; margin-top: 10px; line-height: 1.5;"></p>
+        <button class="huge-btn" style="background: var(--primary); margin-top: 20px;" onclick="closeModal('alertModal')">OKE!</button>
     </div>
 
     <script>
@@ -572,7 +609,7 @@
 
         async function runCommands(id) {
             if (commands[id].length === 0) {
-                alert("Masukkan perintah dulu ya!");
+                showAlertModal('⚠️', 'PERHATIAN', 'Masukkan perintah dulu ya!');
                 return;
             }
 
@@ -593,7 +630,7 @@
                 else if (cmd.includes('Right')) col++;
 
                 if (row < 0 || row > 6 || col < 0 || col > 6) {
-                    alert("Aduh! Robot keluar jalur! 💥");
+                    showAlertModal('💥', 'OOPS!', 'Aduh! Robot keluar jalur!');
                     initGrid(id);
                     return;
                 }
@@ -602,7 +639,7 @@
                 
                 if (data.obstacles.includes(currentPos)) {
                     gridCells[currentPos].innerHTML = '💥';
-                    alert("Yah! Robot menabrak rintangan! 🚧 Coba lagi ya!");
+                    showAlertModal('🚧', 'AWAS!', 'Yah! Robot menabrak rintangan! Coba lagi ya!');
                     initGrid(id);
                     return;
                 }
@@ -612,22 +649,47 @@
             }
 
             if (currentPos === data.target) {
-                alert("HORE! Robot sampai ke Finish Line! 🏁🏆✨");
+                showAlertModal('🏆✨', 'HORE!', 'Robot sampai ke Finish Line!');
             } else {
-                alert("Robot berhenti, tapi belum sampai finish. Ayo coba lagi! 🤔");
+                showAlertModal('🤔', 'HAMPIR!', 'Robot berhenti, tapi belum sampai finish. Ayo coba lagi!');
             }
         }
 
-        function showSecurityAlert() {
+        function showSecurityAlert() { /* deprecated */
             const overlay = document.getElementById('overlay');
             const modal = document.getElementById('securityModal');
             overlay.style.display = 'block';
             modal.style.display = 'block';
         }
 
-        function closeModal() {
+        function showModal(modalId) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
             document.getElementById('overlay').style.display = 'none';
-            document.getElementById('securityModal').style.display = 'none';
+            if(modalId) {
+                document.getElementById(modalId).style.display = 'none';
+            } else {
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            }
+        }
+
+        function showAlertModal(icon, title, message) {
+            document.getElementById('alertIcon').innerHTML = icon;
+            document.getElementById('alertTitle').innerHTML = title;
+            document.getElementById('alertMessage').innerHTML = message;
+            showModal('alertModal');
+        }
+
+        function checkLoginSecurity() {
+            const pass = document.getElementById('passInput').value;
+            if (pass === "") {
+                showAlertModal('🛡️', 'WELL DONE!', 'Oke baik, selamat! Kamu sudah paham keamanan digital sekarang. Jangan pernah mengetik password aslimu di sembarang form!');
+            } else {
+                showModal('securityModal');
+            }
         }
 
         // Quiz Logic
