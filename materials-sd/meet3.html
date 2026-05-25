@@ -728,7 +728,8 @@
                 transform: translateY(-20px) rotate(-2deg);
             }
         }
-    </style>
+            @keyframes floatSprite { 0% { transform: translateY(0px); } 100% { transform: translateY(-20px); } }
+</style>
     </body>
 
 <body>
@@ -1273,14 +1274,24 @@
         </div>
 
         <!-- Slide 15: Feedback -->
-        <div class="slide" id="slide15">
-            <h2 class="agenda-title">Feedback Sesi Hari Ini 💖</h2>
-            <div
-                style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); text-align: center; border: 4px solid #a8c368;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://bit.ly/feedback_class_dms"
-                    style="width: 180px; margin-bottom: 20px;" alt="QR Code">
-                <p style="font-size: 1.4rem; font-weight: bold; color: #008080;">bit.ly/feedback_class_dms</p>
-                <p style="font-size: 1.1rem; color: #666;">Scan QR ini untuk memberikan masukanmu!</p>
+        <div class="slide" id="slide19">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
+                </div>
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🎒</div>
+                    <h3 style="color: #008080; margin: 0 0 10px 0; font-size: 1.8rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
+                </div>
+
             </div>
         </div>
 
