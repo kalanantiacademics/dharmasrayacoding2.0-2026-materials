@@ -433,54 +433,34 @@
         </div>
 
         <!-- Slide 14: Remix Tutorial -->
-        <div class="slide" id="slide14">
-            <h2 class="agenda-title">Langkah 1: Remix Project 🔄</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1;">
-                    <div class="img-container" style="height: 350px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/541086b5-83bb-4123-9545-9dc63f28a3d5.png" alt="Remix Button">
-                    </div>
-                </div>
-                <div style="flex: 1; text-align: left;">
-                    <div class="card" style="text-align: left;">
-                        <h4 style="color: var(--secondary);">Cara Remix:</h4>
-                        <ol style="font-size: 1.2rem; line-height: 1.8;">
-                            <li>Buka link project awal (slide selanjutnya).</li>
-                            <li>Klik tombol hijau <span class="highlight">Remix</span> di kanan atas.</li>
-                            <li>Sekarang project itu jadi milikmu dan bisa diedit!</li>
-                        </ol>
-                        <p style="margin-top: 20px; font-weight: 800; color: var(--success);">💡 Tujuannya agar kamu langsung punya semua Sprite & Backdrop!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 15: Open Link -->
         <div class="slide" id="slide15">
-            <h2 class="agenda-title">Buka & Remix Project Ini 🚀</h2>
-            <div style="text-align: center;">
-                <img src="https://media0.giphy.com/avatars/scratchfoundation/TRGiyW3EqeCF.GIF" style="width: 120px; margin-bottom: 20px;">
-                <br>
-                <a href="https://scratch.mit.edu/projects/1315334002/" target="_blank" class="huge-btn-scratch">👉 KLIK UNTUK REMIX 👈</a>
-                <div class="card" style="margin-top: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
-                    <p style="font-size: 1.3rem;">Setelah di-remix, kamu akan melihat:</p>
-                    <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px; font-size: 2.5rem;">
-                        <span>👩‍💼</span><span>🍏</span><span>🍕</span><span>🥦</span><span>🍟</span>
+            <h2 class="agenda-title">Butuh Starter Project? 🛠️</h2>
+            <div style="display: flex; gap: 40px; align-items: center;">
+                <div class="img-container" style="flex: 1.2; height: 350px;">
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/541086b5-83bb-4123-9545-9dc63f28a3d5.png" alt="Remix Tutorial">
+                </div>
+                <div style="flex: 0.8; text-align: left;">
+                    <div class="card">
+                        <h4 style="color: var(--secondary);">Langkah:</h4>
+                        <ol style="font-size: 1.2rem; line-height: 1.8;">
+                            <li>Buka link starter project berikut:<br>
+                                <a href="https://scratch.mit.edu/projects/1324375083/" target="_blank" class="huge-btn pulsing" style="display: inline-block; margin: 15px 0; font-size: 1.1rem; padding: 10px 20px;">BUKA STARTER PROJECT 🚀</a>
+                            </li>
+                            <li>Klik tombol <span style="color: var(--secondary); font-weight: bold;">Remix</span> di kanan atas.</li>
+                            <li>Sekarang semua aset sudah ada di dalam editor kamu!</li>
+                        </ol>
                     </div>
-                    <p style="margin-top: 15px; color: var(--accent);">Sprite Player Female, Makanan Sehat, Junk Food, dan Backdrop sudah siap!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 16: Player Code -->
-        <!-- Slide 16: Player Code -->
         <div class="slide" id="slide16">
-            <h2 class="agenda-title">Langkah 2: Program Player 👩‍💼</h2>
+            <h2 class="agenda-title">Langkah 1: Program Player 👩‍💼</h2>
             <div style="display: flex; gap: 30px; width: 100%; align-items: stretch; height: 100%;">
                 <!-- Character Image Column -->
                 <div style="flex: 0.7; text-align: center; display: flex; flex-direction: column; justify-content: center;">
-                    <div class="img-container" style="height: 450px; background: none; border: none;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/57cf73d5-cfdf-4b87-be67-fb543908caf8.png" style="filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4)); max-height: 100%;">
+                    <div class="img-container" style="height: 450px; background: none; border: none; overflow: hidden; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/57cf73d5-cfdf-4b87-be67-fb543908caf8.png" style="filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4)); max-height: 100%; transition: transform 0.2s ease-out; transform-origin: center center;">
                     </div>
                     <p style="font-weight: 800; color: var(--secondary); margin-top: 15px; font-size: 1.4rem;">Sprite: Player Female</p>
                 </div>
@@ -493,8 +473,8 @@
                             <div class="step-number" style="min-width: 35px; height: 35px; font-size: 1.2rem;">1</div>
                             <h4 style="font-size: 1.2rem; margin: 0;">Animasi Kaki</h4>
                         </div>
-                        <div class="img-container" style="height: 200px; margin-bottom: 15px; background: rgba(0,0,0,0.2);">
-                            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/89d8a2a5-9401-4d6a-bde9-3ddef6b72ce5.png" style="max-height: 100%;">
+                        <div class="img-container" style="height: 200px; margin-bottom: 15px; background: rgba(0,0,0,0.2); overflow: hidden; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/89d8a2a5-9401-4d6a-bde9-3ddef6b72ce5.png" style="max-height: 100%; transition: transform 0.2s ease-out; transform-origin: center center;">
                         </div>
                         <p style="font-size: 1.05rem; line-height: 1.5;">Masukkan blok <span class="highlight">Next Costume</span> di dalam <span class="highlight">Forever</span>. Tambahkan <span class="highlight">Wait (0.1) secs</span> agar pergantian kostum terlihat alami seperti orang berjalan sungguhan.</p>
                     </div>
@@ -505,8 +485,8 @@
                             <div class="step-number" style="min-width: 35px; height: 35px; font-size: 1.2rem;">2</div>
                             <h4 style="font-size: 1.2rem; margin: 0;">Arah Gerak</h4>
                         </div>
-                        <div class="img-container" style="height: 200px; margin-bottom: 15px; background: rgba(0,0,0,0.2);">
-                            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b9402fa8-9470-49d4-95d0-e43fb73cd46a.png" style="max-height: 100%;">
+                        <div class="img-container" style="height: 200px; margin-bottom: 15px; background: rgba(0,0,0,0.2); overflow: hidden; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b9402fa8-9470-49d4-95d0-e43fb73cd46a.png" style="max-height: 100%; transition: transform 0.2s ease-out; transform-origin: center center;">
                         </div>
                         <p style="font-size: 1.05rem; line-height: 1.5;">Gunakan <span class="highlight">Point towards (mouse)</span> dalam loop agar selalu menghadap kursor. <span class="highlight">Wajib</span> tambah <span class="highlight">Set rotation style (left-right)</span> di awal agar tidak berputar 360 derajat.</p>
                     </div>
@@ -517,8 +497,8 @@
                             <div class="step-number" style="min-width: 35px; height: 35px; font-size: 1.2rem; background: var(--secondary);">3</div>
                             <h4 style="font-size: 1.2rem; margin: 0; color: var(--secondary);">Logika Cerdas</h4>
                         </div>
-                        <div class="img-container" style="height: 200px; margin-bottom: 15px; background: rgba(0,0,0,0.2);">
-                            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f8bc1b92-5156-4e4f-89d4-f97b6996e002.png" style="max-height: 100%;">
+                        <div class="img-container" style="height: 200px; margin-bottom: 15px; background: rgba(0,0,0,0.2); overflow: hidden; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                            <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f8bc1b92-5156-4e4f-89d4-f97b6996e002.png" style="max-height: 100%; transition: transform 0.2s ease-out; transform-origin: center center;">
                         </div>
                         <p style="font-size: 1.05rem; line-height: 1.5;">Gunakan <span class="highlight">If Touching</span>. Pilih nama sprite makanan di sensornya. Jika <span class="highlight">Healthy Food</span>: Ubah size (-10). Jika <span class="highlight">Junk Food</span>: Ubah size (+50) secara instan!</p>
                     </div>
@@ -528,19 +508,19 @@
 
         <!-- Slide 17: Food Code -->
         <div class="slide" id="slide17">
-            <h2 class="agenda-title">Langkah 3: Program Makanan 🍏🍔</h2>
+            <h2 class="agenda-title">Langkah 2: Program Makanan 🍏🍔</h2>
             <div style="display: flex; gap: 30px; width: 100%; align-items: stretch;">
                 <div class="card" style="flex: 1; display: flex; flex-direction: column;">
                     <h4 style="color: var(--secondary);">Gerak Acak & Kecepatan</h4>
-                    <div class="img-container" style="height: 200px; margin-bottom: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/da815c59-f30c-4900-8dfb-c455175136f0.png">
+                    <div class="img-container" style="height: 200px; margin-bottom: 15px; overflow: hidden; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/da815c59-f30c-4900-8dfb-c455175136f0.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center;">
                     </div>
                     <p style="font-size: 1rem; line-height: 1.4;">Gunakan blok <span class="highlight">Glide (1) secs to (random position)</span>. <br><br>💡 **Tantangan**: Gunakan operator <span class="highlight">Pick Random (0.5) to (3)</span> pada kolom detik agar kecepatan makanan berbeda-beda dan sulit ditebak!</p>
                 </div>
                 <div class="card" style="flex: 1; border-color: var(--primary); display: flex; flex-direction: column;">
                     <h4 style="color: var(--primary);">Interaksi "Makan"</h4>
-                    <div class="img-container" style="height: 200px; margin-bottom: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/04338bb9-7852-4845-b6e4-f04bab3a4e39.png">
+                    <div class="img-container" style="height: 200px; margin-bottom: 15px; overflow: hidden; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/04338bb9-7852-4845-b6e4-f04bab3a4e39.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center;">
                     </div>
                     <p style="font-size: 1rem; line-height: 1.4;">Gunakan <span class="highlight">If touching (Player Female)</span>. <br>Jika kena tabrak, makanan harus <span class="highlight">Hide</span> (menghilang), <span class="highlight">Wait</span> beberapa detik, lalu <span class="highlight">Show</span> (muncul) kembali di tempat lain.</p>
                 </div>
@@ -663,16 +643,21 @@
         </div>
 
         <!-- Slide 24: Feedback -->
-        <div class="slide" id="slide24">
-            <h2 class="agenda-title">Session Feedback 💖</h2>
-            <div style="display: flex; gap: 50px; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 20px;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp5" style="width: 200px;">
+        <div class="slide" id="slide20">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #ddd;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 250px; height: 250px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floating 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floating 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floating 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));" class="float">
                 </div>
-                <div style="text-align: left;">
-                    <h3>Selesai untuk Hari Ini!</h3>
-                    <p style="margin-bottom: 30px;">Scan QR atau klik tombol di bawah untuk memberikan masukan sesi ini.</p>
-                    <a href="https://bit.ly/feedback-smp5" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--secondary); margin: 0 0 10px 0; font-size: 1.5rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #ddd; font-size: 1rem; margin-bottom: 20px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
@@ -884,6 +869,23 @@
                     if (e.key.toLowerCase() === 'd') moveCat('right');
                 }
             });
+        }
+    
+        function zoomPan(e, container) {
+            const img = container.querySelector('img');
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xPercent = (x / rect.width) * 100;
+            const yPercent = (y / rect.height) * 100;
+            img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+            img.style.transform = "scale(2)";
+        }
+
+        function resetZoomPan(container) {
+            const img = container.querySelector('img');
+            img.style.transformOrigin = "center center";
+            img.style.transform = "scale(1)";
         }
     </script>
 </body>
