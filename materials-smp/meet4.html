@@ -301,7 +301,7 @@
                         <div class="block block-motion">move 10 steps</div>
                         <div class="block block-motion">move 10 steps</div>
                     </div>
-                    <p style="margin-top: 15px;">**Capek nulisnya...** <br> Susah kalau mau diubah!</p>
+                    <p style="margin-top: 15px;"><span style="color: var(--secondary); font-weight: bold;">Cukup melelahkan...</span> <br> Susah kalau mau diubah!</p>
                 </div>
                 <div style="display: flex; align-items: center; font-size: 3rem;">➡️</div>
                 <div class="card" style="flex: 1; border: 3px solid var(--orange);">
@@ -312,7 +312,7 @@
                             <div class="block block-motion" style="min-width: 140px; transform: scale(0.9);">move 10 steps</div>
                         </div>
                     </div>
-                    <p style="margin-top: 15px;">**Singkat & Padat!** <br> Mau ganti jarak tinggal ubah angka!</p>
+                    <p style="margin-top: 15px;"><span style="color: var(--secondary); font-weight: bold;">Singkat & Padat!</span> <br> Mau ganti jarak tinggal ubah angka!</p>
                 </div>
             </div>
         </div>
@@ -332,23 +332,34 @@
 
         <!-- Slide 9: Orange Blocks -->
         <div class="slide" id="slide9">
-            <h2 class="agenda-title">Blok Control Oranye 🟠</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 850px;">Kita pelajari kode untuk mengulang sesuatu! Supaya program Scratch kita lebih sederhana dan mudah dibaca.</p>
-            <div style="display: flex; gap: 20px; justify-content: center; width: 100%; align-items: flex-start;">
-                <div class="block-repeat" style="min-width: 150px; min-height: 80px;">
-                    <span style="font-weight: 800;">repeat (10)</span>
-                    <div style="height: 30px; border: 2px dashed #ffab19; border-radius: 4px; margin-left: 10px;"></div>
+            <h2 class="agenda-title" style="margin-bottom: 20px;">Blok Control Oranye 🟠</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 30px; max-width: 900px; color: #ddd;">Kita pelajari kode untuk mengulang sesuatu! Supaya program Scratch kita lebih sederhana dan mudah dibaca.<br>💡 Bentuk blok ini mirip seperti puzzle kosong, di mana kita bisa memasukkan blok lain di tengahnya!</p>
+            <div style="display: flex; gap: 30px; justify-content: center; width: 100%; align-items: stretch; max-width: 1000px;">
+                <div class="card" style="flex: 1; border-top: 5px solid var(--orange); display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+                    <div class="block-repeat" style="min-width: 150px; min-height: 80px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                        <span style="font-weight: 800;">repeat (10)</span>
+                        <div style="height: 30px; border: 2px dashed rgba(255,255,255,0.5); border-radius: 4px; margin-left: 10px;"></div>
+                    </div>
+                    <h4 style="color: var(--orange); font-size: 1.4rem; margin: 0 0 10px 0;">REPEAT</h4>
+                    <p style="font-size: 1.1rem; margin: 0;">Mengulang blok kode sesuai jumlah <span style="color: var(--secondary); font-weight: bold;">ANGKA</span> di dalamnya.</p>
                 </div>
-                <div class="block-repeat" style="min-width: 150px; min-height: 80px;">
-                    <span style="font-weight: 800;">forever</span>
-                    <div style="height: 30px; border: 2px dashed #ffab19; border-radius: 4px; margin-left: 10px;"></div>
+                <div class="card" style="flex: 1; border-top: 5px solid var(--orange); display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+                    <div class="block-repeat" style="min-width: 150px; min-height: 80px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                        <span style="font-weight: 800;">forever</span>
+                        <div style="height: 30px; border: 2px dashed rgba(255,255,255,0.5); border-radius: 4px; margin-left: 10px;"></div>
+                    </div>
+                    <h4 style="color: var(--orange); font-size: 1.4rem; margin: 0 0 10px 0;">FOREVER</h4>
+                    <p style="font-size: 1.1rem; margin: 0;">Mengulang blok kode secara terus-menerus <span style="color: var(--secondary); font-weight: bold;">SELAMANYA</span>.</p>
                 </div>
-                <div class="block-repeat" style="min-width: 150px; min-height: 80px;">
-                    <span style="font-weight: 800;">repeat until <span style="background: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; color: #333;">( )?</span></span>
-                    <div style="height: 30px; border: 2px dashed #ffab19; border-radius: 4px; margin-left: 10px;"></div>
+                <div class="card" style="flex: 1; border-top: 5px solid var(--orange); display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+                    <div class="block-repeat" style="min-width: 150px; min-height: 80px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                        <span style="font-weight: 800;">repeat until <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.4);">( )?</span></span>
+                        <div style="height: 30px; border: 2px dashed rgba(255,255,255,0.5); border-radius: 4px; margin-left: 10px;"></div>
+                    </div>
+                    <h4 style="color: var(--orange); font-size: 1.4rem; margin: 0 0 10px 0;">REPEAT UNTIL</h4>
+                    <p style="font-size: 1.1rem; margin: 0;">Mengulang blok kode <span style="color: var(--secondary); font-weight: bold;">SAMPAI</span> kondisi (syarat) tertentu terpenuhi.</p>
                 </div>
             </div>
-            <p style="margin-top: 25px; font-size: 1rem; color: #aaa;">💡 Bentuknya seperti mulut, bagian tengah itu tempat untuk memasukkan blok lain!</p>
         </div>
 
         <!-- Slide 10: Loop Efficiency -->
@@ -395,6 +406,28 @@
             </div>
         </div>
 
+        <!-- Slide 12B: Starter Project -->
+        <div class="slide" id="slide12b">
+            <h2 class="agenda-title">Butuh Starter Project? 🛠️</h2>
+            <div style="display: flex; gap: 40px; align-items: center;">
+                <div class="img-container" style="flex: 1.2; height: 350px;">
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/541086b5-83bb-4123-9545-9dc63f28a3d5.png" alt="Remix Tutorial">
+                </div>
+                <div style="flex: 0.8; text-align: left;">
+                    <div class="card" style="padding: 30px;">
+                        <h4 style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px;">Langkah:</h4>
+                        <ol style="font-size: 1.3rem; line-height: 1.8; margin-left: 20px;">
+                            <li>Buka link starter project berikut:<br>
+                                <a href="https://scratch.mit.edu/projects/1324370986/" target="_blank" class="huge-btn pulsing" style="display: inline-block; margin: 15px 0; font-size: 1.1rem; padding: 10px 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">BUKA STARTER PROJECT 🚀</a>
+                            </li>
+                            <li>Klik tombol <span style="color: var(--secondary); font-weight: bold;">Remix</span> (berwarna hijau) di kanan atas.</li>
+                            <li>Sekarang semua aset sudah ada di dalam editor kamu!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide 13: Step 1 Bear -->
         <div class="slide" id="slide13">
             <h2 class="agenda-title">Langkah 1: Siapkan Si Beruang 🐻</h2>
@@ -403,8 +436,8 @@
                     <div class="card" style="text-align: left; height: 100%;">
                         <h4 style="color: var(--secondary);">Instruksi:</h4>
                         <ul style="font-size: 1.3rem; line-height: 2;">
-                            <li>Pilih sprite **Bear Walking**.</li>
-                            <li>Buka tab **Costumes**.</li>
+                            <li>Pilih sprite <span style="color: var(--secondary); font-weight: bold;">Bear Walking</span>.</li>
+                            <li>Buka tab <span style="color: var(--secondary); font-weight: bold;">Costumes</span>.</li>
                             <li>Pastikan beruangmu punya banyak kostum gerakan (a-h).</li>
                             <li>Letakkan beruang di tengah bawah layar.</li>
                         </ul>
@@ -439,33 +472,33 @@
         <!-- Slide 15: Step 3 Backdrop Prep -->
         <div class="slide" id="slide15">
             <h2 class="agenda-title">Langkah 3: Trik Moving Backdrop 🎬</h2>
-            <div class="grid-container" style="gap: 15px; max-width: 1000px;">
-                <div class="card" style="padding: 10px; display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 5px; font-size: 0.9rem;">Step 1: Pilih Backdrop</div>
-                    <div style="height: 140px; width: 100%; display: flex; align-items: center; justify-content: center;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/7e6b653a-07aa-4559-bf70-522d9c015776.png" style="max-width: 100%; max-height: 100%; border-radius: 8px; object-fit: contain;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1000px; margin: 0 auto;">
+                <div class="card" style="padding: 15px; display: flex; flex-direction: column; align-items: center; overflow: visible;">
+                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 10px; font-size: 1.1rem;">Step 1: Pilih Backdrop</div>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/7e6b653a-07aa-4559-bf70-522d9c015776.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center;" class="zoom-image">
                     </div>
                 </div>
-                <div class="card" style="padding: 10px; display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 5px; font-size: 0.9rem;">Step 2: Copy Tab Backdrop</div>
-                    <div style="height: 140px; width: 100%; display: flex; align-items: center; justify-content: center;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b757f740-d690-4d26-a069-725ebcaedb3a.png" style="max-width: 100%; max-height: 100%; border-radius: 8px; object-fit: contain;">
+                <div class="card" style="padding: 15px; display: flex; flex-direction: column; align-items: center; overflow: visible;">
+                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 10px; font-size: 1.1rem;">Step 2: Copy Tab Backdrop</div>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b757f740-d690-4d26-a069-725ebcaedb3a.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center;" class="zoom-image">
                     </div>
                 </div>
-                <div class="card" style="padding: 10px; display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 5px; font-size: 0.9rem;">Step 3: Paste ke Sprite Baru</div>
-                    <div style="height: 140px; width: 100%; display: flex; align-items: center; justify-content: center;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/eac041a7-75bd-483e-865b-deec4b1f2397.png" style="max-width: 100%; max-height: 100%; border-radius: 8px; object-fit: contain;">
+                <div class="card" style="padding: 15px; display: flex; flex-direction: column; align-items: center; overflow: visible;">
+                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 10px; font-size: 1.1rem;">Step 3: Paste ke Sprite Baru</div>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/eac041a7-75bd-483e-865b-deec4b1f2397.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center;" class="zoom-image">
                     </div>
                 </div>
-                <div class="card" style="padding: 10px; display: flex; flex-direction: column; align-items: center;">
-                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 5px; font-size: 0.9rem;">Step 4: Atur Posisi Sprite</div>
-                    <div style="height: 140px; width: 100%; display: flex; align-items: center; justify-content: center;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/93291ddf-7b54-46cd-bedd-8de5d7cfb6f9.png" style="max-width: 100%; max-height: 100%; border-radius: 8px; object-fit: contain;">
+                <div class="card" style="padding: 15px; display: flex; flex-direction: column; align-items: center; overflow: visible;">
+                    <div style="font-weight: 800; color: var(--secondary); margin-bottom: 10px; font-size: 1.1rem;">Step 4: Atur Posisi Sprite</div>
+                    <div style="height: 200px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 8px; position: relative;" onmousemove="zoomPan(event, this)" onmouseleave="resetZoomPan(this)">
+                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/93291ddf-7b54-46cd-bedd-8de5d7cfb6f9.png" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease-out; transform-origin: center center;" class="zoom-image">
                     </div>
                 </div>
             </div>
-            <p style="margin-top: 15px; font-weight: 800; color: var(--accent);">Penting: Kita menjadikan Backdrop sebagai Sprite agar bisa digerakkan!</p>
+            <p style="margin-top: 25px; font-weight: 800; color: var(--accent); font-size: 1.2rem;">Penting: Kita menjadikan Backdrop sebagai Sprite agar bisa digerakkan!</p>
         </div>
 
         <!-- Slide 16: Step 4 Backdrop 1 Code -->
@@ -481,11 +514,11 @@
                     <div class="card" style="text-align: left; padding: 40px;">
                         <h4 style="color: var(--secondary); font-size: 1.8rem;">Logika Backdrop 1:</h4>
                         <ol style="font-size: 1.3rem; line-height: 1.8; font-weight: 500;">
-                            <li>Mulai di posisi awal: **X: 0, Y: 0**.</li>
-                            <li>Jalan pelan ke kiri: **change x by -3**.</li>
-                            <li>Ulangi sampai menyentuh batas kiri (**X < -450**).</li>
-                            <li>Teleport balik ke kanan: **Go to X: 470**.</li>
-                            <li>Lakukan terus-menerus (**Forever**).</li>
+                            <li>Mulai di posisi awal: <span style="color: var(--secondary); font-weight: bold;">X: 0, Y: 0</span>.</li>
+                            <li>Jalan pelan ke kiri: <span style="color: var(--secondary); font-weight: bold;">change x by -3</span>.</li>
+                            <li>Ulangi sampai menyentuh batas kiri (<span style="color: var(--secondary); font-weight: bold;">X < -450</span>).</li>
+                            <li>Teleport balik ke kanan: <span style="color: var(--secondary); font-weight: bold;">Go to X: 470</span>.</li>
+                            <li>Lakukan terus-menerus (<span style="color: var(--secondary); font-weight: bold;">Forever</span>).</li>
                         </ol>
                     </div>
                 </div>
@@ -499,8 +532,8 @@
                 <div style="font-size: 6rem; margin-bottom: 20px;">🖼️ + 🖼️</div>
                 <h3 style="color: var(--secondary); font-size: 2rem;">Kenapa butuh DUA Sprite Backdrop?</h3>
                 <p style="font-size: 1.5rem; line-height: 1.6; margin-top: 20px;">
-                    Kalau cuma satu, saat ia bergerak ke kiri, bagian kanannya akan **KOSONG**. <br><br>
-                    Jadi, kita butuh **Sprite ke-2** untuk mengekor tepat di belakang Sprite pertama. Saat yang satu habis, yang satu menyambung!
+                    Kalau cuma satu, saat ia bergerak ke kiri, bagian kanannya akan <span style="color: var(--secondary); font-weight: bold;">KOSONG</span>. <br><br>
+                    Jadi, kita butuh <span style="color: var(--secondary); font-weight: bold;">Sprite ke-2</span> untuk mengekor tepat di belakang Sprite pertama. Saat yang satu habis, yang satu menyambung!
                 </p>
                 <div class="card" style="margin-top: 30px; border-color: var(--success); background: rgba(0, 230, 118, 0.05);">
                     <p style="font-size: 1.3rem; font-weight: 800;">"Ulangi proses Step 3 untuk membuat Sprite Backdrop ke-2!"</p>
@@ -522,9 +555,9 @@
                         <h4 style="color: var(--secondary); font-size: 1.8rem;">Logika Backdrop 2:</h4>
                         <ol style="font-size: 1.3rem; line-height: 1.8; font-weight: 500;">
                             <li>Hampir sama dengan Backdrop 1!</li>
-                            <li>Bedanya: Mulai menunggu di kanan (**X: 470**).</li>
+                            <li>Bedanya: Mulai menunggu di kanan (<span style="color: var(--secondary); font-weight: bold;">X: 470</span>).</li>
                             <li>Ia akan otomatis muncul begitu Backdrop 1 mulai bergeser.</li>
-                            <li>**Hasilnya**: Animasi jalanan yang mulus tanpa henti!</li>
+                            <li><span style="color: var(--secondary); font-weight: bold;">Hasilnya</span>: Animasi jalanan yang mulus tanpa henti!</li>
                         </ol>
                     </div>
                 </div>
@@ -539,9 +572,9 @@
                 <h3 style="color: var(--secondary);">Ada yang bolong atau loncat?</h3>
                 <p style="font-size: 1.4rem; line-height: 1.6;">
                     Periksa angka koordinatnya! <br>
-                    Apakah Backdrop 1 mulai di **X:0**? <br>
-                    Apakah Backdrop 2 mulai di **X:470**? <br>
-                    Apakah keduanya punya **change x by -3**?
+                    ✅Apakah Backdrop 1 mulai di <span style="color: var(--secondary); font-weight: bold;">X:0</span>? <br>
+                    ✅Apakah Backdrop 2 mulai di <span style="color: var(--secondary); font-weight: bold;">X:470</span>? <br>
+                    ✅Apakah keduanya punya <span style="color: var(--secondary); font-weight: bold;">change x by -3</span>?
                 </p>
                 <div class="card" style="margin-top: 30px; border-color: var(--success);">
                     <p style="font-size: 1.2rem; font-weight: 800;">"Coding itu melatih ketelitian. Cek satu-satu angkanya ya!"</p>
@@ -560,7 +593,7 @@
                     <div class="card" style="padding: 40px;">
                         <div style="font-size: 5rem;">🌐</div>
                         <h4>Save & Share</h4>
-                        <p style="font-size: 1.3rem;">Klik **File > Save Now** lalu beri nama projectmu: **Bear Sidewalk Animation**.</p>
+                        <p style="font-size: 1.3rem;">Klik <span style="color: var(--secondary); font-weight: bold;">File > Save Now</span> lalu beri nama projectmu: <span style="color: var(--secondary); font-weight: bold;">Bear Sidewalk Animation</span>.</p>
                     </div>
                 </div>
             </div>
@@ -586,16 +619,21 @@
         </div>
 
         <!-- Slide 22: Feedback -->
-        <div class="slide" id="slide22">
-            <h2 class="agenda-title">Session Feedback 💖</h2>
-            <div style="display: flex; gap: 50px; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 20px;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp4" style="width: 200px;">
+        <div class="slide" id="slide20">
+            <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #ddd;">
+                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
+            </p>
+            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div style="position: relative; width: 250px; height: 250px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floating 2s infinite alternate;">💖</div>
+                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floating 2.5s infinite alternate reverse;">✨</div>
+                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floating 3s infinite alternate;">🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));" class="float">
                 </div>
-                <div style="text-align: left;">
-                    <h3>Selesai untuk Hari Ini!</h3>
-                    <p style="margin-bottom: 30px;">Scan QR atau klik tombol di bawah untuk memberikan masukan sesi ini.</p>
-                    <a href="https://bit.ly/feedback-smp4" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center; backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--secondary); margin: 0 0 10px 0; font-size: 1.5rem;">Selesai untuk Hari Ini!</h3>
+                    <p style="color: #ddd; font-size: 1rem; margin-bottom: 20px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
@@ -816,6 +854,23 @@
             if (e.key === 'ArrowRight') changeSlide(1);
             else if (e.key === 'ArrowLeft') changeSlide(-1);
         });
+    
+        function zoomPan(e, container) {
+            const img = container.querySelector('img');
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const xPercent = (x / rect.width) * 100;
+            const yPercent = (y / rect.height) * 100;
+            img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+            img.style.transform = "scale(2)";
+        }
+
+        function resetZoomPan(container) {
+            const img = container.querySelector('img');
+            img.style.transformOrigin = "center center";
+            img.style.transform = "scale(1)";
+        }
     </script>
 </body>
 </html>
