@@ -143,6 +143,17 @@
         .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; }
         .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; }
 
+
+
+        /* AI for Oceans helper cards */
+        .ocean-hero-img { max-width: 100%; max-height: 330px; object-fit: contain; border-radius: 24px; box-shadow: 0 12px 28px rgba(0,0,0,0.16); border: 5px solid #ffffff; background: #ffffff; }
+        .ocean-image-panel { background: white; border-radius: 28px; padding: 18px; box-shadow: 0 10px 28px rgba(0,0,0,0.12); border: 3px solid #e9f5f5; }
+        .ocean-note { background: #e0f2f1; border-left: 8px solid #008080; color: #234; border-radius: 20px; padding: 18px 24px; font-size: 1.25rem; line-height: 1.45; }
+        .ocean-warning { background: #fff8db; border: 3px dashed #f2c140; color: #6d5600; border-radius: 20px; padding: 18px 24px; font-size: 1.18rem; line-height: 1.45; }
+        .ocean-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; width: 100%; max-width: 1050px; }
+        .mini-step { background: #ffffff; border: 2px solid #edf2f7; border-radius: 20px; padding: 18px; box-shadow: 0 6px 15px rgba(0,0,0,0.06); text-align: left; }
+        .mini-step strong { color: #008080; }
+
         @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -168,18 +179,12 @@
             <h1 class="cover-title" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
                 <div style="line-height: 1.1; text-align: center;">
                     <span style="font-size: 3rem; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">PROJECT:</span><br>
-                    <span class="game-title-gradient" style="font-size: 6.5rem;">MAKE ME HAPPY</span>
+                    <span class="game-title-gradient" style="font-size: 6.5rem;">AI & Machine Learning</span>
                 </div>
             </h1>
 
             <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px auto; z-index: 3;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" 
-                     alt="Scratch" 
-                     style="height: 100px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
-                <span style="font-size: 3rem; color: white; font-weight: bold;">+</span>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" 
-                     alt="ML4K" 
-                     style="height: 100px; width: auto; object-fit: contain; background: #008080; padding: 10px; border-radius: 15px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+                <span style="font-size: 8rem; color: white; font-weight: bold;">🤖🧠✨</span>
             </div>
             
             <p class="cover-subtitle">Sesi 7: PENGENALAN MACHINE LEARNING</p>
@@ -216,15 +221,11 @@
                     <p style="font-size: 0.95rem; margin: 0;">Memahami bagaimana komputer bisa dilatih untuk "berpikir" seperti manusia.</p>
                 </div>
                 <div class="card" style="padding: 15px;">
-                    <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 5px;">📚</div>
-                    <h3 class="txt-pink" style="font-size: 1.1rem; margin-bottom: 5px;">Melatih AI Text Recognition</h3>
-                    <p style="font-size: 0.95rem; margin: 0;">Mengajari robot untuk bisa mengenali kata-kata yang kita ketik.</p>
+                    <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 5px;">🐬</div>
+                    <h3 class="txt-pink" style="font-size: 1.1rem; margin-bottom: 5px;">AI for Ocean</h3>
+                    <p style="font-size: 0.95rem; margin: 0;">Mengajari robot untuk bisa mengenali object di laut.</p>
                 </div>
-                <div class="card" style="grid-column: span 2; padding: 15px;">
-                    <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 5px;">😊</div>
-                    <h3 class="txt-green" style="font-size: 1.1rem; margin-bottom: 5px;">Project "Make Me Happy"</h3>
-                    <p style="font-size: 0.95rem; margin: 0;">Mempraktikkan pembuatan program yang bisa tahu apakah kata-katamu menyedihkan atau menyenangkan menggunakan <strong>ML4K</strong>!</p>
-                </div>
+               
             </div>
         </div>
 
@@ -298,7 +299,7 @@
                     <input type="text" id="aiEmojiInput" class="ai-input" placeholder="Masukkan 1 emoji..." maxlength="2">
                     <button class="ai-btn" onclick="testEmojiAI()">KIRIM</button>
                 </div>
-                <p style="font-size: 0.9rem; color: #888; margin-top: 15px;">Tips: Tekan <strong>Windows + .</strong> (Titik) atau <strong>Cmd + Ctrl + Space</strong> untuk membuka keyboard emoji.</p>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 15px;">Tips: Tekan dan tahan tombol <strong>Windows -> lalu .</strong> (Titik) atau <strong>Cmd + Ctrl + Space</strong> untuk membuka keyboard emoji.</p>
             </div>
         </div>
 
@@ -384,384 +385,169 @@
             </div>
         </div>
 
-        <!-- Slide 13: Intro ML4K -->
+
+        <!-- Slide 13: Intro AI for Oceans -->
         <div class="slide" id="slide13">
             <h2 class="agenda-title">Waktunya Melatih Mesin Sungguhan! 🌐</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px;">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="max-height: 150px; margin-bottom: 30px; background: #008080; padding: 20px; border-radius: 20px;">
-                <p style="font-size: 1.6rem; line-height: 1.6;">
-                    Kita akan menggunakan website khusus bernama <strong>Machine Learning for Kids (ML4K)</strong>. Di sini, kita akan melatih model AI dan menyambungkannya ke Scratch!
-                </p>
-            </div>
-        </div>
-
-        <!-- Slide Login Class Account -->
-        <div class="slide" id="slideLoginClass">
-            <h2 class="agenda-title" style="color: #ff6b6b; margin-bottom: 20px;">PENTING: Gunakan Akun Kelas! 🔑🏫</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 1100px;">
-                <div style="font-size: 8rem; animation: floatSprite 2s infinite alternate;">🔑🏫</div>
-                
-                <div style="max-width: 650px; text-align: left; display: flex; flex-direction: column; gap: 15px;">
-                    <p style="font-size: 1.35rem; line-height: 1.6; margin: 0; color: #333;">
-                        Hari ini kita akan login menggunakan <strong>satu akun kelas bersama</strong> yang sudah disiapkan oleh Teacher!
+            <div class="ocean-two-col">
+                <div class="ocean-image-panel">
+                    <img class="ocean-hero-img" src="https://miro.medium.com/v2/resize:fit:1400/1*hCNgA59vplMCTmCOcwMjkA.gif" alt="AI training fish and trash">
+                </div>
+                <div style="text-align: left;">
+                    <div style="font-size: 4.5rem; margin-bottom: 8px;">🤖🌊</div>
+                    <h3 style="font-size: 2rem; color: #008080; margin: 0 0 14px 0;">Perhatikan gambar di samping.</h3>
+                    <p style="font-size: 1.45rem; line-height: 1.55; color: #444; margin: 0 0 18px 0;">
+                        Kira-kira robot sedang belajar membedakan apa ya?
                     </p>
-                    
-                    <div class="card" style="padding: 20px 25px; border-left: 8px solid #ff9800; border-radius: 15px; background: #fffde7; text-align: left; align-items: flex-start; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin: 0;">
-                        <h4 style="margin: 0 0 10px 0; color: #e65100; font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
-                            📋 Langkah Login:
-                        </h4>
-                        <ol style="margin: 0; padding-left: 20px; font-size: 1.15rem; line-height: 1.6; color: #444;">
-                            <li style="margin-bottom: 8px;">Buka website ML4K, lalu klik tombol <strong>Log In</strong> di pojok kanan atas.</li>
-                            <li style="margin-bottom: 8px;">Tanyakan / perhatikan layar depan untuk melihat <strong>Username</strong> dan <strong>Password</strong> dari Teacher.</li>
-                            <li style="margin-bottom: 8px;">Setelah masuk, klik menu <strong>Projects</strong> di bar navigasi atas.</li>
-                            <li>Pilih project yang sesuai dengan materi yang sedang kamu kerjakan hari ini!</li>
-                        </ol>
+                    <div class="ocean-note">
+                        Hari ini kita akan melihat bagaimana komputer dilatih dari banyak contoh, lalu mencoba menebak mana <strong>ikan</strong> dan mana <strong>sampah</strong>.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 14: ML4K Link -->
+        <!-- Slide 14: Training Computer with Dataset -->
         <div class="slide" id="slide14">
-            <div style="text-align: center;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 20px;">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" alt="ML4K" style="height: 100px; background: #008080; padding: 10px; border-radius: 15px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" alt="Scratch" style="height: 100px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
-                    <div style="font-size: 6rem; animation: bounce 1s infinite alternate;">👇</div>
+            <h2 class="agenda-title">Melatih AI Mengenali Ikan dan Sampah 🐟🗑️</h2>
+            <div class="ocean-two-col" style="grid-template-columns: .9fr 1.1fr;">
+                <div class="ocean-image-panel" style="display:flex; justify-content:center; align-items:center;">
+                    <img class="ocean-hero-img" src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/eb387800-8190-4552-9bed-8e1d3700b2fc.png" alt="Robot AI" style="max-height: 370px;">
                 </div>
-                <a href="https://machinelearningforkids.co.uk/" target="_blank" class="huge-btn" style="font-size: 2rem; padding: 30px 60px;">BUKA ML4K SEKARANG 🌐</a>
-                <p style="margin-top: 30px; font-size: 1.2rem; color: #888;">machinelearningforkids.co.uk</p>
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    <div class="card" style="text-align:left; align-items:flex-start; border-left: 8px solid #4c97ff;">
+                        <div style="font-size: 2.8rem;">📚</div>
+                        <h3 class="txt-blue" style="margin: 5px 0;">Dataset</h3>
+                        <p style="font-size:1.2rem; margin:0; line-height:1.45;">Kumpulan contoh yang kita berikan agar komputer belajar membedakan objek.</p>
+                    </div>
+                    <div class="card" style="text-align:left; align-items:flex-start; border-left: 8px solid #a8c368;">
+                        <div style="font-size: 2.8rem;">🧠</div>
+                        <h3 class="txt-green" style="margin: 5px 0;">Training</h3>
+                        <p style="font-size:1.2rem; margin:0; line-height:1.45;">Proses melatih komputer dengan contoh yang benar.</p>
+                    </div>
+                    <div class="ocean-warning">
+                        Pada sesi kali ini, kita akan melatih komputer untuk memahami perbedaan antara <strong>ikan</strong> dan <strong>sampah</strong> menggunakan dataset.
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 15: Log In ML4K -->
+        <!-- Slide 15: Platform Guide -->
         <div class="slide" id="slide15">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Cara Masuk ke ML4K 🔑</h2>
-            <div class="step-grid" style="grid-template-columns: 1fr 1fr; max-width: 1000px;">
-                <div class="step-card">
-                    <div class="step-header"><div class="step-num-circle">1</div> Klik Log In</div>
-                    <div class="step-body" style="justify-content: center;">
-                        Cari tombol <strong>"Log In"</strong> di pojok kanan atas halaman depan.
-                        <div style="margin-top:15px; background: #008080; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; display: inline-block;">Log In</div>
-                    </div>
+            <h2 class="agenda-title">Sebelum Mulai, Perhatikan Cara Pakainya 👀</h2>
+            <div class="grid-container" style="max-width: 980px; grid-template-columns: repeat(2, 1fr);">
+                <div class="card" style="padding: 22px;">
+                    <div class="card-icon">🧭</div>
+                    <h3 class="txt-teal">Ikuti Level</h3>
+                    <p style="font-size:1.1rem; margin:0;">Kita akan membuka platform berbeda. Ikuti arahan teacher dan lanjutkan level satu per satu.</p>
                 </div>
-                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee;">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/94c0c098-324e-417c-9321-b030308db7cf.png" alt="Log In Step" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="card" style="padding: 22px;">
+                    <div class="card-icon">🖱️</div>
+                    <h3 class="txt-blue">Klik Sesuai Instruksi</h3>
+                    <p style="font-size:1.1rem; margin:0;">Baca instruksi singkat di layar, lalu pilih gambar atau tombol yang diminta.</p>
                 </div>
+            
             </div>
-            <p style="margin-top: 20px; color: #666; font-size: 1.1rem;">Gunakan Username dan Password yang telah dibagikan oleh gurumu ya!</p>
+            <div class="ocean-note" style="margin-top:24px; max-width:880px; text-align:center;">
+                Kalau tampilan berbeda sedikit, tetap tenang. Ikuti instruksi teacher dan lihat tombol yang ditunjukkan di layar.
+            </div>
         </div>
 
-        <!-- Slide 16: Demo Final Project -->
+        <!-- Slide 16: Levels and Video Note -->
         <div class="slide" id="slide16">
-            <h2 class="agenda-title" style="margin-bottom: 15px;">Project: Make Me Happy 😄</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 20px;">Ini adalah project yang akan kita buat menggunakan AI yang sudah dilatih!</p>
-            
-            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; max-width: 1000px; text-align: left;">
-                <!-- Kiri: GIF Demo -->
-                <div style="width: 500px; height: 415px; background: #ffffff; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border: 5px solid #008080; display: flex; justify-content: center; align-items: center; overflow: hidden; flex-shrink: 0;">
-                    <img src="https://cdn-web.ruangguru.com/file-uploader/4bd204de-9b2b-41e5-a5b1-77232ecf5341.gif" alt="Make Me Happy Demo" style="width: 100%; height: 100%; object-fit: contain;">
+            <h2 class="agenda-title">Ada 8 Level yang Akan Kamu Selesaikan 🧩</h2>
+            <div class="ocean-two-col" style="grid-template-columns: 1.05fr .95fr;">
+                <div class="ocean-image-panel">
+                    <img class="ocean-hero-img" src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/22ad45ba-5102-4316-a0d2-ae50021bb191.png" alt="Next button guide" style="max-height: 360px;">
                 </div>
-                
-                <!-- Kanan: Penjelasan -->
-                <div style="background: #f8f9fa; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-left: 8px solid #f2c140; flex-grow: 1;">
-                    <h3 style="margin-top: 0; color: #856404; font-size: 1.4rem;">Tentang Program Ini 🧐</h3>
-                    <p style="font-size: 1.15rem; line-height: 1.6; color: #444; margin-bottom: 15px;">
-                        Di program ini, kita bisa <strong>mengatakan sesuatu</strong> kepada karakter Emoji. Emoji menentukan, apakah itu kata yang baik (<strong class="txt-green">good_words</strong>) atau kata yang buruk (<strong class="txt-red">bad_words</strong>).
-                    </p>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div style="background: #f0fdf4; padding: 12px; border-radius: 10px; border: 2px solid #22c55e;">
-                            🌟 <strong style="color: #22c55e;">Jika "good_words":</strong><br>Emoji akan tersenyum senang! 😄
-                        </div>
-                        <div style="background: #fef2f2; padding: 12px; border-radius: 10px; border: 2px solid #ef4444;">
-                            😠 <strong style="color: #ef4444;">Jika "bad_words":</strong><br>Emoji akan menangis sedih... 😢
-                        </div>
-                    </div>
+                <div style="display:flex; flex-direction:column; gap:18px; text-align:left;">
+                    <div class="mini-step"><span style="font-size:2.2rem;">1️⃣</span> Di bagian atas, kamu akan melihat <strong>level 1 sampai 8</strong>.</div>
+                    <div class="mini-step"><span style="font-size:2.2rem;">2️⃣</span> Beberapa level berbentuk <strong>activity</strong>, beberapa berbentuk <strong>video</strong>.</div>
+                    <div class="mini-step"><span style="font-size:2.2rem;">3️⃣</span> Jika melihat halaman video, tidak perlu diputar. Klik tombol <strong>Next</strong> di pojok kanan bawah.</div>
+                    <div class="ocean-warning">💡Hari ini kita akan fokus pada activity melatih AI.</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 16.1: Buka Project yang Sudah Ada -->
-        <div class="slide" id="slide16-1">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Buka Project yang Sudah Ada 🚀</h2>
-            <div style="background: #f8f9fa; padding: 25px; border-radius: 20px; text-align: left; max-width: 900px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 10px solid #4c97ff; margin-bottom: 20px;">
-                <p style="font-size: 1.3rem; margin-top: 0;">Setelah login dengan Username dan Password yang diberikan guru, buka menu <strong>Proyek (Projects)</strong>.</p>
-                <p style="font-size: 1.2rem; color: #555;">Di sana kamu akan melihat beberapa proyek yang sudah ada: <strong class="txt-blue">make-me-happy</strong> dan <strong class="txt-purple">shy-panda</strong>.</p>
-                <p style="font-size: 1.2rem; color: #555;">Kita fokus ke <strong>make-me-happy</strong> dulu, lalu buka!</p>
-            </div>
-            
-            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-top: 20px;">
-                <div style="background: white; padding: 20px; border-radius: 15px; border: 3px dashed #22c55e; width: 250px; box-shadow: 0 5px 15px rgba(34, 197, 94, 0.2);">
-                    <h3 style="color: #22c55e; margin: 0; font-size: 1.5rem;">good_words</h3>
-                </div>
-                <div style="font-size: 2.5rem; color: #666;">❓</div>
-                <div style="background: white; padding: 20px; border-radius: 15px; border: 3px dashed #ef4444; width: 250px; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.2);">
-                    <h3 style="color: #ef4444; margin: 0; font-size: 1.5rem;">bad_words</h3>
-                </div>
-            </div>
-
-            <div style="margin-top: 30px; background: #fff3cd; color: #856404; padding: 15px 30px; border-radius: 50px; font-size: 1.2rem; display: inline-block; animation: bounce 2s infinite alternate;">
-                🗣️ <strong>Ada yang bisa jelaskan?</strong> Ini maksudnya apa ya? Apa yang sedang kita kelompokkan?
-            </div>
-        </div>
-
-        <!-- Slide 16.2: Ini Namanya Dataset! -->
-        <div class="slide" id="slide16-2">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Inilah yang Namanya Dataset! 🧠</h2>
-            <p style="font-size: 1.3rem; max-width: 900px; line-height: 1.6; margin-bottom: 30px;">
-                Kita sedang mengumpulkan dan mengelompokkan data. Kita perlu <strong>menjelaskan ke komputer</strong> perbedaan antara kata yang baik dan kata yang buruk!
-            </p>
-
-            <div class="step-grid" style="grid-template-columns: 1fr 1fr; align-items: stretch; max-width: 1000px; gap: 30px;">
-                <div style="background: #f0fdf4; padding: 25px; border-radius: 20px; border: 3px solid #22c55e; text-align: left;">
-                    <h3 style="color: #22c55e; margin-top: 0; font-size: 1.5rem;">🌟 good_words</h3>
-                    <p style="font-size: 1.1rem; color: #444;">Contohnya kata-kata yang membuat senang dan ramah:</p>
-                    <ul style="font-size: 1.1rem; color: #22c55e; font-weight: bold; padding-left: 20px;">
-                        <li>"You are kind"</li>
-                        <li>"Happy"</li>
-                        <li>"Nice"</li>
-                    </ul>
-                </div>
-                <div style="background: #fef2f2; padding: 25px; border-radius: 20px; border: 3px solid #ef4444; text-align: left;">
-                    <h3 style="color: #ef4444; margin-top: 0; font-size: 1.5rem;">😠 bad_words</h3>
-                    <p style="font-size: 1.1rem; color: #444;">Contohnya kata-kata yang kasar atau menyedihkan:</p>
-                    <ul style="font-size: 1.1rem; color: #ef4444; font-weight: bold; padding-left: 20px;">
-                        <li>"You are mean"</li>
-                        <li>"Angry"</li>
-                        <li>"Bad"</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 16.3: Ayo Tambah Kosakatamu -->
-        <div class="slide" id="slide16-3">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Ayo Tambah Kosakatamu! ✍️</h2>
-            
-            <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 900px;">
-                <p style="font-size: 1.4rem; color: #333; margin-top: 0;">
-                    Bisakah kamu menambahkan beberapa kata ke dalam <strong>good_words</strong> dan <strong>bad_words</strong>?
-                </p>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 25px 0;">
-                    <div style="font-size: 3rem;">➕</div>
-                    <div style="text-align: left; font-size: 1.2rem; line-height: 1.6; color: #555;">
-                        <strong>Misi Kalian:</strong><br>
-                        ✨ Masukkan <strong>2 kata baik</strong><br>
-                        ⚠️ Masukkan <strong>2 kata buruk</strong>
-                    </div>
-                </div>
-                
-                <div style="background: #e0f2fe; padding: 20px; border-radius: 15px; border-left: 8px solid #0ea5e9; text-align: left; margin-top: 20px;">
-                    <p style="margin: 0; font-size: 1.1rem; color: #0369a1;">
-                        💡 <strong>Tips:</strong> Karena ini menggunakan Bahasa Inggris, boleh banget pakai <strong>Google Translate</strong> lho! Sekalian kita latihan Bahasa Inggris ya. Kalau bingung, boleh bertanya atau minta bantuan guru.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 16.4: Catatan Untuk Nanti -->
-        <div class="slide" id="slide16-4">
-            <div style="font-size: 5rem; margin-bottom: 10px;">🛑</div>
-            <h2 class="agenda-title" style="margin-bottom: 20px; color: #ef4444;">Perhatian Sebentar!</h2>
-            
-            <p style="font-size: 1.4rem; max-width: 800px; line-height: 1.6; margin-bottom: 30px;">
-                Setelah slide ini, akan ada langkah-langkah membuat project dari nol.
-            </p>
-
-            <div style="background: #fdf6e3; padding: 25px; border-radius: 20px; border: 3px dashed #d4b462; max-width: 800px; margin: 0 auto;">
-                <p style="font-size: 1.2rem; font-weight: bold; color: #856404; margin-top: 0;">
-                    Apakah HARI INI kita perlu mengikuti langkah pembuatan dari nol?
-                </p>
-                <p style="font-size: 1.3rem; color: #d9534f; font-weight: bold; font-size: 1.5rem; margin: 15px 0;">
-                    TIDAK PERLU! 🙅‍♂️
-                </p>
-                <p style="font-size: 1.1rem; color: #555; margin-bottom: 0;">
-                    Karena kita sudah punya project <strong>make-me-happy</strong>, langkah-langkah di slide selanjutnya hanya sebagai <strong>PANDUAN</strong> kalau kamu mau coba bikin sendiri nanti!
-                </p>
-            </div>
-            
-            <p style="margin-top: 25px; font-size: 1.2rem; color: #008080; font-weight: bold;">
-                Mari kita lihat sekilas saja! 👉
-            </p>
-        </div>
-
-
-        <!-- Slide 17: Tahap 1 -->
+        <!-- Slide 17: Language Guide -->
         <div class="slide" id="slide17">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Tahap 1: Membuat Project Baru 📂</h2>
-            <div class="step-grid" style="grid-template-columns: 1fr 1fr; align-items: stretch; max-width: 1100px;">
-                <div class="step-card">
-                    <div class="step-header" style="background: #4c97ff;"><div class="step-num-circle">1</div> Konfigurasi Project</div>
-                    <div class="step-body" style="text-align: left; align-items: flex-start; font-size: 1.2rem; line-height: 1.8;">
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Klik tombol <strong>Add a new project</strong></li>
-                            <li>Project Name: <strong class="txt-blue">Make Me Happy</strong></li>
-                            <li>Recognizing: <strong class="txt-purple">Text</strong></li>
-                            <li>Language: <strong class="txt-teal">English</strong></li>
-                            <li>Storage: <strong class="txt-yellow">In the Cloud</strong></li>
-                            <li>Klik tombol <strong>Create</strong></li>
-                        </ul>
+            <h2 class="agenda-title">Ubah Bahasa Terlebih Dahulu 🌏</h2>
+            <div class="ocean-two-col">
+                <div style="text-align:left;">
+                    <div style="font-size:4.5rem;">🌐🇮🇩</div>
+                    <p style="font-size:1.45rem; line-height:1.55; color:#444;">
+                        Setelah masuk, kamu bisa mengubah bahasa dari pojok kiri bawah agar instruksinya lebih mudah dipahami.
+                    </p>
+                    <div class="ocean-note">
+                        🙋‍♂️Jika masih bingung mencari pilihan bahasa, angkat tangan dan teacher akan membantu.
                     </div>
                 </div>
-                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee;">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/0d1300d7-8e62-4ddf-b5b6-6a2e179e0a23.png" alt="Get Started Step" style="width: 100%; height: 100%; object-fit: cover;">
+                <div class="ocean-image-panel">
+                    <img class="ocean-hero-img" src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/42930078-ec74-4e44-b90a-2e8819f5156f.png" alt="Language change guide" style="max-height: 370px;">
                 </div>
             </div>
         </div>
 
-        <!-- Slide 18: Tahap 2 -->
+        <!-- Slide 18: Open AI for Ocean -->
         <div class="slide" id="slide18">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Tahap 2: Melatih Model (Train) 🧠</h2>
-            <div class="step-grid" style="grid-template-columns: 1fr 1fr; align-items: stretch; max-width: 1100px;">
-                <div class="step-card">
-                    <div class="step-header" style="background: #cf63cf;"><div class="step-num-circle">2</div> Tambahkan Datasets</div>
-                    <div class="step-body" style="text-align: left; align-items: flex-start; font-size: 1.1rem; line-height: 1.6;">
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Buka projectmu lalu klik menu <strong>Train</strong>.</li>
-                            <li>Klik <strong>Add New Label</strong>. Buat dua label: <strong class="txt-green">good_words</strong> dan <strong class="txt-red">bad_words</strong>.</li>
-                            <li>Masukkan 10+ contoh kalimat bahasa Inggris ke setiap kolom.</li>
-                            <li>Jika sudah selesai, klik <strong>Back to Project</strong>.</li>
-                        </ul>
-                        <div style="background: #fff9db; padding: 10px 15px; border-left: 4px solid #f2c140; margin-top: 15px; font-size: 0.95rem; width: 100%; box-sizing: border-box;">
-                            💡 <strong>Tips:</strong> Gunakan Google Translate jika perlu bantuan untuk bahasa Inggris.
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee;">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/fa3dd690-ad32-4d24-8805-15064f715714.png" alt="Datasets Step" style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
+            <h2 class="agenda-title">Mulai Melatih AI Pertama 🌊🤖</h2>
+            <div style="text-align:center; max-width: 900px;">
+                <div style="font-size: 7rem; margin-bottom: 12px; animation: floatSprite 2s infinite alternate;">🐟🧠🗑️</div>
+                <p style="font-size:1.55rem; line-height:1.55; color:#444; margin:0 0 28px 0;">
+                    Klik tombol di bawah ini untuk membuka activity. Setelah terbuka, tetap perhatikan instruksi teacher ya.
+                </p>
+                <a href="https://studio.code.org/courses/oceans/units/1/lessons/1/levels/1" target="_blank" class="huge-btn" style="font-size: 2.05rem; padding: 26px 54px;">
+                    BUKA AI FOR OCEAN 🌐
+                </a>
+                <p style="margin-top: 22px; color:#666; font-size:1.1rem;">Activity akan terbuka di tab baru.</p>
             </div>
         </div>
 
-        <!-- Slide 18.5: Perhatian Buka Scratch -->
-        <div class="slide" id="slide18-5">
-            <div style="font-size: 5rem; margin-bottom: 10px;">🔔</div>
-            <h2 class="agenda-title" style="margin-bottom: 20px; color: #4c97ff;">Perhatian! Waktunya Mencoba!</h2>
-            
-            <p style="font-size: 1.4rem; max-width: 800px; line-height: 1.6; margin-bottom: 30px;">
-                Sekarang merupakan tahapan yang <strong>PERLU KAMU IKUTI</strong>!
-            </p>
-
-            <div style="background: #e0f2fe; padding: 25px; border-radius: 20px; border: 3px dashed #0ea5e9; max-width: 800px; margin: 0 auto;">
-                <p style="font-size: 1.3rem; color: #0369a1; font-weight: bold; margin-top: 0;">
-                    Ayo kita coba buka Scratch dari dalam ML4K! 🚀
-                </p>
-                <p style="font-size: 1.1rem; color: #555; margin-bottom: 0;">
-                    Setelah tadi mencoba menambahkan kata-kata, sekarang ikuti langkah-langkah di slide berikutnya (Tahap 3) ya. Kita akan masuk ke Scratch untuk memprogram AI-nya!
-                </p>
-            </div>
-            
-            <p style="margin-top: 25px; font-size: 1.2rem; color: #0284c7; font-weight: bold; animation: bounce 1s infinite alternate;">
-                Siap? Lanjut ke slide sebelah! 👉
-            </p>
-        </div>
-
-        <!-- Slide 19: Tahap 3 -->
+        <!-- Slide 19: Reflection After Training -->
         <div class="slide" id="slide19">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Tahap 3: Hubungkan ke Scratch 🐱</h2>
-            <div class="step-grid" style="grid-template-columns: 1fr 1fr 1fr; max-width: 1100px; gap: 15px;">
-                <div class="step-card">
-                    <div class="step-header" style="background: #a8c368; color: white;">Klik menu Make</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <div style="width: 100%; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" alt="Make Menu" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <p style="margin:0; font-size: 1rem;">Kembali ke halaman project, klik menu <strong>Make</strong>.</p>
-                    </div>
+            <h2 class="agenda-title">Bagaimana Pengalaman Melatih AI Pertamamu? 💬</h2>
+            <div class="ocean-two-col">
+                <div class="ocean-image-panel">
+                    <img class="ocean-hero-img" src="https://miro.medium.com/v2/resize:fit:1400/1*hCNgA59vplMCTmCOcwMjkA.gif" alt="AI training reflection">
                 </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #4c97ff; color: white;">Pilih Scratch 3</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <div style="width: 100%; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <img src="https://roboguru-forum-cdn.ruangguru.com//image/3379679f-269d-444e-9652-d2d505d255ac.png" alt="Scratch 3" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <p style="margin:0; font-size: 1rem;">Pilih <strong>Scratch 3</strong> sebagai platform tempat kita membuat program.</p>
+                <div style="text-align:left;">
+                    <div style="font-size:4rem;">🧠✨</div>
+                    <p style="font-size:1.45rem; line-height:1.55; color:#444;">
+                        Coba ingat lagi aktivitas yang baru saja kamu lakukan.
+                    </p>
+                    <div class="card" style="align-items:flex-start; text-align:left; border-left:8px solid #f2c140;">
+                        <h3 class="txt-yellow" style="margin:0 0 10px 0;">Pertanyaan Diskusi</h3>
+                        <p style="font-size:1.25rem; margin:0; line-height:1.45;">🤔Menurutmu, sebenarnya apa yang kita lakukan saat memilih gambar ikan dan sampah?</p>
                     </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #f2c140; color: #333;">Buka Editor Scratch</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <div style="width: 100%; height: 120px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; overflow: hidden; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <img src="https://roboguru-forum-cdn.ruangguru.com//image/1f78009f-f890-433e-b2bf-4a35b52e22f3.png" alt="Editor" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <p style="margin:0; font-size: 1rem;">Klik <strong>Straight into Scratch now</strong> untuk masuk ke editor!</p>
+                    <div class="ocean-note" style="margin-top:18px;">
+                        💡Kita sedang memberi contoh agar AI bisa belajar pola dari data.
                     </div>
                 </div>
             </div>
-            <p style="color: #008080; font-weight: bold; margin-top: 20px; font-size: 1.1rem; background: #e0f2f1; padding: 15px 30px; border-radius: 50px; border: 2px dashed #008080;">🎉 Kamu akan otomatis diarahkan ke editor Scratch khusus yang sudah dilengkapi dengan blok cerdas buatanmu!</p>
         </div>
 
-        <!-- Slide 20: Tahap 4 -->
+        <!-- Slide 20: More AI Models -->
         <div class="slide" id="slide20">
-            <h2 class="agenda-title" style="margin-bottom: 15px;">Tahap 4: Simpan Projectmu! 💾</h2>
-            
-            <div style="background: #fff3cd; border-left: 10px solid #f2c140; padding: 20px; border-radius: 15px; margin-bottom: 25px; width: 100%; max-width: 900px; box-sizing: border-box;">
-                <h3 style="margin: 0; color: #856404; font-size: 1rem;">⚠️ PENTING UNTUK DIPERHATIKAN</h3>
-                <p style="margin: 10px 0 0; font-size: 1.1rem; color: #856404; line-height: 1.5;">
-                    Project ini hanya bisa dibuka melalui editor Scratch di website <strong>ML4K</strong>. Agar hasil kerjamu tidak hilang, kamu <strong>WAJIB</strong> menyimpannya ke komputer masing-masing.
-                </p>
-            </div>
-
-            <div class="step-grid" style="grid-template-columns: 1fr 1.2fr; align-items: stretch; max-width: 1100px;">
-                <div class="step-card">
-                    <div class="step-header" style="background: #008080;"><div class="step-num-circle">4</div> Cara Menyimpan</div>
-                    <div class="step-body" style="text-align: left; align-items: flex-start; font-size: 1.1rem; line-height: 1.6;">
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Klik menu <strong>File</strong> di pojok kiri atas.</li>
-                            <li>Pilih <strong>Save to your computer</strong>.</li>
-                            <li>Gunakan nama yang rapi, contoh:<br>
-                                <code style="background: #eee; padding: 2px 8px; border-radius: 5px;">MakeMeHappy_Budi.sb3</code>
-                            </li>
-                        </ul>
-                        <p style="margin-top: 15px; font-size: 0.95rem; color: #666; border-top: 1px solid #eee; padding-top: 10px;">
-                            💡 Besok-besok kalau mau lanjut, kamu harus buka lewat project ini lagi lalu pilih <strong>Load from your computer</strong>.
-                        </p>
-                    </div>
+            <h2 class="agenda-title">Kita Akan Sering Menggunakan AI 🤖📚</h2>
+            <div class="grid-container" style="max-width: 980px; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+                <div class="card" style="padding:24px;">
+                    <div class="card-icon">🖼️</div>
+                    <h3 class="txt-blue">Image</h3>
+                    <p style="font-size:1.05rem; margin:0;">AI belajar dari gambar.</p>
                 </div>
-                <div style="display: flex; align-items: center; justify-content: center; border-radius: 20px; overflow: hidden; min-height: 250px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #eee; background: #fff;">
-                    <!-- Placeholder for Save to Computer Image -->
-                    <img src="https://roboguru-forum-cdn.ruangguru.com//image/c3714519-ed1c-4088-b3e3-06c5aabb001e.png" alt="Save to Computer" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                <div class="card" style="padding:24px;">
+                    <div class="card-icon">💬</div>
+                    <h3 class="txt-purple">Text</h3>
+                    <p style="font-size:1.05rem; margin:0;">AI belajar dari kata atau kalimat.</p>
+                </div>
+                <div class="card" style="padding:24px;">
+                    <div class="card-icon">🔊</div>
+                    <h3 class="txt-green">Sound</h3>
+                    <p style="font-size:1.05rem; margin:0;">AI belajar dari suara.</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Slide 20.5: Penjelasan Akhir Tahapan -->
-        <div class="slide" id="slide20-5">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Apa yang sudah kita pelajari hari ini? 🤔💡</h2>
-            
-            <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 900px; text-align: left;">
-                <p style="font-size: 1.4rem; color: #333; margin-top: 0; line-height: 1.6;">
-                    Tahapan-tahapan tadi adalah <strong>cara kita menghubungkan data</strong> (kata-kata baik & buruk) ke dalam program Scratch. Kalau kita mau membuat game cerdas dari AI yang sudah kita latih, <strong class="txt-blue">beginilah cara membukanya!</strong>
-                </p>
-                
-                <div style="background: #fff3cd; padding: 25px; border-radius: 15px; border: 3px dashed #f2c140; margin-top: 25px;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🛑</div>
-                        <div>
-                            <h3 style="color: #856404; margin: 0 0 10px 0; font-size: 1.4rem;">TAPI HARI INI KITA BELUM BIKIN PROGRAMNYA YA!</h3>
-                            <p style="margin: 0; font-size: 1.2rem; color: #666; line-height: 1.5;">
-                                Hari ini kita jadikan <strong>contoh saja</strong> untuk tahu alurnya. Nanti di pertemuan-pertemuan selanjutnya, baru kita akan mulai membuat blok programnya bersama-sama!
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="ocean-note" style="margin-top:30px; max-width:900px; text-align:center; font-size:1.35rem;">
+                Hari ini kita mulai dari AI yang membedakan benda di laut. Nanti kita akan mencoba model AI lain dengan contoh data yang berbeda.
             </div>
-            
-            <p style="margin-top: 30px; font-size: 1.3rem; color: #22c55e; font-weight: bold; animation: bounce 1s infinite alternate;">
-                Sampai di sini, sudah kebayang kan alurnya? Mantap! 👍
-            </p>
-        </div>
-
-        <!-- Slide 21: Selebrasi -->
-        <div class="slide" id="slide21">
-            <h2 class="agenda-title">SELESAI! LUAR BIASA! 🎉</h2>
-            <div style="font-size: 8rem; animation: bounce 1s infinite alternate; margin-bottom: 20px;">🙌🥳🤖</div>
-            <p style="font-size: 1.8rem; text-align: center; max-width: 800px; color: #444; line-height: 1.6;">
-                Kalian sudah mencoba <strong class="txt-teal">Melatih AI</strong>!
-            </p>
-            <p style="font-size: 1.3rem; margin-top: 20px; background: #f0fdf4; padding: 15px 30px; border-radius: 50px; border: 2px dashed #a8c368;">
-                Ada yang berani maju ke depan kelas untuk memperlihatkan datasets nya? 🙋‍♂️🙋‍♀️
-            </p>
         </div>
 
         <!-- Slide 22: Quiz -->
@@ -795,23 +581,6 @@
                 <div class="card" style="flex-direction: row; text-align: left; gap: 20px; padding: 20px 30px;">
                     <div class="card-icon" style="margin: 0; font-size: 2.5rem;">🤖</div>
                     <p style="margin: 0; font-size: 1.2rem;"><strong>Tidak Tahu? Wajar!:</strong> Jika AI salah menebak, kita hanya perlu memberikannya lebih banyak Datasets.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="slide" id="slide5">
-            <h2 class="agenda-title">Pertemuan Selanjutnya ➡️</h2>
-            <div style="display: flex; gap: 20px; width: 100%; max-width: 1000px;">
-                <div class="card" style="flex: 1; border-top: 10px solid #9966ff;">
-                    <div style="font-size: 4rem;">🧠🔨</div>
-                    <h3 class="txt-purple">Trained Model</h3>
-                    <p style="font-size: 1.1rem;"><strong>(Sesi Hari Ini)</strong><br>Kita yang memberi contoh (dataset) satu per satu sampai AI-nya paham.</p>
-                </div>
-                <div style="display: flex; align-items: center; font-size: 2rem;">➡️</div>
-                <div class="card" style="flex: 1; border-top: 10px solid #008080; background: #f0fdf4;">
-                    <div style="font-size: 4rem;">🚀✨</div>
-                    <h3 class="txt-teal">Pre-trained Model</h3>
-                    <p style="font-size: 1.1rem;"><strong>(Sesi Selanjutnya)</strong><br>Kita pakai model <strong>Toxicity</strong> yang sudah disediakan ML4K. Sudah pintar, tinggal pakai!</p>
                 </div>
             </div>
         </div>
@@ -1061,10 +830,10 @@
             exp: "Benar sekali! AI cuma butuh lebih banyak latihan dan contoh data."
         },
         {
-            q: "Di menu apa kita memasukkan kumpulan contoh kata-kata di ML4K?",
-            opts: ["A. Menu Train", "B. Menu Make", "C. Menu Learn"],
-            ans: 0,
-            exp: "Betul! Menu Train adalah tempat kita melatih robot dengan label dan datasets."
+            q: "Saat melatih AI for Ocean, apa yang kita berikan ke komputer agar ia belajar membedakan ikan dan sampah?",
+            opts: ["A. Warna latar belakang", "B. Contoh gambar yang benar", "C. Tombol keyboard"],
+            ans: 1,
+            exp: "Betul! Kita memberi contoh gambar yang benar agar AI belajar dari data."
         }
     ];
 
