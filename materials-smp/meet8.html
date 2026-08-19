@@ -1,554 +1,1257 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUANGGURU CODING - MEET 8 SMP</title>
-    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <title>RUANGGURU CODING - SESSION 8 SMP</title>
+    <link rel="icon"
+        href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+        type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4a8b8b;
             --secondary: #f2c140;
             --dark: #1a2424;
-            --light: #ffffff;
+            --panel: #202b2b;
+            --light: #fff;
             --accent: #78a3a3;
             --success: #00e676;
             --danger: #ff5252;
-            --orange: #ffab19;
-            --card-bg: rgba(0, 0, 0, 0.2);
-            
-            /* Scratch Block Colors */
-            --b-event: #FFBF00;
-            --b-look: #9966FF;
-            --b-control: #FFAB19;
-            --b-motion: #4C97FF;
-            --b-sensing: #4CBFE6;
-            --b-op: #59C059;
-            --b-ai: #008080;
+            --blue: #4c97ff;
+            --purple: #9966ff;
+            --orange: #ff8c1a;
+            --card-bg: rgba(255, 255, 255, .075);
         }
 
-        body { 
-            margin: 0; padding: 0; 
-            font-family: 'Outfit', sans-serif; 
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
             background: url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover fixed no-repeat;
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; overflow: hidden; 
-            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            color: var(--light)
         }
 
-        .presentation-container { 
-            width: 80vw; height: 80vh; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); 
-            border-radius: 20px; overflow: hidden; 
-            display: flex; flex-direction: column; position: relative; 
+        .presentation-container {
+            width: 80vw;
+            height: 80vh;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .6);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
             background: #202b2b;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, .12)
         }
 
-        .slide { 
-            width: 100%; height: 100%; 
-            padding: 40px 60px; box-sizing: border-box; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            position: absolute; top: 0; left: 0; 
-            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1); 
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            inset: 0;
+            transition: all .65s cubic-bezier(.645, .045, .355, 1);
             background: linear-gradient(135deg, #2b3a3a 0%, #1a2424 100%);
-            visibility: hidden; opacity: 0; 
+            visibility: hidden;
+            opacity: 0;
+            overflow-y: auto
         }
 
-        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+            transform: translateX(0)
+        }
 
-        /* Logos */
-        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; }
-        .slide-logo-left img { height: 40px; width: auto; }
-        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; }
-        .slide-logo-right img { height: 40px; width: auto; }
+        .slide.is-next {
+            transform: translateX(100%);
+            visibility: visible;
+            opacity: 1;
+            z-index: 11
+        }
 
-        .nav-button { background-color: var(--secondary); color: #222; border: none; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-        #prevBtn { left: 20px; } 
-        #nextBtn { right: 20px; }
-        .nav-button:hover:not(:disabled) { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px var(--secondary); }
-        .nav-button:disabled { background-color: #555; color: #888; cursor: not-allowed; opacity: 0.5; }
+        .slide.is-exiting {
+            transform: translateX(-100%);
+            opacity: 0;
+            z-index: 5
+        }
 
-        /* Typography */
-        h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
-        .agenda-title { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-align: center; border-left: 10px solid var(--primary); padding-left: 20px; line-height: 1; }
-        .cover-title { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; text-align: center; }
-        .cover-subtitle { font-size: 1.4rem; color: var(--accent); font-weight: 400; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
-        .highlight { color: var(--secondary); font-weight: 800; }
+        .slide-logo-left {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            padding: 10px 20px 10px 40px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            gap: 15px
+        }
 
-        /* Elements */
-        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; backdrop-filter: blur(10px); text-align: center; }
-        .card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.1); border-color: var(--primary); }
-        .huge-btn { background: var(--primary); color: white; padding: 15px 35px; border-radius: 15px; font-weight: 800; font-size: 1.2rem; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; display: inline-block; box-shadow: 0 10px 20px rgba(74, 139, 139, 0.3); }
-        .huge-btn:hover { background: var(--accent); transform: translateY(-3px); }
+        .slide-logo-left img {
+            height: 40px;
+            width: auto
+        }
 
-        /* Scratch Blocks */
-        .block { padding: 8px 15px; border-radius: 8px; color: white; font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; margin: 4px; box-shadow: 0 3px 0 rgba(0,0,0,0.2); }
-        .block.say { background: var(--b-look); border-radius: 15px 15px 15px 15px; border-bottom: 4px solid #774DCB; }
-        .block.ask { background: var(--b-sensing); border-radius: 8px; border-bottom: 4px solid #2CA5E2; }
-        .block.ai { background: var(--b-ai); border-radius: 20px; border-bottom: 4px solid #005a5a; }
-        .block.set { background: var(--orange); border-radius: 8px; border-bottom: 4px solid #E68D00; }
-        .block-input { background: white; color: #222; border-radius: 10px; padding: 2px 10px; font-size: 0.9rem; }
+        .slide-logo-right {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: white;
+            padding: 10px 40px 10px 20px;
+            border-bottom-left-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000
+        }
 
-        /* DnD Styles */
-        .dnd-container { width: 100%; display: flex; flex-direction: column; gap: 20px; align-items: center; }
-        .drop-zone { width: 400px; height: 80px; border: 3px dashed rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; transition: 0.3s; background: rgba(255,255,255,0.05); }
-        .drop-zone.drag-over { background: rgba(74, 139, 139, 0.2); border-color: var(--primary); }
-        .block-pool { display: flex; gap: 15px; margin-top: 20px; }
-        .draggable-block { cursor: grab; }
+        .slide-logo-right img {
+            height: 40px;
+            width: auto
+        }
 
-        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-        .float { animation: floatSprite 2s infinite alternate ease-in-out; }
+        .nav-button {
+            background: var(--secondary);
+            color: #222;
+            border: none;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: .3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .3)
+        }
+
+        #prevBtn {
+            left: 20px
+        }
+
+        #nextBtn {
+            right: 20px
+        }
+
+        .nav-button:hover:not(:disabled) {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px var(--secondary)
+        }
+
+        .nav-button:disabled {
+            background: #555;
+            color: #888;
+            cursor: not-allowed;
+            opacity: .5
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px
+        }
+
+        .agenda-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 0 0 28px;
+            text-align: center;
+            border-left: 10px solid var(--primary);
+            padding-left: 20px;
+            line-height: 1.08
+        }
+
+        .cover-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin: 0 0 12px;
+            line-height: 1.05;
+            text-align: center
+        }
+
+        .cover-subtitle {
+            font-size: 1.35rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-align: center
+        }
+
+        .highlight-gradient {
+            background: linear-gradient(135deg, #f2c140 0%, #ffffff 48%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900
+        }
+
+        .small-text {
+            font-size: 1.05rem;
+            color: #dce7e7;
+            line-height: 1.5
+        }
+
+        .caption {
+            margin-top: 12px;
+            opacity: .82;
+            font-size: 1rem
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            width: 100%;
+            max-width: 1020px
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            width: 100%;
+            max-width: 1060px
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+            width: 100%;
+            max-width: 1080px
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            transition: .3s;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, .18)
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, .1);
+            border-color: var(--primary)
+        }
+
+        .card h4,
+        .card h3 {
+            font-size: 1.55rem;
+            margin: 12px 0 10px;
+            color: var(--secondary)
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.45;
+            margin: 0;
+            color: #e9eeee
+        }
+
+        .card-icon {
+            font-size: 3.3rem;
+            margin-bottom: 10px
+        }
+
+        .huge-btn {
+            background: var(--primary);
+            color: white;
+            padding: 18px 42px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.32rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 10px 20px rgba(76, 151, 255, .18);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px
+        }
+
+        .huge-btn:hover {
+            background: var(--accent);
+            transform: scale(1.04);
+            box-shadow: 0 0 30px var(--accent)
+        }
+
+        .note {
+            background: rgba(242, 193, 64, .12);
+            border: 1px dashed var(--secondary);
+            color: #fff7d0;
+            border-radius: 18px;
+            padding: 20px 24px;
+            font-size: 1.2rem;
+            line-height: 1.5
+        }
+
+        .teal-note {
+            background: rgba(74, 139, 139, .22);
+            border-left: 7px solid var(--primary);
+            color: #ecffff;
+            border-radius: 18px;
+            padding: 18px 24px;
+            font-size: 1.2rem;
+            line-height: 1.5
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .08);
+            color: #eef;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 800
+        }
+
+        .img-container {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 18px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain
+        }
+
+        .project-gif {
+            max-width: 100%;
+            max-height: 420px;
+            border-radius: 18px;
+            border: 4px solid rgba(242, 193, 64, .45);
+            background: rgba(0, 0, 0, .2)
+        }
+
+        .float {
+            animation: floating 2.4s infinite alternate ease-in-out
+        }
+
+        @keyframes floating {
+            from {
+                transform: translateY(0)
+            }
+
+            to {
+                transform: translateY(-14px)
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.04)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .dnd-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            width: 100%;
+            max-width: 1000px
+        }
+
+        .drop-title {
+            font-size: 1.25rem;
+            color: var(--secondary);
+            text-align: center;
+            margin: 0 0 12px;
+            font-weight: 900
+        }
+
+        .drop-zone {
+            min-height: 160px;
+            border: 2px dashed rgba(255, 255, 255, .26);
+            background: rgba(0, 0, 0, .2);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-content: flex-start;
+            justify-content: center
+        }
+
+        .drop-zone.over {
+            border-color: var(--secondary);
+            background: rgba(242, 193, 64, .12)
+        }
+
+        .drag-pool {
+            margin-top: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            padding: 18px;
+            width: 100%;
+            max-width: 980px
+        }
+
+        .drag-item {
+            background: var(--primary);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .15);
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-weight: 900;
+            cursor: grab;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, .22);
+            user-select: none
+        }
+
+        .drag-item.locked {
+            cursor: default;
+            opacity: .95
+        }
+
+        .mini-step {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 18px;
+            padding: 18px;
+            font-size: 1.15rem;
+            line-height: 1.45;
+            color: #f0f5f5
+        }
+
+        .mini-step strong {
+            color: var(--secondary)
+        }
+
+        .sound-box {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 24px;
+            padding: 28px;
+            text-align: center;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, .28)
+        }
+
+        .volume-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 18px auto;
+            width: 100%;
+            max-width: 560px
+        }
+
+        .volume-row input {
+            flex: 1;
+            accent-color: var(--secondary)
+        }
+
+        .status-line {
+            min-height: 34px;
+            font-size: 1.15rem;
+            color: #dff;
+            margin-top: 12px;
+            font-weight: 800
+        }
+
+        .simulator {
+            width: 100%;
+            max-width: 860px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .14);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, .28)
+        }
+
+        .sim-row {
+            display: flex;
+            gap: 12px
+        }
+
+        .sim-input {
+            flex: 1;
+            background: rgba(255, 255, 255, .96);
+            color: #1a2424;
+            border: 2px solid rgba(255, 255, 255, .25);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            outline: none
+        }
+
+        .sim-output {
+            margin-top: 18px;
+            display: grid;
+            grid-template-columns: 170px 1fr;
+            gap: 18px;
+            align-items: center;
+            background: rgba(0, 0, 0, .22);
+            border-radius: 18px;
+            padding: 18px
+        }
+
+        .album-art {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, var(--secondary) 0 16%, #111 17% 26%, #3a3a3a 27% 100%);
+            border-radius: 50%;
+            margin: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .35)
+        }
+
+        .song-line {
+            font-size: 1.25rem;
+            margin: 7px 0
+        }
+
+        .song-line b {
+            color: var(--secondary)
+        }
+
+        .code-img {
+            width: 100%;
+            max-height: 470px;
+            object-fit: contain;
+            border-radius: 18px;
+            border: 4px solid rgba(242, 193, 64, .45);
+            background: white;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, .35)
+        }
+
+        .sprite-card {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+            gap: 24px;
+            align-items: center;
+            width: 100%;
+            max-width: 1060px
+        }
+
+        .sprite-preview {
+            min-height: 330px
+        }
+
+        .scratch-block {
+            color: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            display: inline-block;
+            margin: 4px 0;
+            box-shadow: inset 0 -3px rgba(0, 0, 0, .15);
+            font-size: 1rem
+        }
+
+        .b-event {
+            background: #ffbf00;
+            color: #333
+        }
+
+        .b-sensing {
+            background: #5cb1d6
+        }
+
+        .b-data {
+            background: #ff8c1a
+        }
+
+        .b-control {
+            background: #ffab19
+        }
+
+        .b-look {
+            background: #9966ff
+        }
+
+        .b-itunes {
+            background: #111827
+        }
+
+        .b-sound {
+            background: #cf63cf
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 900px
+        }
+
+        .check-item {
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .13);
+            border-radius: 16px;
+            padding: 16px 18px;
+            font-size: 1.08rem;
+            text-align: left;
+            cursor: pointer;
+            color: #f4ffff
+        }
+
+        .check-item.checked {
+            border-color: var(--success);
+            background: rgba(0, 230, 118, .13)
+        }
+
+        .quiz-opt {
+            background: rgba(255, 255, 255, .06);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, .18);
+            padding: 16px 20px;
+            border-radius: 15px;
+            font-size: 1.08rem;
+            cursor: pointer;
+            transition: .2s;
+            text-align: left;
+            width: 100%;
+            font-family: 'Outfit', sans-serif
+        }
+
+        .quiz-opt:hover {
+            border-color: var(--secondary);
+            background: rgba(242, 193, 64, .08)
+        }
+
+        .quiz-opt.correct {
+            background: rgba(0, 230, 118, .18);
+            border-color: var(--success)
+        }
+
+        .quiz-opt.wrong {
+            background: rgba(255, 82, 82, .16);
+            border-color: var(--danger)
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .8);
+            z-index: 2000;
+            display: none;
+            backdrop-filter: blur(5px)
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #16213e;
+            padding: 38px;
+            border-radius: 20px;
+            z-index: 2001;
+            text-align: center;
+            border: 2px solid var(--secondary);
+            display: none;
+            max-width: 520px;
+            color: white;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, .45)
+        }
+
+        .modal h2 {
+            color: var(--secondary);
+            margin: 10px 0
+        }
+
+        @media(max-width:900px) {
+
+            .grid-container,
+            .three-col,
+            .two-col,
+            .dnd-board,
+            .sprite-card,
+            .checklist {
+                grid-template-columns: 1fr !important
+            }
+
+            .slide {
+                padding: 32px 36px
+            }
+
+            .cover-title {
+                font-size: 3rem
+            }
+
+            .sim-output {
+                grid-template-columns: 1fr
+            }
+
+            .slide-logo-left img,
+            .slide-logo-right img {
+                height: 32px
+            }
+
+            .slide-logo-left {
+                padding-left: 18px
+            }
+
+            .slide-logo-right {
+                padding-right: 18px
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="slide-logo-left">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="RG">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="DH">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="DS">
-        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Juara">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png"
+            alt="Logo Ruangguru">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png"
+            alt="Logo Kabupaten Dharmasraya">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s"
+            alt="Logo Disdik Dharmasraya">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png"
+            alt="Logo Dharmasraya Juara">
     </div>
-    <div class="slide-logo-right">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="RG Coding">
-    </div>
+    <div class="slide-logo-right"><img
+            src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+            alt="Logo Ruangguru Coding"></div>
 
     <div class="presentation-container">
-        <!-- Slide 1: Cover -->
-        <div class="slide active" id="slide1">
-            <h1 class="cover-title">JOURNEY TO SCHOOL <br><span style="color: var(--secondary);">SCRATCH PREDICTION</span></h1>
-            <p class="cover-subtitle">SESI 8: INTEGRASI MACHINE LEARNING & SCRATCH</p>
-            <div style="display: flex; gap: 40px; justify-content: center; align-items: center;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 100px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));">
-                <div style="font-size: 4rem; color: var(--accent);">➕</div>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 100px; background: #008080; padding: 15px; border-radius: 20px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));">
-            </div>
-            <div style="font-size: 5rem; margin-top: 30px;" class="float">🤖🚀</div>
-        </div>
-
-        <!-- Slide 2: Recall -->
-        <div class="slide" id="slide2">
-            <h2 class="agenda-title">Review Sesi 7 🧠</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 8rem;" class="float">⚙️🏋️</div>
-                </div>
-                <div style="flex: 1.5;">
-                    <p style="font-size: 1.4rem; line-height: 1.6;">Masuk ke dunia AI, masih ingat apa yang kita lakukan minggu lalu?</p>
-                    <div style="display: flex; flex-direction: column; gap: 15px;">
-                        <div class="card" style="text-align: left; padding: 15px 25px;">
-                            <span class="highlight">Training:</span> Memberikan contoh data (Age, Distance, Friends).
-                        </div>
-                        <div class="card" style="text-align: left; padding: 15px 25px;">
-                            <span class="highlight">Learn & Test:</span> Melatih model dan mencoba tebakan AI.
-                        </div>
-                    </div>
+        <div class="slide active" id="cover">
+            <div style="text-align:center;max-width:1040px">
+                <div class="pill">SCRATCH + MACHINE LEARNING 4 KIDS</div>
+                <h1 class="cover-title"><span class="highlight-gradient">PRETRAINED AI</span><br>MUSIC PLAYER</h1>
+                <p class="cover-subtitle">SESSION 8: INPUT • PROCESS • OUTPUT • Music EXTENSION</p>
+                <div style="font-size:5.8rem;margin:18px 0" class="float">🎧🤖🎵</div>
+                <div
+                    style="display:flex;justify-content:center;gap:22px;align-items:center;flex-wrap:wrap;margin-top:18px">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png"
+                        alt="Scratch" style="height:74px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));">
+                    <span style="font-size:2.4rem;font-weight:900">+</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s"
+                        alt="ML4K"
+                        style="height:74px;background:#008080;padding:9px;border-radius:16px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));">
+                    <span style="font-size:2.4rem;font-weight:900">+</span>
+                    <div
+                        style="height:74px;min-width:74px;border-radius:20px;background:linear-gradient(135deg,#ff2d55,#5856d6);display:grid;place-items:center;font-size:2.9rem;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));">
+                        ♪</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: Agenda Today -->
-        <div class="slide" id="slide3">
-            <h2 class="agenda-title">Hari Ini Kita Mau Ngapain? 📅</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 10rem;" class="float">📝</div>
-                </div>
-                <div style="flex: 1.5;">
-                    <div class="card" style="text-align: left; padding: 30px; border-left: 10px solid var(--secondary);">
-                        <ul style="font-size: 1.4rem; line-height: 2; list-style-type: '✅ ';">
-                            <li>Menghubungkan <span class="highlight">ML4K ke Scratch</span>.</li>
-                            <li>Membuat variabel pendukung (Age, Distance, Friends).</li>
-                            <li>Coding blok <span class="highlight">prediksi AI</span>.</li>
-                            <li>Mencoba hasil integrasi secara langsung!</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4: Project Preview -->
-        <div class="slide" id="slide4">
-            <h2 class="agenda-title">Project: Journey to School AI 🚗🚶</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                <p style="font-size: 1.3rem; margin-bottom: 20px;">Inilah hasil akhir yang akan kita buat hari ini!</p>
-                <div style="width: 100%; max-width: 650px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 25px; border: 2px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                    <img src="https://cdn-web.ruangguru.com/file-uploader/fb364ca9-7e0d-4e00-af77-1ffb60db1dc3.gif" style="width: 100%; border-radius: 15px;">
-                </div>
-                <p style="margin-top: 20px; font-weight: 800; color: var(--secondary);">AI akan menebak kendaraanmu lewat percakapan di Scratch! 🤖✨</p>
-            </div>
-        </div>
-
-        <!-- Slide 5: Analogy -->
-        <div class="slide" id="slide5">
-            <h2 class="agenda-title">Analogi: Otak & Tubuh 🧠👤</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1; text-align: center;">
-                    <div class="card" style="border-color: var(--primary);">
-                        <div style="font-size: 4rem;">🧠</div>
-                        <h3 style="color: var(--primary);">ML4K Model</h3>
-                        <p>Adalah <strong>Otak</strong> yang pintar tapi tidak bisa bicara.</p>
-                    </div>
-                </div>
-                <div style="font-size: 3rem; color: var(--secondary);">➕</div>
-                <div style="flex: 1; text-align: center;">
-                    <div class="card" style="border-color: #4d97ff;">
-                        <div style="font-size: 4rem;">👤</div>
-                        <h3 style="color: #4d97ff;">Scratch</h3>
-                        <p>Adalah <strong>Tubuh</strong> yang bisa bertanya dan bicara.</p>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-top: 30px; text-align: center; font-size: 1.5rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 2px dashed var(--accent);">
-                Hari ini kita akan <span class="highlight">menghubungkan</span> Otak AI ke Tubuh Scratch agar program bisa menebak perjalananmu!
-            </div>
-        </div>
-
-        <!-- Slide 6: Step 1: Launch Scratch -->
-        <div class="slide" id="slide6">
-            <h2 class="agenda-title">Step 1: Hubungkan ke Scratch 🐱</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: flex-start;">
-                <div style="flex: 1.2; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                    <img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" style="width: 100%; border-radius: 10px;">
-                </div>
-                <div style="flex: 1; text-align: left;">
-                    <ol style="font-size: 1.3rem; line-height: 2;">
-                        <li>Di ML4K, klik menu <span class="highlight">Make</span>.</li>
-                        <li>Pilih <span class="highlight">Scratch 3</span>.</li>
-                        <li>Klik <span class="highlight">Straight into Scratch now</span>.</li>
-                        <li>Editor Scratch akan terbuka dengan kategori blok AI khusus!</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Step 2: Input Questions -->
-        <div class="slide" id="slide7">
-            <h2 class="agenda-title">Step 2: Menanyakan Data ❓</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                <div style="flex: 1.2; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/157277d0-0e6a-49d9-af7f-71a80a2b4894.png" style="width: 100%; border-radius: 10px;">
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <p style="font-size: 1.2rem; margin-bottom: 20px;">Gunakan blok <span class="highlight">Ask</span> untuk bertanya:</p>
-                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-                        <div class="block ask" style="font-size: 0.9rem;">ask <span class="block-input">Berapa umurmu?</span> and wait</div>
-                        <div class="block ask" style="font-size: 0.9rem;">ask <span class="block-input">Seberapa jauh jarak rumah?</span> and wait</div>
-                        <div class="block ask" style="font-size: 0.9rem;">ask <span class="block-input">Berapa teman dekat rumah?</span> and wait</div>
-                    </div>
-                    <div class="card" style="margin-top: 20px; background: rgba(76, 151, 255, 0.1); padding: 15px;">
-                        <p style="font-weight: 800; font-size: 0.9rem;">Simpan setiap jawaban ke variabel!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Step 3: Use Variables -->
-        <div class="slide" id="slide8">
-            <h2 class="agenda-title">Step 3: Simpan ke Variabel 📥</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                <div style="flex: 1.2; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/e41f627d-2436-4716-b84e-7d726e10afd3.png" style="width: 100%; border-radius: 10px;">
-                </div>
-                <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.3rem;">Simpan di <span class="highlight">Variables</span>:</p>
-                    <div class="card" style="text-align: left; padding: 20px;">
-                        <p style="font-size: 1.1rem; line-height: 1.6;">
-                            Karena kita punya 3 pertanyaan berbeda, kita butuh 3 kotak (Variabel) agar data tidak tertukar sebelum dikirim ke AI!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Step 4: The AI Block -->
-        <div class="slide" id="slide9">
-            <h2 class="agenda-title">Step 4: Blok Prediksi AI 🧠⚡</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                <div style="flex: 1.2; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/29ccb86a-af08-479e-b3fe-f12daa505ec6.png" style="width: 100%; border-radius: 10px;">
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <div class="block ai" style="font-size: 1.1rem; padding: 15px 25px; margin-bottom: 20px;">
-                        recognise numbers (age) (distance) (friends)
-                    </div>
-                    <p style="font-size: 1.1rem; opacity: 0.8; line-height: 1.4;">
-                        Blok ini akan mengirim 3 angka ke ML4K, lalu memberikan jawaban tebakannya secara instan!
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Interactive Lab -->
-        <div class="slide" id="slide10">
-            <h2 class="agenda-title">Interactive Lab: Hubungkan AI! 🛠️</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 30px;">Tarik blok AI ke dalam blok Say agar Robot bisa mengucapkan hasil tebakannya!</p>
-            
-            <div class="dnd-container">
-                <div class="drop-zone" id="sayDropZone">
-                    <div class="block say" style="font-size: 1.5rem; width: 100%; justify-content: flex-start;">
-                        say <div id="dropTarget" style="width: 250px; height: 40px; border: 2px dashed rgba(255,255,255,0.3); border-radius: 15px; margin: 0 10px;"></div> for 2 secs
-                    </div>
-                </div>
-                
-                <div class="block-pool">
-                    <div class="block ai draggable-block" draggable="true" id="aiBlock">
-                        recognise numbers... 🧠
-                    </div>
-                    <div class="block motion draggable-block" draggable="true" id="motionBlock">
-                        move 10 steps 🏃
-                    </div>
-                </div>
-            </div>
-            <div id="labFeedback" style="margin-top: 20px; font-weight: 800; font-size: 1.2rem;"></div>
-        </div>
-
-        <!-- Slide 11: Coding Tips -->
-        <div class="slide" id="slide11">
-            <h2 class="agenda-title">Tips Coding AI 💡</h2>
-            <div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;">
-                <div class="card" style="border-top: 5px solid var(--success);">
-                    <h4>Gunakan Join</h4>
-                    <p>Gabungkan kalimat agar lebih ramah: <br><code>say [Aku tebak kamu ke sekolah naik] + [prediction]</code></p>
-                </div>
-                <div class="card" style="border-top: 5px solid var(--danger);">
-                    <h4>Cek Urutan</h4>
-                    <p>Urutan angka (Age, Distance, Friends) harus sama persis dengan yang ada di ML4K!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: Final Checklist -->
-        <div class="slide" id="slide12">
-            <h2 class="agenda-title">Final Checklist ✅</h2>
-            <div style="text-align: left; max-width: 700px; margin: 0 auto;">
-                <div class="card" style="margin-bottom: 15px;">
-                    <p style="font-size: 1.3rem;">🔲 3 Pertanyaan Ask & Wait selesai.</p>
-                </div>
-                <div class="card" style="margin-bottom: 15px;">
-                    <p style="font-size: 1.3rem;">🔲 3 Variabel terisi dengan Answer.</p>
-                </div>
-                <div class="card" style="margin-bottom: 15px;">
-                    <p style="font-size: 1.3rem;">🔲 Blok AI terpasang di dalam Say.</p>
-                </div>
-                <div class="card" style="border-color: var(--success);">
-                    <p style="font-size: 1.3rem; font-weight: 800; color: var(--success);">🔲 TEST! Coba masukkan angka dan lihat tebakannya!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 13: Debugging -->
-        <div class="slide" id="slide13">
-            <h2 class="agenda-title">Waduh! Tebakan AI Salah? 😱</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="font-size: 8rem;" class="float">🤖❓</div>
-                <div style="flex: 1.5; text-align: left;">
-                    <p style="font-size: 1.4rem;">Jika AI salah menebak, jangan khawatir! Ingat konsep <strong>Machine Learning</strong>:</p>
-                    <div class="card" style="border-color: var(--danger); background: rgba(255, 82, 82, 0.1);">
-                        <p style="font-size: 1.2rem; font-weight: 800;">Solusinya: Kembali ke ML4K, tambah lebih banyak DATA TRAINING, lalu klik TRAIN MODEL lagi!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14: Summary -->
-        <div class="slide" id="slide14">
-            <h2 class="agenda-title">Rangkuman Sesi 8 📋</h2>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
+        <div class="slide">
+            <h2 class="agenda-title">Review: AI Sebelumnya 🧠</h2>
+            <div class="grid-container">
                 <div class="card">
-                    <h4>🔗 Integrasi</h4>
-                    <p>Menghubungkan model AI dari ML4K ke dalam editor Scratch.</p>
+                    <div class="card-icon">📚</div>
+                    <h4>Training</h4>
+                    <p>Kita memberi contoh data agar model bisa belajar mengenali pola.</p>
                 </div>
                 <div class="card">
-                    <h4>🔢 Numerical Prediction</h4>
-                    <p>Menebak kategori menggunakan data angka sebagai input.</p>
+                    <div class="card-icon">🧪</div>
+                    <h4>Testing</h4>
+                    <p>Hasil AI tetap harus dicoba karena prediksi bisa benar atau salah.</p>
                 </div>
                 <div class="card">
-                    <h4>📦 Variables</h4>
-                    <p>Tempat menyimpan sementara data input user sebelum diproses AI.</p>
+                    <div class="card-icon">🏷️</div>
+                    <h4>Dataset</h4>
+                    <p>Contoh data yang diberi label untuk membantu model belajar.</p>
                 </div>
                 <div class="card">
-                    <h4>🛠️ Refinement</h4>
-                    <p>Menambah data training untuk meningkatkan akurasi tebakan AI.</p>
+                    <div class="card-icon">🤖</div>
+                    <h4>Prediction</h4>
+                    <p>AI memberi hasil berdasarkan pola yang pernah dipelajari.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 15: Quick Quiz -->
-        <div class="slide" id="slide15">
+        <div class="slide">
+            <h2 class="agenda-title">Hari Ini: AI Ready-to-Use ⚡</h2>
+            <div class="two-col">
+                <div class="card">
+                    <div style="font-size:6rem" class="float">🧠✅</div>
+                    <h4>Pretrained / Ready-to-use</h4>
+                    <p>Kita tidak melatih model dari nol. Kita memakai sistem dan data yang sudah tersedia.</p>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Contoh:</strong> search engine, rekomendasi lagu, translator, dan
+                        extension yang bisa mengambil data dari internet.</div>
+                    <div class="teal-note" style="margin-top:16px">Tugas kita sebagai creator: memberi input yang jelas,
+                        memahami prosesnya, lalu mengecek output-nya.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Input → Process → Output 🔄</h2>
+            <div class="three-col">
+                <div class="card">
+                    <div class="card-icon">⌨️</div>
+                    <h4>Input</h4>
+                    <p>Data yang diberikan user. Contoh: keyword lagu.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h4>Process</h4>
+                    <p>Sistem mencari dan mengolah data dari sumber yang tersedia.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔊</div>
+                    <h4>Output</h4>
+                    <p>Hasil yang muncul: judul lagu, artist, album, dan suara preview.</p>
+                </div>
+            </div>
+            <div class="note" style="margin-top:26px;max-width:900px;text-align:center">Di project Music Player, user
+                mengetik keyword lagu. iTunes extension mencari hasil, lalu Scratch menampilkan info dan memainkan
+                preview.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Activity: Sort the System 🧩</h2>
+            <p class="small-text" style="margin-top:-12px;text-align:center">Tarik kartu ke bagian yang tepat untuk
+                Music Player.</p>
+            <div class="dnd-board">
+                <div>
+                    <div class="drop-title">INPUT ⌨️</div>
+                    <div class="drop-zone" data-accept="input"></div>
+                </div>
+                <div>
+                    <div class="drop-title">PROCESS ⚙️</div>
+                    <div class="drop-zone" data-accept="process"></div>
+                </div>
+                <div>
+                    <div class="drop-title">OUTPUT 🔊</div>
+                    <div class="drop-zone" data-accept="output"></div>
+                </div>
+            </div>
+            <div class="drag-pool">
+                <div class="drag-item" draggable="true" data-type="output">preview lagu diputar</div>
+                <div class="drag-item" draggable="true" data-type="input">keyword lagu dari user</div>
+                <div class="drag-item" draggable="true" data-type="process">iTunes mencari lagu</div>
+                <div class="drag-item" draggable="true" data-type="output">SongTitle muncul</div>
+                <div class="drag-item" draggable="true" data-type="process">mengambil data artist & album</div>
+                <div class="drag-item" draggable="true" data-type="input">jawaban dari ask block</div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Project Preview 🎧</h2>
+            <div class="two-col" style="grid-template-columns:1.1fr .9fr">
+                <div class="img-container" style="height:430px"><img class="project-gif"
+                        src="https://cdn-web.ruangguru.com/file-uploader/d713f3ed-8134-4584-9a02-b68eb833e51f.gif"
+                        alt="Music Player Preview"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Target:</strong> Music Player bisa mencari lagu dari keyword.</div>
+                    <div class="mini-step"><strong>Output:</strong> title, artist, album, dan preview audio.</div>
+                    <div class="mini-step"><strong>Extra:</strong> disk dan bongo cat bergerak saat lagu sedang playing.
+                    </div>
+                    <div class="note" style="margin-top:16px">Kita akan memakai starter project agar fokus ke logic dan
+                        extension.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Speaker Check 🔊</h2>
+            <div class="sound-box">
+                <div style="font-size:5rem" class="float">🎚️🎧</div>
+                <p style="font-size:1.35rem;line-height:1.5">Klik tombol di bawah. Coba naik-turunkan volume laptop atau
+                    headset kamu.</p>
+                <div class="volume-row"><span>🔈</span><input id="volumeSlider" type="range" min="0" max="1" step="0.05"
+                        value="0.25"><span>🔊</span></div>
+                <button id="testSoundBtn" class="huge-btn pulse" onclick="playTestSound()">PLAY TEST SOUND ▶️</button>
+                <div class="status-line" id="soundStatus">Kalau belum terdengar, tetap bisa ikut bikin project kok.
+                </div>
+                <audio id="testAudio" preload="auto"
+                    src="https://codeskulptor-demos.commondatastorage.googleapis.com/pang/paza-moduless.mp3"></audio>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Buka ML4K Scratch 🌐</h2>
+            <div class="two-col">
+                <div class="card" style="background:rgba(74,139,139,.24)"><img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s"
+                        alt="ML4K"
+                        style="height:130px;object-fit:contain;background:#008080;border-radius:18px;padding:10px">
+                    <h4>Machine Learning 4 Kids Scratch</h4>
+                    <p>Versi Scratch yang punya extension tambahan untuk AI dan data.</p>
+                </div>
+                <div style="text-align:left">
+                    <p style="font-size:1.32rem;line-height:1.55">Kita tidak perlu login. Buka editor, lalu tunggu
+                        arahan teacher untuk load starter project.</p><a class="huge-btn"
+                        href="https://machinelearningforkids.co.uk/scratch/" target="_blank"
+                        rel="noopener noreferrer">OPEN ML4K SCRATCH ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Download Starter Project 🛠️</h2>
+            <div class="two-col" style="grid-template-columns:.85fr 1.15fr">
+                <div class="card">
+                    <div style="font-size:6rem">🎧📁</div>
+                    <h4>[STARTER] Music Player.sb3</h4>
+                    <p>Gunakan file ini sebagai base project.</p>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>1.</strong> Download file starter project.</div>
+                    <div class="mini-step"><strong>2.</strong> Simpan di folder yang mudah dicari.</div>
+                    <div class="mini-step"><strong>3.</strong> Nanti file ini akan di-load ke ML4K Scratch.</div>
+                    <a class="huge-btn" style="margin-top:18px" href="https://drive.google.com/file/d/1hQV_MhXfbhA3DFl96QVMpatd_VFR-Oyf/view?usp=drive_link" target="_blank" rel="noopener noreferrer">DOWNLOAD
+                        STARTER ⬇️</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Load Project di ML4K 📂</h2>
+            <div class="two-col" style="grid-template-columns:1.05fr .95fr;align-items:center">
+                <div class="img-container" style="max-height:380px">
+                    <img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/c8653431-5312-4d47-9539-b6ab4feed74d.png"
+                        alt="Load Project from Computer" style="max-height:340px">
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>1. File:</strong> Klik menu <strong>File</strong> di pojok kiri atas.</div>
+                    <div class="mini-step"><strong>2. Load:</strong> Pilih <strong>Load from your computer</strong>.</div>
+                    <div class="mini-step"><strong>3. Choose SB3:</strong> Cari file <strong>[STARTER] Music Player.sb3</strong>.</div>
+                    <div class="note" style="margin-top:16px">Project ini dibuka di <strong>ML4K Scratch</strong>, bukan scratch.mit.edu.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Tambahkan iTunes Extension 🎵</h2>
+            <div class="grid-container" style="grid-template-columns:repeat(3,1fr);max-width:1080px">
+                <div class="card">
+                    <div class="card-icon">1</div>
+                    <h4>Add Extension</h4><img class="code-img" style="max-height:230px"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f15608a4-3f57-4c77-9a24-670d5e6ab75f.png"
+                        alt="Add extension button">
+                </div>
+                <div class="card">
+                    <div class="card-icon">2</div>
+                    <h4>Choose iTunes</h4><img class="code-img" style="max-height:230px"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/6e62eae6-4b81-40d2-94a5-16e3e9486303.png"
+                        alt="Choose iTunes extension">
+                </div>
+                <div class="card">
+                    <div class="card-icon">3</div>
+                    <h4>New Blocks</h4><img class="code-img" style="max-height:230px"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/7f39eb98-ddc2-495a-9578-dcee6757bc9f.png"
+                        alt="iTunes blocks appear">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="slide">
+            <h2 class="agenda-title">Sprite 1: Player 🎧</h2>
+            <div class="sprite-card">
+                <div class="img-container sprite-preview"><img
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/a09c80d0-4a6d-420f-a464-425edc44dc19.jpg"
+                        alt="Player sprite"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Fungsi:</strong> music player utama yang bertanya lagu apa yang ingin
+                        dicari.</div>
+                    <div class="mini-step"><strong>Variables:</strong> SongTitle, Artist, Album, Playing.</div>
+                    <div class="mini-step"><strong>Logic:</strong> ask → search for answer → set variables → play
+                        preview.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Player Code: Big Picture 🧱</h2>
+            <div class="grid-container" style="grid-template-columns:1fr 1fr;max-width:1080px">
+                <div class="card" style="text-align:left">
+                    <span class="scratch-block b-event">when green flag clicked</span><br>
+                    <span class="scratch-block b-data">set SongTitle / Artist / Album to empty</span><br>
+                    <span class="scratch-block b-data">set Playing to No</span><br>
+                    <span class="scratch-block b-sensing">ask [What to play?] and wait</span><br>
+                    <span class="scratch-block b-itunes">search for (answer)</span><br>
+                    <span class="scratch-block b-data">set variables from iTunes result</span><br>
+                    <span class="scratch-block b-sound">play preview</span>
+                </div>
+                <div class="teal-note" style="align-self:center">Intinya: user memberi keyword. iTunes extension mencari
+                    lagu. Scratch mengambil title, artist, album, lalu menampilkan data itu lewat variable di stage.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Player Code: Follow the Image 👀</h2>
+            <img class="code-img"
+                src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/e5d013b8-10ba-461d-971b-208c7bc23286.png"
+                alt="Player Scratch code">
+            <div class="caption">Perhatikan urutan dari atas ke bawah: reset variables → ask → search → set data →
+                playing.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Sprite 2: Disk 💿</h2>
+            <div class="sprite-card">
+                <div class="img-container sprite-preview"><img
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/9c907405-680c-4753-bbc6-ce0ae5c07efd.png"
+                        alt="Disk sprite"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Fungsi:</strong> memberi animasi disk berputar.</div>
+                    <div class="mini-step"><strong>Kunci logic:</strong> cek variable <strong>Playing</strong>.</div>
+                    <div class="mini-step"><strong>Jika Playing = Yes:</strong> disk terus turn 2.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Disk Code 💿</h2>
+            <img class="code-img"
+                src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/58cefa3f-4d6d-451b-bcce-c4c28c92df73.png"
+                alt="Disk Scratch code">
+            <div class="caption">Disk tidak mencari lagu. Disk hanya membaca status Playing.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Sprite 3: Bongo Cat 🐱</h2>
+            <div class="sprite-card">
+                <div class="img-container sprite-preview"><img
+                        src="https://cdn-web.ruangguru.com/file-uploader/4385cf3c-0dd9-401c-b204-4cf54241ce1e.gif"
+                        alt="Bongo cat gif"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Fungsi:</strong> dekorasi animasi project.</div>
+                    <div class="mini-step"><strong>Costume:</strong> ganti costume berulang seperti GIF.</div>
+                    <div class="mini-step"><strong>Trigger:</strong> animasi aktif saat Playing = Yes.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Bongo Cat Code 🐱</h2>
+            <img class="code-img"
+                src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/728b899c-bded-48d7-9479-06de1fb46b14.png"
+                alt="Bongo cat Scratch code">
+            <div class="caption">Logic-nya mirip Disk: baca variable Playing, lalu animasi berjalan.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Build Checklist ✅</h2>
+            <div class="checklist" id="buildChecklist">
+                <button class="check-item" onclick="toggleCheck(this)">☐ Starter project berhasil dibuka di ML4K
+                    Scratch</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ iTunes extension sudah muncul</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Variable SongTitle, Artist, Album
+                    terlihat</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Variable Playing berubah Yes / No</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Player bisa search lagu dari keyword</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Disk dan Bongo Cat bergerak saat
+                    playing</button>
+            </div>
+            <div class="status-line" id="checkStatus">0 / 6 selesai</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Test & Debug 🧪</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">🔎</div>
+                    <h4>Coba Keyword Berbeda</h4>
+                    <p>Search judul lagu, nama penyanyi, atau keyword umum.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔊</div>
+                    <h4>Cek Audio</h4>
+                    <p>Jika suara tidak muncul, cek volume, speaker, dan koneksi internet.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👀</div>
+                    <h4>Cek Variables</h4>
+                    <p>Pastikan SongTitle, Artist, dan Album berubah setelah search.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🐞</div>
+                    <h4>Debug</h4>
+                    <p>Jika tidak jalan, cek urutan blok dan extension iTunes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Save Your Project 💾</h2>
+            <div class="two-col" style="grid-template-columns:1.05fr .95fr;align-items:center">
+                <div class="img-container" style="max-height:380px">
+                    <img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b1dd37d6-0bbe-4c68-b2a6-f1e7888498fa.png"
+                        alt="Save to Computer" style="max-height:340px">
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>1. File:</strong> Klik menu <strong>File</strong> di pojok kiri atas.</div>
+                    <div class="mini-step"><strong>2. Save:</strong> Pilih <strong>Save to your computer</strong>.</div>
+                    <div class="mini-step"><strong>3. Nama File:</strong> Gunakan format nama <strong>Music Player - Nama Siswa</strong>.</div>
+                    <div class="note" style="margin-top:16px">Ingat: project ML4K perlu disimpan manual ke komputer.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" style="background:#2b3a3a">
             <h2 class="agenda-title">Quick Quiz ⏱️</h2>
-            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; width: 100%; max-width: 750px; border: 2px solid rgba(255,255,255,0.1);">
-                <div id="q-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--accent);">
-                    <span id="q-progress">Pertanyaan 1/3</span>
+            <div id="quiz-container"
+                style="background:rgba(255,255,255,.1);padding:30px;border-radius:25px;width:100%;max-width:790px;border:2px solid rgba(255,255,255,.1);backdrop-filter:blur(10px)">
+                <div id="q-progress" style="font-weight:bold;color:var(--accent);margin-bottom:16px">Pertanyaan 1/3
                 </div>
-                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; line-height: 1.4; margin-bottom: 25px;">...</h3>
-                <div id="q-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
-                <div id="q-feedback" style="margin-top: 25px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid;">
-                    <strong id="feedback-status" style="font-size: 1.2rem; display: block; margin-bottom: 5px;"></strong>
-                    <span id="feedback-hint" style="font-size: 1rem;"></span>
+                <h3 id="q-text"
+                    style="font-size:1.35rem;margin-top:0;line-height:1.4;margin-bottom:25px;text-transform:none;letter-spacing:0">
+                </h3>
+                <div id="q-options" style="display:flex;flex-direction:column;gap:12px"></div>
+                <div id="q-feedback"
+                    style="margin-top:20px;padding:15px;border-radius:15px;display:none;text-align:left;border-left:6px solid;font-size:1rem">
                 </div>
-                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                    <button id="q-next-btn" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button>
+                <div style="display:flex;justify-content:flex-end;margin-top:18px"><button id="q-next-btn"
+                        class="huge-btn" style="display:none;padding:10px 28px;font-size:1.05rem"
+                        onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button></div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Summary Hari Ini 📝</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">🧠</div>
+                    <h4>Ready-to-use AI</h4>
+                    <p>Kita memakai sistem yang sudah tersedia, bukan melatih dari nol.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h4>IPO</h4>
+                    <p>Input, process, output membantu kita membaca cara kerja sistem.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎵</div>
+                    <h4>iTunes Extension</h4>
+                    <p>Extension mencari lagu dan memberi data untuk program Scratch.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎛️</div>
+                    <h4>Variables</h4>
+                    <p>SongTitle, Artist, Album, dan Playing membuat UI terlihat hidup.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 16: Feedback -->
-        <div class="slide" id="slide16">
-            <h2 class="agenda-title">Session Feedback 💖</h2>
-            <div style="display: flex; gap: 50px; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 20px;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp8" style="width: 200px;">
+        <div class="slide">
+            <h2 class="agenda-title">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size:1.25rem;text-align:center;max-width:800px;margin:-5px 0 30px;color:#ddd">Isi feedback
+                singkat setelah kelas selesai.</p>
+            <div
+                style="display:flex;gap:40px;align-items:center;justify-content:center;width:100%;max-width:900px;flex-wrap:wrap">
+                <div
+                    style="position:relative;width:250px;height:250px;flex-shrink:0;display:flex;justify-content:center;align-items:flex-end">
+                    <div
+                        style="position:absolute;top:20px;left:20px;font-size:3rem;animation:floating 2s infinite alternate">
+                        💖</div>
+                    <div
+                        style="position:absolute;top:50px;right:20px;font-size:2.5rem;animation:floating 2.5s infinite alternate reverse">
+                        ✨</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png"
+                        alt="Happy Cat" style="width:220px;z-index:2;filter:drop-shadow(0 8px 16px rgba(0,0,0,.2))"
+                        class="float">
                 </div>
-                <div style="text-align: left;">
-                    <h3>Sesi 8 Selesai!</h3>
-                    <p style="margin-bottom: 30px;">Sekarang AI-mu sudah bisa "berbicara" di Scratch. Keren!</p>
-                    <a href="https://bit.ly/feedback-smp8" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                <div
+                    style="background:rgba(255,255,255,.1);border-radius:20px;padding:32px;box-shadow:0 8px 25px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.2);text-align:center;width:100%;max-width:420px;backdrop-filter:blur(10px)">
+                    <h3 style="color:var(--secondary);margin:0 0 10px;font-size:1.6rem">Selesai untuk Hari Ini!</h3>
+                    <p style="color:#ddd;font-size:1.05rem;margin:0">Pastikan project sudah ditest, disimpan, dan
+                        feedback sudah diisi.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation -->
         <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
         <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
     </div>
 
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="resultModal">
+        <div id="modalEmoji" style="font-size:5rem">🎉</div>
+        <h2 id="modalTitle">Correct</h2>
+        <p id="modalMessage">Great job.</p><button class="huge-btn" style="margin-top:20px"
+            onclick="closeModal()">OK</button>
+    </div>
+
     <script>
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentSlide = 0;
-
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
-            currentSlide = index;
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === slides.length - 1;
-
-            if (slides[index].id === 'slide10') initLab();
-            if (slides[index].id === 'slide15') initQuiz();
-        }
-
-        function changeSlide(direction) {
-            const newIndex = currentSlide + direction;
-            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex);
-        }
-
-        // --- Interactive Lab Logic (Slide 8) ---
-        function initLab() {
-            const draggables = document.querySelectorAll('.draggable-block');
-            const dropZone = document.getElementById('dropTarget');
-            const feedback = document.getElementById('labFeedback');
-            
-            feedback.textContent = "";
-            dropZone.innerHTML = "";
-            dropZone.style.background = "transparent";
-
-            draggables.forEach(block => {
-                block.ondragstart = (e) => e.dataTransfer.setData('text', e.target.id);
-            });
-
-            dropZone.ondragover = (e) => {
-                e.preventDefault();
-                dropZone.style.background = "rgba(255,255,255,0.1)";
-            };
-
-            dropZone.ondragleave = () => dropZone.style.background = "transparent";
-
-            dropZone.ondrop = (e) => {
-                e.preventDefault();
-                const id = e.dataTransfer.getData('text');
-                const dragged = document.getElementById(id);
-                
-                if (id === 'aiBlock') {
-                    dropZone.innerHTML = '<div class="block ai" style="font-size: 0.8rem; padding: 5px 10px; margin: 0;">recognise numbers... 🧠</div>';
-                    feedback.textContent = "BENAR! AI block dipasang di dalam Say agar Robot bisa bicara. ✅";
-                    feedback.style.color = "var(--success)";
-                } else {
-                    feedback.textContent = "Kurang tepat. Pakai blok AI untuk prediksinya! ❌";
-                    feedback.style.color = "var(--danger)";
-                }
-            };
-        }
-
-        // --- Quiz Logic (Slide 13) ---
-        const quizData = [
-            {
-                q: "Apa fungsi blok 'recognise numbers' di Scratch?",
-                opts: ["A. Untuk menghitung matematika", "B. Mengirim data ke AI dan mendapatkan hasil prediksi", "C. Membuat variabel baru"],
-                ans: 1,
-                hint: "Blok ini adalah penghubung utama antara data di Scratch dan model di ML4K."
-            },
-            {
-                q: "Kenapa kita butuh 3 variabel (Age, Distance, Friends)?",
-                opts: ["A. Agar program terlihat keren", "B. Agar komputer tidak lambat", "C. Untuk menyimpan jawaban user sebelum dikirim ke AI"],
-                ans: 2,
-                hint: "AI butuh data yang terorganisir agar bisa memprosesnya dengan benar."
-            },
-            {
-                q: "Apa yang harus dilakukan jika hasil prediksi AI sering salah?",
-                opts: ["A. Mematikan komputer", "B. Menambah lebih banyak data training di ML4K", "C. Mengganti nama variabel"],
-                ans: 1,
-                hint: "Akurasi AI sangat bergantung pada jumlah dan kualitas Dataset-nya."
-            }
-        ];
-
-        let currentQIdx = 0;
-        function initQuiz() {
-            const data = quizData[currentQIdx];
-            document.getElementById('q-progress').textContent = `Pertanyaan ${currentQIdx + 1}/${quizData.length}`;
-            document.getElementById('q-text').textContent = data.q;
-            const optsDiv = document.getElementById('q-options');
-            optsDiv.innerHTML = '';
-            data.opts.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.style.cssText = "background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; text-align: left; transition: 0.3s;";
-                btn.innerHTML = opt;
-                btn.onclick = () => checkQuiz(i, btn);
-                optsDiv.appendChild(btn);
-            });
-            document.getElementById('q-feedback').style.display = 'none';
-            document.getElementById('q-next-btn').style.display = 'none';
-        }
-
-        function checkQuiz(idx, btn) {
-            const data = quizData[currentQIdx];
-            const feedback = document.getElementById('q-feedback');
-            const status = document.getElementById('feedback-status');
-            const hint = document.getElementById('feedback-hint');
-            const nextBtn = document.getElementById('q-next-btn');
-            
-            if (idx === data.ans) {
-                btn.style.background = "rgba(0, 230, 118, 0.2)";
-                status.textContent = "BENAR! 🎉";
-                feedback.style.color = "#00e676";
-            } else {
-                btn.style.background = "rgba(255, 82, 82, 0.2)";
-                status.textContent = "KURANG TEPAT ❌";
-                feedback.style.color = "#ff5252";
-            }
-            hint.textContent = data.hint;
-            feedback.style.display = 'block';
-            nextBtn.style.display = 'block';
-            if (currentQIdx === quizData.length - 1) {
-                nextBtn.textContent = "SELESAI 🏁";
-                nextBtn.onclick = () => changeSlide(1);
-            }
-        }
-
-        function nextQuiz() { currentQIdx++; initQuiz(); }
-
-        window.onload = () => {
-            showSlide(0);
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') changeSlide(1);
-                if (e.key === 'ArrowLeft') changeSlide(-1);
-            });
-        };
+        const slides = document.querySelectorAll('.slide'); const prevBtn = document.getElementById('prevBtn'); const nextBtn = document.getElementById('nextBtn'); let currentSlide = 0;
+        function showSlide(index, direction = 'next') { const audio = document.getElementById('testAudio'); if (audio && !audio.paused) { audio.pause(); audio.currentTime = 0; const btn = document.getElementById('testSoundBtn'); if (btn) btn.innerHTML = 'PLAY TEST SOUND ▶️'; } if (index === currentSlide && slides[index].classList.contains('active')) return; slides.forEach(s => s.classList.remove('active', 'is-next', 'is-exiting')); const oldSlide = slides[currentSlide]; const newSlide = slides[index]; if (direction === 'next') { oldSlide.classList.add('is-exiting'); newSlide.classList.add('is-next'); setTimeout(() => { newSlide.classList.add('active'); newSlide.classList.remove('is-next') }, 40) } else { newSlide.classList.add('active') } currentSlide = index; prevBtn.disabled = currentSlide === 0; nextBtn.disabled = currentSlide === slides.length - 1; }
+        function changeSlide(direction) { const newIndex = currentSlide + direction; if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex, direction === 1 ? 'next' : 'prev') }
+        document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') changeSlide(1); else if (e.key === 'ArrowLeft') changeSlide(-1) });
+        let draggedItem = null; document.addEventListener('dragstart', e => { if (e.target.classList.contains('drag-item')) { draggedItem = e.target; e.target.style.opacity = '.55'; e.dataTransfer.setData('text/plain', e.target.textContent) } }); document.addEventListener('dragend', e => { if (e.target.classList.contains('drag-item')) e.target.style.opacity = '1' }); document.querySelectorAll('.drop-zone').forEach(zone => { zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over') }); zone.addEventListener('dragleave', () => zone.classList.remove('over')); zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('over'); if (!draggedItem) return; const accepted = zone.dataset.accept; if (draggedItem.dataset.type === accepted) { zone.appendChild(draggedItem); if (!draggedItem.classList.contains('order-item')) { draggedItem.draggable = false; draggedItem.classList.add('locked'); showModal('✅', 'Tepat', 'Kartu berhasil ditempatkan pada bagian yang sesuai.') } } else { showModal('⚠️', 'Cek Lagi', 'Bagian ini belum tepat. Pikirkan apakah kartu itu input, process, atau output.') } draggedItem = null; }) });
+        function showModal(emoji, title, message) { document.getElementById('modalEmoji').textContent = emoji; document.getElementById('modalTitle').textContent = title; document.getElementById('modalMessage').textContent = message; document.getElementById('overlay').style.display = 'block'; document.getElementById('resultModal').style.display = 'block' } function closeModal() { document.getElementById('overlay').style.display = 'none'; document.getElementById('resultModal').style.display = 'none' }
+        function playTestSound() { const audio = document.getElementById('testAudio'); const btn = document.getElementById('testSoundBtn'); const slider = document.getElementById('volumeSlider'); const status = document.getElementById('soundStatus'); if (!audio.paused) { audio.pause(); audio.currentTime = 0; if (btn) btn.innerHTML = 'PLAY TEST SOUND ▶️'; if (status) status.textContent = '⏹️ Sound dihentikan. Klik play lagi untuk mencoba ulang.'; return; } audio.volume = Number(slider ? slider.value : 0.25); audio.currentTime = 0; audio.play().then(() => { if (btn) btn.innerHTML = 'STOP TEST SOUND ⏹️'; if (status) status.textContent = '✅ Sound berhasil diputar. Speaker aman!'; }).catch(() => { if (btn) btn.innerHTML = 'PLAY TEST SOUND ▶️'; if (status) status.textContent = '⚠️ Browser memblokir audio. Klik lagi atau cek volume. Tetap bisa lanjut project.'; }); }
+        const testAudioEl = document.getElementById('testAudio'); if (testAudioEl) { testAudioEl.addEventListener('ended', () => { const btn = document.getElementById('testSoundBtn'); if (btn) btn.innerHTML = 'PLAY TEST SOUND ▶️'; const status = document.getElementById('soundStatus'); if (status) status.textContent = '✅ Sound selesai diputar. Speaker aman!'; }); }
+        const volumeSliderEl = document.getElementById('volumeSlider'); if (volumeSliderEl) { volumeSliderEl.addEventListener('input', e => { const audio = document.getElementById('testAudio'); if (audio) audio.volume = Number(e.target.value); }); }
+        function simulateSongSearch() { const value = (document.getElementById('songSearch').value || 'music').trim().toLowerCase(); const bank = { pop: ['Golden Hour', 'JVKE', 'this is what ____ feels like'], rock: ['Believer', 'Imagine Dragons', 'Evolve'], lofi: ['Lofi Study', 'Chill Beats', 'Focus Mode'], jazz: ['Fly Me to the Moon', 'Frank Sinatra', 'Classic Hits'], kpop: ['Dynamite', 'BTS', 'BE'], music: ['Blinding Lights', 'The Weeknd', 'After Hours'] }; let key = 'music'; if (value.includes('rock')) key = 'rock'; else if (value.includes('lofi')) key = 'lofi'; else if (value.includes('jazz')) key = 'jazz'; else if (value.includes('kpop')) key = 'kpop'; else if (value.includes('pop')) key = 'pop'; const r = bank[key]; document.getElementById('simTitle').textContent = r[0]; document.getElementById('simArtist').textContent = r[1]; document.getElementById('simAlbum').textContent = r[2]; document.getElementById('simPlaying').textContent = 'Playing = Yes'; showModal('🎵', 'Search Result', 'Simulasi berhasil. Di project asli, data ini akan datang dari iTunes extension.'); }
+        function checkOrder() { const zone = document.getElementById('orderZone'); const items = [...zone.querySelectorAll('.order-item')]; const seq = items.map(i => Number(i.dataset.order)).join(','); const status = document.getElementById('orderStatus'); if (seq === '1,2,3,4,5') { status.textContent = '✅ Urutan sudah benar!'; status.style.color = 'var(--success)'; } else { status.textContent = '⚠️ Urutan belum tepat. Hint: reset variables dulu, baru ask.'; status.style.color = 'var(--secondary)'; } }
+        function toggleCheck(btn) { btn.classList.toggle('checked'); btn.textContent = btn.textContent.replace('☐', '✅').replace('☑', '✅'); const checked = document.querySelectorAll('#buildChecklist .checked').length; document.getElementById('checkStatus').textContent = checked + ' / 6 selesai'; if (checked === 6) document.getElementById('checkStatus').textContent = '✅ Semua checklist selesai. Siap quick quiz!'; }
+        const quizData = [{ q: 'Dalam project Music Player, mana yang termasuk input?', opts: ['A. Keyword lagu yang diketik user', 'B. Disk berputar', 'C. Variable Album muncul'], ans: 0, hint: 'Input adalah data yang masuk dari user ke sistem.' }, { q: 'Apa fungsi iTunes extension pada project ini?', opts: ['A. Menggambar sprite baru', 'B. Mencari lagu dan mengambil informasi dari iTunes', 'C. Menghapus semua variable'], ans: 1, hint: 'Extension membantu Scratch memakai sistem siap pakai untuk mencari lagu.' }, { q: 'Mengapa variable Playing penting untuk Disk dan Bongo Cat?', opts: ['A. Untuk menentukan kapan animasi bergerak', 'B. Untuk mengganti warna backdrop otomatis', 'C. Untuk membuat akun ML4K'], ans: 0, hint: 'Disk dan Bongo Cat membaca Playing agar animasi aktif saat musik berjalan.' }]; let currentQIdx = 0;
+        function initQuiz() { const data = quizData[currentQIdx]; document.getElementById('q-progress').textContent = `Pertanyaan ${currentQIdx + 1}/${quizData.length}`; document.getElementById('q-text').textContent = data.q; const optsDiv = document.getElementById('q-options'); optsDiv.innerHTML = ''; data.opts.forEach((opt, i) => { const btn = document.createElement('button'); btn.className = 'quiz-opt'; btn.textContent = opt; btn.onclick = () => checkQuiz(i, btn); optsDiv.appendChild(btn) }); document.getElementById('q-feedback').style.display = 'none'; document.getElementById('q-next-btn').style.display = 'none' }
+        function checkQuiz(idx, btn) { const data = quizData[currentQIdx]; const feedback = document.getElementById('q-feedback'); document.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true); if (idx === data.ans) { btn.classList.add('correct'); feedback.style.borderColor = 'var(--success)'; feedback.style.color = 'var(--success)'; feedback.innerHTML = '<strong>BENAR ✅</strong><br>' + data.hint } else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-opt')[data.ans].classList.add('correct'); feedback.style.borderColor = 'var(--danger)'; feedback.style.color = 'var(--danger)'; feedback.innerHTML = '<strong>KURANG TEPAT ❌</strong><br>' + data.hint } feedback.style.display = 'block'; const next = document.getElementById('q-next-btn'); next.style.display = 'inline-flex'; next.textContent = currentQIdx === quizData.length - 1 ? 'SELESAI 🏁' : 'SOAL BERIKUTNYA ➜' }
+        function nextQuiz() { if (currentQIdx < quizData.length - 1) { currentQIdx++; initQuiz() } else { changeSlide(1) } } document.addEventListener('DOMContentLoaded', () => initQuiz());
     </script>
 </body>
+
 </html>
