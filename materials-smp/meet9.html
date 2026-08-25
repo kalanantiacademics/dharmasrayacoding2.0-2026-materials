@@ -1,394 +1,1303 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUANGGURU CODING - MEET 9 SMP</title>
-    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <title>RUANGGURU CODING - SESSION 9 SMP</title>
+    <link rel="icon"
+        href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+        type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4a8b8b;
             --secondary: #f2c140;
             --dark: #1a2424;
-            --light: #ffffff;
+            --panel: #202b2b;
+            --light: #fff;
             --accent: #78a3a3;
             --success: #00e676;
             --danger: #ff5252;
-            --orange: #ffab19;
-            --card-bg: rgba(0, 0, 0, 0.2);
-            
-            /* Scratch Block Colors */
-            --b-event: #FFBF00;
-            --b-look: #9966FF;
-            --b-control: #FFAB19;
-            --b-motion: #4C97FF;
-            --b-sensing: #4CBFE6;
-            --b-op: #59C059;
-            --b-ai: #008080;
+            --blue: #4c97ff;
+            --purple: #9966ff;
+            --orange: #ff8c1a;
+            --card-bg: rgba(255, 255, 255, .075);
         }
 
-        body { 
-            margin: 0; padding: 0; 
-            font-family: 'Outfit', sans-serif; 
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
             background: url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover fixed no-repeat;
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
             color: var(--light);
         }
 
-        .presentation-container { 
-            width: 80vw; height: 80vh; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); 
-            border-radius: 20px; overflow: hidden; 
-            display: flex; flex-direction: column; position: relative; 
+        .presentation-container {
+            width: 80vw;
+            height: 80vh;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .6);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
             background: #202b2b;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, .12);
         }
 
-        .slide { 
-            width: 100%; height: 100%; 
-            padding: 40px 60px; box-sizing: border-box; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            position: absolute; top: 0; left: 0; 
-            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1); 
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            inset: 0;
+            transition: all .65s cubic-bezier(.645, .045, .355, 1);
             background: linear-gradient(135deg, #2b3a3a 0%, #1a2424 100%);
-            visibility: hidden; opacity: 0; 
+            visibility: hidden;
+            opacity: 0;
+            overflow-y: auto;
         }
 
-        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+            transform: translateX(0);
+        }
 
-        /* Logos */
-        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; }
-        .slide-logo-left img { height: 40px; width: auto; }
-        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; }
-        .slide-logo-right img { height: 40px; width: auto; }
+        .slide.is-next {
+            transform: translateX(100%);
+            visibility: visible;
+            opacity: 1;
+            z-index: 11;
+        }
 
-        .nav-button { background-color: var(--secondary); color: #222; border: none; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-        #prevBtn { left: 20px; } 
-        #nextBtn { right: 20px; }
-        .nav-button:hover:not(:disabled) { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px var(--secondary); }
-        .nav-button:disabled { background-color: #555; color: #888; cursor: not-allowed; opacity: 0.5; }
+        .slide.is-exiting {
+            transform: translateX(-100%);
+            opacity: 0;
+            z-index: 5;
+        }
 
-        /* Typography */
-        h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
-        .agenda-title { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-align: center; border-left: 10px solid var(--primary); padding-left: 20px; line-height: 1; }
-        .cover-title { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; text-align: center; }
-        .cover-subtitle { font-size: 1.4rem; color: var(--accent); font-weight: 400; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
-        .highlight { color: var(--secondary); font-weight: 800; }
+        .slide-logo-left {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            padding: 10px 20px 10px 40px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            gap: 15px;
+        }
 
-        /* Elements */
-        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; backdrop-filter: blur(10px); text-align: center; }
-        .card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.1); border-color: var(--primary); }
-        .huge-btn { background: var(--primary); color: white; padding: 15px 35px; border-radius: 15px; font-weight: 800; font-size: 1.2rem; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; display: inline-block; box-shadow: 0 10px 20px rgba(74, 139, 139, 0.3); }
-        .huge-btn:hover { background: var(--accent); transform: translateY(-3px); }
+        .slide-logo-left img {
+            height: 40px;
+            width: auto;
+        }
 
-        /* Interactive Lab */
-        .lab-container { display: flex; flex-direction: column; gap: 20px; width: 100%; max-width: 800px; }
-        .data-pool { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 20px; min-height: 100px; }
-        .data-item { padding: 10px 20px; background: white; color: #222; border-radius: 12px; font-weight: 800; cursor: grab; box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
-        .bin-zones { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
-        .bin-zone { flex: 1; height: 150px; border: 3px dashed rgba(255,255,255,0.2); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.3s; }
-        .bin-zone.drag-over { background: rgba(255,255,255,0.1); border-color: var(--secondary); }
+        .slide-logo-right {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: white;
+            padding: 10px 40px 10px 20px;
+            border-bottom-left-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
 
-        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-        .float { animation: floatSprite 2s infinite alternate ease-in-out; }
+        .slide-logo-right img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-button {
+            background: var(--secondary);
+            color: #222;
+            border: none;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: .3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+        }
+
+        #prevBtn {
+            left: 20px;
+        }
+
+        #nextBtn {
+            right: 20px;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 20px var(--secondary);
+        }
+
+        .nav-button:disabled {
+            background: #555;
+            color: #888;
+            cursor: not-allowed;
+            opacity: .5;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .agenda-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 0 0 28px;
+            text-align: center;
+            border-left: 10px solid var(--primary);
+            padding-left: 20px;
+            line-height: 1.08;
+        }
+
+        .cover-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin: 0 0 12px;
+            line-height: 1.05;
+            text-align: center;
+        }
+
+        .cover-subtitle {
+            font-size: 1.35rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .highlight-gradient {
+            background: linear-gradient(135deg, #f2c140 0%, #ffffff 48%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+        }
+
+        .small-text {
+            font-size: 1.05rem;
+            color: #dce7e7;
+            line-height: 1.5;
+        }
+
+        .caption {
+            margin-top: 12px;
+            opacity: .82;
+            font-size: 1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            width: 100%;
+            max-width: 1020px;
+        }
+
+        .three-col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            width: 100%;
+            max-width: 1060px;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+            width: 100%;
+            max-width: 1080px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            transition: .3s;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, .18);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, .1);
+            border-color: var(--primary);
+        }
+
+        .card h4,
+        .card h3 {
+            font-size: 1.55rem;
+            margin: 12px 0 10px;
+            color: var(--secondary);
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.45;
+            margin: 0;
+            color: #e9eeee;
+        }
+
+        .card-icon {
+            font-size: 3.3rem;
+            margin-bottom: 10px;
+        }
+
+        .huge-btn {
+            background: var(--primary);
+            color: white;
+            padding: 18px 42px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.32rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 10px 20px rgba(76, 151, 255, .18);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .huge-btn:hover {
+            background: var(--accent);
+            transform: scale(1.04);
+            box-shadow: 0 0 30px var(--accent);
+        }
+
+        .note {
+            background: rgba(242, 193, 64, .12);
+            border: 1px dashed var(--secondary);
+            color: #fff7d0;
+            border-radius: 18px;
+            padding: 20px 24px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .teal-note {
+            background: rgba(74, 139, 139, .22);
+            border-left: 7px solid var(--primary);
+            color: #ecffff;
+            border-radius: 18px;
+            padding: 18px 24px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .08);
+            color: #eef;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .img-container {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 18px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .project-gif {
+            max-width: 100%;
+            max-height: 420px;
+            border-radius: 18px;
+            border: 4px solid rgba(242, 193, 64, .45);
+            background: rgba(0, 0, 0, .2);
+        }
+
+        .float {
+            animation: floating 2.4s infinite alternate ease-in-out;
+        }
+
+        @keyframes floating {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-14px);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.04);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .dnd-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .drop-title {
+            font-size: 1.25rem;
+            color: var(--secondary);
+            text-align: center;
+            margin: 0 0 12px;
+            font-weight: 900;
+        }
+
+        .drop-zone {
+            min-height: 160px;
+            border: 2px dashed rgba(255, 255, 255, .26);
+            background: rgba(0, 0, 0, .2);
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-content: flex-start;
+            justify-content: center;
+        }
+
+        .drop-zone.over {
+            border-color: var(--secondary);
+            background: rgba(242, 193, 64, .12);
+        }
+
+        .drag-pool {
+            margin-top: 22px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            padding: 18px;
+            width: 100%;
+            max-width: 980px;
+        }
+
+        .drag-item {
+            background: var(--primary);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .15);
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-weight: 900;
+            cursor: grab;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, .22);
+            user-select: none;
+        }
+
+        .drag-item.locked {
+            cursor: default;
+            opacity: .95;
+        }
+
+        .mini-step {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 18px;
+            padding: 18px;
+            font-size: 1.15rem;
+            line-height: 1.45;
+            color: #f0f5f5;
+            margin-bottom: 12px;
+        }
+
+        .mini-step strong {
+            color: var(--secondary);
+        }
+
+        .mic-box {
+            width: 100%;
+            max-width: 820px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 24px;
+            padding: 28px;
+            text-align: center;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, .28);
+        }
+
+        .level-meter {
+            height: 28px;
+            width: 100%;
+            max-width: 620px;
+            background: rgba(0, 0, 0, .34);
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 22px auto;
+            border: 1px solid rgba(255, 255, 255, .18);
+        }
+
+        .level-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
+            transition: width .08s linear;
+        }
+
+        .status-line {
+            min-height: 34px;
+            font-size: 1.15rem;
+            color: #dff;
+            margin-top: 12px;
+            font-weight: 800;
+        }
+
+        .command-sim {
+            width: 100%;
+            max-width: 880px;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .14);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, .28);
+        }
+
+        .sim-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .sim-input {
+            flex: 1;
+            background: rgba(255, 255, 255, .96);
+            color: #1a2424;
+            border: 2px solid rgba(255, 255, 255, .25);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .room-preview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .device-card {
+            background: rgba(0, 0, 0, .22);
+            border-radius: 18px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            text-align: center;
+        }
+
+        .device-icon {
+            font-size: 5rem;
+            line-height: 1;
+        }
+
+        .device-state {
+            font-weight: 900;
+            color: var(--secondary);
+            margin-top: 10px;
+            font-size: 1.25rem;
+        }
+
+        .code-img {
+            width: 100%;
+            max-height: 470px;
+            object-fit: contain;
+            border-radius: 18px;
+            border: 4px solid rgba(242, 193, 64, .45);
+            background: white;
+            box-shadow: 0 12px 26px rgba(0, 0, 0, .35);
+        }
+
+        .sprite-card {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+            gap: 24px;
+            align-items: center;
+            width: 100%;
+            max-width: 1060px;
+        }
+
+        .sprite-preview {
+            min-height: 330px;
+        }
+
+        .scratch-block {
+            color: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            display: inline-block;
+            margin: 4px 0;
+            box-shadow: inset 0 -3px rgba(0, 0, 0, .15);
+            font-size: 1rem;
+        }
+
+        .b-event {
+            background: #ffbf00;
+            color: #333;
+        }
+
+        .b-sensing {
+            background: #5cb1d6;
+        }
+
+        .b-data {
+            background: #ff8c1a;
+        }
+
+        .b-control {
+            background: #ffab19;
+        }
+
+        .b-look {
+            background: #9966ff;
+        }
+
+        .b-speech {
+            background: #111827;
+        }
+
+        .b-sound {
+            background: #cf63cf;
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .check-item {
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .13);
+            border-radius: 16px;
+            padding: 16px 18px;
+            font-size: 1.08rem;
+            text-align: left;
+            cursor: pointer;
+            color: #f4ffff;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .check-item.checked {
+            border-color: var(--success);
+            background: rgba(0, 230, 118, .13);
+        }
+
+        .quiz-opt {
+            background: rgba(255, 255, 255, .06);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, .18);
+            padding: 16px 20px;
+            border-radius: 15px;
+            font-size: 1.08rem;
+            cursor: pointer;
+            transition: .2s;
+            text-align: left;
+            width: 100%;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .quiz-opt:hover {
+            border-color: var(--secondary);
+            background: rgba(242, 193, 64, .08);
+        }
+
+        .quiz-opt.correct {
+            background: rgba(0, 230, 118, .18);
+            border-color: var(--success);
+        }
+
+        .quiz-opt.wrong {
+            background: rgba(255, 82, 82, .16);
+            border-color: var(--danger);
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .8);
+            z-index: 2000;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #16213e;
+            padding: 38px;
+            border-radius: 20px;
+            z-index: 2001;
+            text-align: center;
+            border: 2px solid var(--secondary);
+            display: none;
+            max-width: 520px;
+            color: white;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, .45);
+        }
+
+        .modal h2 {
+            color: var(--secondary);
+            margin: 10px 0;
+        }
+
+        @media(max-width:900px) {
+
+            .grid-container,
+            .three-col,
+            .two-col,
+            .dnd-board,
+            .sprite-card,
+            .checklist,
+            .room-preview {
+                grid-template-columns: 1fr !important;
+            }
+
+            .slide {
+                padding: 32px 36px;
+            }
+
+            .cover-title {
+                font-size: 3rem;
+            }
+
+            .slide-logo-left img,
+            .slide-logo-right img {
+                height: 32px;
+            }
+
+            .slide-logo-left {
+                padding-left: 18px;
+            }
+
+            .slide-logo-right {
+                padding-right: 18px;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="slide-logo-left">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="RG">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="DH">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="DS">
-        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Juara">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png"
+            alt="Logo Ruangguru">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png"
+            alt="Logo Kabupaten Dharmasraya">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s"
+            alt="Logo Disdik Dharmasraya">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png"
+            alt="Logo Dharmasraya Juara">
     </div>
-    <div class="slide-logo-right">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="RG Coding">
-    </div>
+    <div class="slide-logo-right"><img
+            src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+            alt="Logo Ruangguru Coding"></div>
 
     <div class="presentation-container">
-        <!-- Slide 1: Cover -->
-        <div class="slide active" id="slide1">
-            <h1 class="cover-title">JOURNEY TO SCHOOL <br><span style="color: var(--secondary);">EVALUATION & TESTING</span></h1>
-            <p class="cover-subtitle">SESI 9: MENGUJI & MENINGKATKAN AKURASI AI</p>
-            <div style="display: flex; gap: 40px; justify-content: center; align-items: center;">
-                <div style="font-size: 6rem;" class="float">🧪</div>
-                <div style="font-size: 4rem; color: var(--accent);">➜</div>
-                <div style="font-size: 6rem;" class="float">📈</div>
-            </div>
-            <div style="font-size: 5rem; margin-top: 30px;" class="float">🤖⚙️</div>
-        </div>
-
-        <!-- Slide 2: Recall -->
-        <div class="slide" id="slide2">
-            <h2 class="agenda-title">Review Sesi 8 🧠</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 8rem;" class="float">🐱🤖</div>
-                </div>
-                <div style="flex: 1.5;">
-                    <p style="font-size: 1.4rem; line-height: 1.6;">Kita sudah berhasil memberi "Tubuh" pada AI di Scratch.</p>
-                    <div style="display: flex; flex-direction: column; gap: 15px;">
-                        <div class="card" style="text-align: left; padding: 15px 25px;">
-                            <span class="highlight">Input:</span> Ask & Variables (Age, Dist, Friends).
-                        </div>
-                        <div class="card" style="text-align: left; padding: 15px 25px;">
-                            <span class="highlight">Prediction:</span> Menggunakan blok <code>recognise numbers</code>.
-                        </div>
-                    </div>
+        <div class="slide active" id="cover">
+            <div style="text-align:center;max-width:1040px">
+                <div class="pill">SCRATCH + MACHINE LEARNING 4 KIDS</div>
+                <h1 class="cover-title"><span class="highlight-gradient">VOICE RECOGNITION</span><br>SAVE ENERGY</h1>
+                <p class="cover-subtitle">SESSION 9: SPEECH TO TEXT • BROADCAST • SMART HOME CONTROL</p>
+                <div style="font-size:5.8rem;margin:18px 0" class="float">🎙️🤖💡🌬️</div>
+                <div
+                    style="display:flex;justify-content:center;gap:22px;align-items:center;flex-wrap:wrap;margin-top:18px">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png"
+                        alt="Scratch" style="height:74px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));">
+                    <span style="font-size:2.4rem;font-weight:900">+</span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s"
+                        alt="ML4K"
+                        style="height:74px;background:#008080;padding:9px;border-radius:16px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));">
+                    <span style="font-size:2.4rem;font-weight:900">+</span>
+                    <div
+                        style="height:74px;min-width:74px;border-radius:20px;background:linear-gradient(135deg,#4a8b8b,#f2c140);display:grid;place-items:center;font-size:2.9rem;filter:drop-shadow(0 8px 14px rgba(0,0,0,.45));">
+                        🎙️</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: Agenda Today -->
-        <div class="slide" id="slide3">
-            <h2 class="agenda-title">Hari Ini Kita Mau Ngapain? 📅</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 10rem;" class="float">🧐</div>
-                </div>
-                <div style="flex: 1.5;">
-                    <div class="card" style="text-align: left; padding: 30px; border-left: 10px solid var(--secondary);">
-                        <ul style="font-size: 1.4rem; line-height: 2; list-style-type: '🚀 ';">
-                            <li>Menguji akurasi AI dengan <span class="highlight">Data Baru</span>.</li>
-                            <li>Eksperimen: Apa jadinya jika data dihapus?</li>
-                            <li>Mendiskusikan <span class="highlight">Pola</span> yang ditemukan AI.</li>
-                            <li>Menambahkan data agar AI makin pintar!</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4: Analogy -->
-        <div class="slide" id="slide4">
-            <h2 class="agenda-title">Analogi: Belajar untuk Ujian 📚✍️</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1; text-align: center;">
-                    <div class="card" style="border-color: var(--danger);">
-                        <div style="font-size: 4rem;">📖</div>
-                        <h3 style="color: var(--danger);">Hanya Belajar 1 Halaman</h3>
-                        <p>Akan kesulitan menjawab soal yang berbeda.</p>
-                    </div>
-                </div>
-                <div style="flex: 1; text-align: center;">
-                    <div class="card" style="border-color: var(--success);">
-                        <div style="font-size: 4rem;">📚</div>
-                        <h3 style="color: var(--success);">Belajar 100 Halaman</h3>
-                        <p>Bisa menjawab berbagai macam soal dengan benar.</p>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-top: 30px; text-align: center; font-size: 1.3rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px;">
-                Sama seperti manusia, <span class="highlight">Machine Learning</span> butuh banyak contoh (Dataset) agar bisa "lulus ujian" saat memprediksi data baru!
-            </div>
-        </div>
-
-        <!-- Slide 5: Step 1: Testing with New Data -->
-        <div class="slide" id="slide5">
-            <h2 class="agenda-title">Step 1: Uji dengan Data Baru 🧪</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: flex-start;">
-                <div style="flex: 1.2; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/e7ab81f3-4928-4241-a03c-b53ccff5a9b2.png" style="width: 100%; border-radius: 10px;">
-                </div>
-                <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.3rem;">Buka menu <strong>Learn & Test</strong>:</p>
-                    <ol style="font-size: 1.2rem; line-height: 1.8;">
-                        <li>Masukkan angka yang <span class="highlight">belum pernah</span> kamu latih sebelumnya.</li>
-                        <li>Bandingkan jawaban AI dengan kenyataan.</li>
-                        <li>Apakah AI-mu sudah cukup akurat?</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6: Step 2: The Deletion Test -->
-        <div class="slide" id="slide6">
-            <h2 class="agenda-title">Step 2: Eksperimen Hapus Data 🗑️</h2>
-            <div style="display: flex; gap: 30px; width: 100%; align-items: center;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 8rem;" class="float">📉</div>
-                </div>
-                <div style="flex: 1.5; text-align: left;">
-                    <h3 style="color: var(--danger);">Apa yang Terjadi Jika...</h3>
-                    <p style="font-size: 1.3rem; line-height: 1.6;">
-                        Kita menghapus salah satu data training yang penting?
-                    </p>
-                    <div class="card" style="text-align: left; background: rgba(255, 82, 82, 0.1); border-color: var(--danger);">
-                        <p style="font-weight: 800;">Tugas:</p>
-                        <ul style="margin: 5px 0;">
-                            <li>Hapus 1 data dari label 'Car'.</li>
-                            <li>Train ulang modelnya.</li>
-                            <li>Tes lagi. Apakah tebakannya masih benar?</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Discussion: Finding Patterns -->
-        <div class="slide" id="slide7">
-            <h2 class="agenda-title">Diskusi: Bagaimana AI Berpikir? 🤔</h2>
-            <div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;">
+        <div class="slide">
+            <h2 class="agenda-title">Review: Music Player Project 🎧</h2>
+            <div class="grid-container">
                 <div class="card">
-                    <h4 class="txt-teal">Pola Jarak</h4>
-                    <p>Mungkin AI berpikir: <br>"Jika Jarak > 5km, maka pasti naik Car."</p>
+                    <div class="card-icon">⚡</div>
+                    <h4>Ready-to-use AI</h4>
+                    <p>Kita memakai extension yang sudah tersedia, bukan melatih model dari nol.</p>
                 </div>
                 <div class="card">
-                    <h4 class="txt-orange">Pola Umur</h4>
-                    <p>Atau AI berpikir: <br>"Jika Umur < 10, tidak mungkin naik Motor sendiri."</p>
+                    <div class="card-icon">🔄</div>
+                    <h4>Input → Process → Output</h4>
+                    <p>User memberi keyword lagu, iTunes mencari data, lalu Scratch menampilkan output.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎛️</div>
+                    <h4>Variables</h4>
+                    <p>SongTitle, Artist, Album, dan Playing membuat project terasa dinamis.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧪</div>
+                    <h4>Testing</h4>
+                    <p>Kita mencoba keyword berbeda dan mengecek hasilnya.</p>
                 </div>
             </div>
-            <p style="margin-top: 30px; font-size: 1.2rem; text-align: center;">
-                AI mencari <span class="highlight">Hubungan</span> antar angka-angka tersebut untuk mengambil keputusan!
-            </p>
         </div>
 
-        <!-- Slide 8: Interactive Lab: Data Doctor -->
-        <div class="slide" id="slide8">
-            <h2 class="agenda-title">Interactive Lab: Data Doctor 🩺</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 20px;">Pisahkan data yang <b>Masuk Akal</b> dan data yang <b>Rusak/Aneh</b>!</p>
-            
-            <div class="lab-container">
-                <div class="data-pool" id="dataPool">
-                    <!-- Dinamis via JS -->
+        <div class="slide">
+            <h2 class="agenda-title">Analogi: Perintah Suara di SmartHome 🏠</h2>
+            <div class="two-col">
+                <div class="card">
+                    <div style="font-size:6rem" class="float">🗣️➡️🤖➡️💡</div>
+                    <h4>Voice Command</h4>
+                    <p>Kita bicara, sistem mendengar, lalu sistem melakukan aksi.</p>
                 </div>
-                
-                <div class="bin-zones">
-                    <div class="bin-zone" id="bin-good" data-type="good">
-                        <div style="font-size: 2.5rem;">✅</div>
-                        <div style="font-weight: 800; color: var(--success);">DATA SEHAT</div>
-                        <div class="items-in-zone" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Contoh nyata:</strong> “turn on the lamp” bisa dipakai untuk
+                        menyalakan lampu pada smart home.</div>
+                    <div class="mini-step"><strong>Masalahnya:</strong> komputer tidak benar-benar “mengerti” seperti
+                        manusia. Ia mengubah suara menjadi teks, lalu mencocokkan teks itu dengan aturan program.</div>
+                    <div class="teal-note">Hari ini kita akan membuat versi sederhana menggunakan Scratch ML4K.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Today's Mission 🎯</h2>
+            <div class="three-col">
+                <div class="card">
+                    <div class="card-icon">🎙️</div>
+                    <h4>Voice Recognition</h4>
+                    <p>Memahami bagaimana suara berubah menjadi perintah.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h4>Speech to Text</h4>
+                    <p>Menambahkan extension untuk membaca ucapan.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📣</div>
+                    <h4>Broadcast</h4>
+                    <p>Room mengirim pesan ke sprite Fan dan Lamp.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h4>Lamp Costume</h4>
+                    <p>Lampu berubah costume saat on atau off.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌬️</div>
+                    <h4>Fan Costume</h4>
+                    <p>Kipas berubah tampilan saat menerima command.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧪</div>
+                    <h4>Test Voice</h4>
+                    <p>Menguji apakah command Inggris terbaca dengan benar.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Input → Process → Output 🔄</h2>
+            <div class="three-col">
+                <div class="card">
+                    <div class="card-icon">🎙️</div>
+                    <h4>Input</h4>
+                    <p>Ucapan user: <br><strong>turn on the lamp</strong></p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h4>Process</h4>
+                    <p>Speech to Text mengubah suara menjadi teks, lalu Room mengecek command.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h4>Output</h4>
+                    <p>Room broadcast pesan. Lamp atau Fan berubah costume.</p>
+                </div>
+            </div>
+            <div class="note" style="margin-top:26px;max-width:900px;text-align:center">Kali ini command harus
+                menggunakan bahasa Inggris agar cocok dengan script: <strong>turn on / turn off</strong>.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Activity: Sort the Smart Home System 🧩</h2>
+            <p class="small-text" style="margin-top:-12px;text-align:center">Tarik kartu ke bagian yang tepat.</p>
+            <div class="dnd-board">
+                <div>
+                    <div class="drop-title">INPUT 🎙️</div>
+                    <div class="drop-zone" data-accept="input"></div>
+                </div>
+                <div>
+                    <div class="drop-title">PROCESS ⚙️</div>
+                    <div class="drop-zone" data-accept="process"></div>
+                </div>
+                <div>
+                    <div class="drop-title">OUTPUT 💡</div>
+                    <div class="drop-zone" data-accept="output"></div>
+                </div>
+            </div>
+            <div class="drag-pool">
+                <div class="drag-item" draggable="true" data-type="input">turn on the lamp</div>
+                <div class="drag-item" draggable="true" data-type="process">speech berubah menjadi teks</div>
+                <div class="drag-item" draggable="true" data-type="output">lamp costume = on</div>
+                <div class="drag-item" draggable="true" data-type="input">turn off the fan</div>
+                <div class="drag-item" draggable="true" data-type="process">Room broadcast fan off</div>
+                <div class="drag-item" draggable="true" data-type="output">fan costume = off</div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Project Preview: Save Energy 💡🌬️</h2>
+            <div class="two-col" style="grid-template-columns:1.1fr .9fr">
+                <div class="img-container" style="height:430px"><img class="project-gif"
+                        src="https://cdn-web.ruangguru.com/file-uploader/a5608f89-c798-4ff1-b45b-e137a359c950.gif"
+                        alt="Save Energy Preview"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Target:</strong> user memberi perintah suara untuk mengontrol lampu
+                        dan kipas.</div>
+                    <div class="mini-step"><strong>Voice commands:</strong> turn on/off the lamp, turn on/off the fan.
                     </div>
-                    <div class="bin-zone" id="bin-bad" data-type="bad">
-                        <div style="font-size: 2.5rem;">❌</div>
-                        <div style="font-weight: 800; color: var(--danger);">DATA RUSAK</div>
-                        <div class="items-in-zone" style="display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;"></div>
+                    <div class="mini-step"><strong>Logic:</strong> Room mendengar command, lalu broadcast ke Lamp atau
+                        Fan.</div>
+                    <div class="note" style="margin-top:16px">Tema project: menghemat energi dengan mematikan alat saat
+                        tidak dipakai.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Microphone Check 🎙️</h2>
+            <div class="mic-box">
+                <div style="font-size:5rem" class="float">🎙️📈</div>
+                <p style="font-size:1.35rem;line-height:1.5">Klik tombol di bawah. Izinkan microphone jika browser
+                    meminta permission. Coba bicara dan lihat bar suara bergerak.</p>
+                <div class="level-meter">
+                    <div class="level-fill" id="micLevel"></div>
+                </div>
+                <button id="micBtn" class="huge-btn pulse" onclick="startMicTest()">START MIC TEST 🎙️</button>
+                <button class="huge-btn" style="background:var(--danger);margin-left:10px"
+                    onclick="stopMicTest()">STOP</button>
+                <div class="status-line" id="micStatus">Kalau tidak ada mic, tetap bisa ikut membuat project dan testing
+                    bersama teacher.</div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Buka ML4K Scratch 🌐</h2>
+            <div class="two-col">
+                <div class="card" style="background:rgba(74,139,139,.24)">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s"
+                        alt="ML4K"
+                        style="height:130px;object-fit:contain;background:#008080;border-radius:18px;padding:10px">
+                    <h4>Machine Learning 4 Kids Scratch</h4>
+                    <p>Versi Scratch dengan extension tambahan seperti Speech to Text.</p>
+                </div>
+                <div style="text-align:left">
+                    <p style="font-size:1.32rem;line-height:1.55">Project ini dibuat di <strong>ML4K Scratch</strong>,
+                        bukan scratch.mit.edu. Tidak perlu login.</p>
+                    <a class="huge-btn" href="https://machinelearningforkids.co.uk/scratch/" target="_blank"
+                        rel="noopener noreferrer">OPEN ML4K SCRATCH ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Download Starter Project 🛠️</h2>
+            <div class="two-col" style="grid-template-columns:.85fr 1.15fr">
+                <div class="card">
+                    <div style="font-size:6rem">💡📁</div>
+                    <h4>[STARTER] Save Energy.sb3</h4>
+                    <p>Gunakan file ini sebagai base project.</p>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>1.</strong> Download file starter project.</div>
+                    <div class="mini-step"><strong>2.</strong> Simpan di folder yang mudah dicari.</div>
+                    <div class="mini-step"><strong>3.</strong> Load file ini di ML4K Scratch.</div>
+                    <a class="huge-btn" style="margin-top:18px" href="STARTER_Save_Energy.sb3" download>DOWNLOAD STARTER
+                        ⬇️</a>
+                    <div class="note" style="margin-top:16px">Jika tombol tidak bekerja, gunakan file starter yang
+                        dikirim teacher.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Load Project di ML4K 📂</h2>
+            <div class="two-col" style="grid-template-columns:1.05fr .95fr;align-items:center">
+                <div class="img-container" style="max-height:380px"><img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/c8653431-5312-4d47-9539-b6ab4feed74d.png"
+                        alt="Load Project from Computer" style="max-height:340px"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>1. File:</strong> Klik menu <strong>File</strong> di pojok kiri atas.
+                    </div>
+                    <div class="mini-step"><strong>2. Load:</strong> Pilih <strong>Load from your computer</strong>.
+                    </div>
+                    <div class="mini-step"><strong>3. Choose SB3:</strong> Cari file <strong>[STARTER] Save
+                            Energy.sb3</strong>.</div>
+                    <div class="note" style="margin-top:16px">Pastikan project terbuka di ML4K Scratch.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Tambahkan Speech to Text Extension 🎙️</h2>
+            <div class="grid-container" style="grid-template-columns:repeat(3,1fr);max-width:1080px">
+                <div class="card">
+                    <div class="card-icon">1</div>
+                    <h4>Add Extension</h4><img class="code-img" style="max-height:230px"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/f15608a4-3f57-4c77-9a24-670d5e6ab75f.png"
+                        alt="Add extension button">
+                </div>
+                <div class="card">
+                    <div class="card-icon">2</div>
+                    <h4>Speech to Text</h4><img class="code-img" style="max-height:230px"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/ad1002fa-3f75-4441-8c46-4ca5e33a88f5.png"
+                        alt="Speech to text extension">
+                </div>
+                <div class="card">
+                    <div class="card-icon">3</div>
+                    <h4>New Blocks</h4><img class="code-img" style="max-height:230px"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/95d5b2c1-0701-4b1e-a418-893abbcbea0f.png"
+                        alt="Speech blocks appear">
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Project Structure: 3 Sprites 🧱</h2>
+            <div class="three-col">
+                <div class="card">
+                    <div class="card-icon">🏠</div>
+                    <h4>Room</h4>
+                    <p>Mendeteksi ucapan di dalam forever, lalu menentukan command dan broadcast.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌬️</div>
+                    <h4>Fan</h4>
+                    <p>Menerima broadcast fan on/off lalu switch costume.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h4>Lamp</h4>
+                    <p>Menerima broadcast lamp on/off lalu switch costume.</p>
+                </div>
+            </div>
+            <div class="teal-note" style="margin-top:26px;max-width:900px;text-align:center">Room adalah “controller”.
+                Fan dan Lamp adalah “device” yang mengikuti command dari controller.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Sprite 1: Room Controller 🏠</h2>
+            <div class="sprite-card">
+                <div class="img-container sprite-preview">
+                    <div style="font-size:9rem" class="float">🏠🎙️</div>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Fungsi:</strong> mendengar voice command dari user.</div>
+                    <div class="mini-step"><strong>Logic:</strong> jika teks ucapan cocok dengan command, Room mengirim
+                        broadcast.</div>
+                    <div class="mini-step"><strong>Command:</strong> turn on/off the lamp, turn on/off the fan.</div>
+                    <div class="note">Gunakan bahasa Inggris saat testing agar sesuai script.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Room Code: Voice Command Logic 👀</h2>
+            <img class="code-img"
+                src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/67c8eb52-4a04-4e61-9b4f-c51120a9585b.png"
+                alt="Room voice recognition code">
+            <div class="caption">Room mengecek ucapan di dalam forever, lalu broadcast command yang sesuai.
+                <strong>Voice Recognition</strong> hanya mendeteksi <strong>Bahasa Inggris</strong></div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Room Code: Big Picture 🧠</h2>
+            <div class="grid-container" style="grid-template-columns:1fr 1fr;max-width:1080px">
+                <div class="card" style="text-align:left">
+                    <span class="scratch-block b-event">when green flag clicked</span><br>
+                    <span class="scratch-block b-control">forever</span><br>
+                    <span class="scratch-block b-speech">listen and convert speech to text</span><br>
+                    <span class="scratch-block b-control">if text = turn on the lamp</span><br>
+                    <span class="scratch-block b-event">broadcast lamp on</span><br>
+                    <span class="scratch-block b-event">broadcast fan off / fan on / lamp off</span>
+                </div>
+                <div class="teal-note" style="align-self:center">Intinya: Room membaca suara, mengubahnya menjadi teks,
+                    lalu mengirim pesan ke sprite lain menggunakan broadcast.</div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Sprite 2: Fan 🌬️</h2>
+            <div class="sprite-card">
+                <div class="img-container sprite-preview">
+                    <div style="font-size:9rem" class="float">🌬️</div>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Fungsi:</strong> menunjukkan kipas menyala atau mati.</div>
+                    <div class="mini-step"><strong>Jika menerima broadcast fan on:</strong> switch costume ke fan on.
+                    </div>
+                    <div class="mini-step"><strong>Jika menerima broadcast fan off:</strong> switch costume ke fan off.
                     </div>
                 </div>
             </div>
-            <div id="labFeedback" style="margin-top: 20px; font-weight: 800;"></div>
         </div>
 
-        <!-- Slide 9: Optimization: Add More Data -->
-        <div class="slide" id="slide9">
-            <h2 class="agenda-title">Step 3: Optimasi Model 🛠️📈</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1.2; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/5a3a96b5-6bde-41d0-8284-a20fb55f42dc.png" style="width: 100%; border-radius: 10px;">
+        <div class="slide">
+            <h2 class="agenda-title">Fan Code 🌬️</h2>
+            <img class="code-img"
+                src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/2e75d62a-5745-47b9-8dc3-8eba02ecfe82.png"
+                alt="Fan broadcast code">
+            <div class="caption">Fan tidak mendengar suara langsung. Fan hanya merespons broadcast dari Room.</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Sprite 3: Lamp 💡</h2>
+            <div class="sprite-card">
+                <div class="img-container sprite-preview">
+                    <div style="font-size:9rem" class="float">💡</div>
                 </div>
-                <div style="flex: 1; text-align: left;">
-                    <p style="font-size: 1.3rem;">Jika AI masih sering salah menebak:</p>
-                    <div class="card" style="border-left: 8px solid var(--success); text-align: left;">
-                        <ul style="margin: 0; padding-left: 20px;">
-                            <li>Tambahkan <span class="highlight">10 data baru</span> untuk setiap label.</li>
-                            <li>Gunakan variasi angka yang berbeda.</li>
-                            <li>Klik <span class="highlight">Train</span> lagi!</li>
-                        </ul>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Fungsi:</strong> menunjukkan lampu menyala atau mati.</div>
+                    <div class="mini-step"><strong>Jika menerima broadcast lamp on:</strong> switch costume ke lamp on.
                     </div>
+                    <div class="mini-step"><strong>Jika menerima broadcast lamp off:</strong> switch costume ke lamp
+                        off.</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 10: Summary Point: Quantity vs Quality -->
-        <div class="slide" id="slide10">
-            <h2 class="agenda-title">Kunci Kehebatan AI 🔑</h2>
-            <div style="display: flex; gap: 30px; width: 100%;">
-                <div class="card" style="flex: 1;">
-                    <div style="font-size: 4rem;">📦</div>
-                    <h3 class="txt-teal">Quantity</h3>
-                    <p>Semakin <b>BANYAK</b> data, AI semakin punya banyak referensi.</p>
+        <div class="slide">
+            <h2 class="agenda-title">Lamp Code 💡</h2>
+            <img class="code-img"
+                src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/c48eee8e-de6f-4226-a28b-7048cc64a5cf.png"
+                alt="Lamp broadcast code">
+            <div class="caption">Logic Lamp mirip Fan: tunggu broadcast, lalu ubah costume.</div>
+        </div>
+
+
+        <div class="slide">
+            <h2 class="agenda-title">Build Checklist ✅</h2>
+            <div class="checklist" id="buildChecklist">
+                <button class="check-item" onclick="toggleCheck(this)">☐ Starter project berhasil dibuka di ML4K
+                    Scratch</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Speech to Text extension sudah muncul</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Room bisa membaca voice command</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Room broadcast lamp on / lamp off</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Room broadcast fan on / fan off</button>
+                <button class="check-item" onclick="toggleCheck(this)">☐ Fan dan Lamp switch costume dengan
+                    benar</button>
+            </div>
+            <div class="status-line" id="checkStatus">0 / 6 selesai</div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Test & Debug 🐞</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">🎙️</div>
+                    <h4>Mic Permission</h4>
+                    <p>Jika tidak terbaca, cek permission microphone di browser.</p>
                 </div>
-                <div class="card" style="flex: 1;">
-                    <div style="font-size: 4rem;">💎</div>
-                    <h3 class="txt-orange">Quality</h3>
-                    <p>Data harus <b>BENAR & MASUK AKAL</b> agar AI tidak bingung.</p>
+                <div class="card">
+                    <div class="card-icon">🗣️</div>
+                    <h4>Speak Clearly</h4>
+                    <p>Ucapkan command Inggris dengan jelas dan tidak terlalu cepat.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📣</div>
+                    <h4>Broadcast Check</h4>
+                    <p>Pastikan nama broadcast sama persis dengan yang diterima sprite.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎭</div>
+                    <h4>Costume Check</h4>
+                    <p>Pastikan costume on/off sudah benar di Fan dan Lamp.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11: Final Checklist -->
-        <div class="slide" id="slide11">
-            <h2 class="agenda-title">Final Checklist ✅</h2>
-            <div style="text-align: left; max-width: 700px; margin: 0 auto;">
-                <div class="card" style="margin-bottom: 15px;">
-                    <p style="font-size: 1.3rem;">🔲 Sudah mencoba tebak 5 orang teman baru.</p>
-                </div>
-                <div class="card" style="margin-bottom: 15px;">
-                    <p style="font-size: 1.3rem;">🔲 Eksperimen hapus data sudah dilakukan.</p>
-                </div>
-                <div class="card" style="margin-bottom: 15px;">
-                    <p style="font-size: 1.3rem;">🔲 AI sudah dilatih ulang dengan data baru.</p>
-                </div>
-                <div class="card" style="border-color: var(--success);">
-                    <p style="font-size: 1.3rem; font-weight: 800; color: var(--success);">🔲 Akurasi AI meningkat? Mantap! 🔥</p>
+        <div class="slide">
+            <h2 class="agenda-title">Save Your Project 💾</h2>
+            <div class="two-col" style="grid-template-columns:1.05fr .95fr;align-items:center">
+                <div class="img-container" style="max-height:380px"><img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b1dd37d6-0bbe-4c68-b2a6-f1e7888498fa.png"
+                        alt="Save to Computer" style="max-height:340px"></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>1. File:</strong> Klik menu <strong>File</strong> di pojok kiri atas.
+                    </div>
+                    <div class="mini-step"><strong>2. Save:</strong> Pilih <strong>Save to your computer</strong>.</div>
+                    <div class="mini-step"><strong>3. Nama File:</strong> Gunakan format <strong>Save Energy - Nama
+                            Siswa</strong>.</div>
+                    <div class="note" style="margin-top:16px">Project ML4K perlu disimpan manual ke komputer.</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 12: Summary -->
-        <div class="slide" id="slide12">
-            <h2 class="agenda-title">Rangkuman Sesi 9 📋</h2>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
-                <div class="card">
-                    <h4>🧪 Testing</h4>
-                    <p>Menguji model dengan data yang belum pernah dipelajari sebelumnya.</p>
-                </div>
-                <div class="card">
-                    <h4>⚖️ Accuracy</h4>
-                    <p>Ukuran seberapa tepat tebakan AI dibandingkan dengan data asli.</p>
-                </div>
-                <div class="card">
-                    <h4>🏗️ Data Quality</h4>
-                    <p>Data yang digunakan untuk melatih AI harus benar dan masuk akal.</p>
-                </div>
-                <div class="card">
-                    <h4>🔄 Iteration</h4>
-                    <p>Proses melatih ulang AI berkali-kali untuk mendapatkan hasil terbaik.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 13: Quick Quiz -->
-        <div class="slide" id="slide13">
+        <div class="slide" style="background:#2b3a3a">
             <h2 class="agenda-title">Quick Quiz ⏱️</h2>
-            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; width: 100%; max-width: 750px; border: 2px solid rgba(255,255,255,0.1);">
-                <div id="q-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--accent);">
-                    <span id="q-progress">Pertanyaan 1/3</span>
+            <div id="quiz-container"
+                style="background:rgba(255,255,255,.1);padding:30px;border-radius:25px;width:100%;max-width:790px;border:2px solid rgba(255,255,255,.1);backdrop-filter:blur(10px)">
+                <div id="q-progress" style="font-weight:bold;color:var(--accent);margin-bottom:16px">Pertanyaan 1/3
                 </div>
-                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; line-height: 1.4; margin-bottom: 25px;">...</h3>
-                <div id="q-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
-                <div id="q-feedback" style="margin-top: 25px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid;">
-                    <strong id="feedback-status" style="font-size: 1.2rem; display: block; margin-bottom: 5px;"></strong>
-                    <span id="feedback-hint" style="font-size: 1rem;"></span>
+                <h3 id="q-text"
+                    style="font-size:1.35rem;margin-top:0;line-height:1.4;margin-bottom:25px;text-transform:none;letter-spacing:0">
+                </h3>
+                <div id="q-options" style="display:flex;flex-direction:column;gap:12px"></div>
+                <div id="q-feedback"
+                    style="margin-top:20px;padding:15px;border-radius:15px;display:none;text-align:left;border-left:6px solid;font-size:1rem">
                 </div>
-                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                    <button id="q-next-btn" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button>
+                <div style="display:flex;justify-content:flex-end;margin-top:18px"><button id="q-next-btn"
+                        class="huge-btn" style="display:none;padding:10px 28px;font-size:1.05rem"
+                        onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button></div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="agenda-title">Summary Hari Ini 📝</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <div class="card-icon">🎙️</div>
+                    <h4>Voice Recognition</h4>
+                    <p>Sistem membaca suara dan mengubahnya menjadi teks.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h4>Speech to Text</h4>
+                    <p>Extension ML4K membantu Scratch membaca command suara.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📣</div>
+                    <h4>Broadcast</h4>
+                    <p>Room mengirim command ke Fan dan Lamp.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎭</div>
+                    <h4>Costume State</h4>
+                    <p>Fan dan Lamp berubah tampilan saat status on/off berubah.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 14: Feedback -->
-        <div class="slide" id="slide14">
-            <h2 class="agenda-title">Session Feedback 💖</h2>
-            <div style="display: flex; gap: 50px; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 20px;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp9" style="width: 200px;">
+        <div class="slide">
+            <h2 class="agenda-title">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size:1.25rem;text-align:center;max-width:800px;margin:-5px 0 30px;color:#ddd">Isi feedback
+                singkat setelah kelas selesai.</p>
+            <div
+                style="display:flex;gap:40px;align-items:center;justify-content:center;width:100%;max-width:900px;flex-wrap:wrap">
+                <div
+                    style="position:relative;width:250px;height:250px;flex-shrink:0;display:flex;justify-content:center;align-items:flex-end">
+                    <div
+                        style="position:absolute;top:20px;left:20px;font-size:3rem;animation:floating 2s infinite alternate">
+                        💖</div>
+                    <div
+                        style="position:absolute;top:50px;right:20px;font-size:2.5rem;animation:floating 2.5s infinite alternate reverse">
+                        ✨</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png"
+                        alt="Happy Cat" style="width:220px;z-index:2;filter:drop-shadow(0 8px 16px rgba(0,0,0,.2))"
+                        class="float">
                 </div>
-                <div style="text-align: left;">
-                    <h3>Luar Biasa!</h3>
-                    <p style="margin-bottom: 30px;">Sekarang kamu tahu rahasia di balik AI yang pintar: Data yang berkualitas!</p>
-                    <a href="https://bit.ly/feedback-smp9" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
+                <div
+                    style="background:rgba(255,255,255,.1);border-radius:20px;padding:32px;box-shadow:0 8px 25px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.2);text-align:center;width:100%;max-width:420px;backdrop-filter:blur(10px)">
+                    <h3 style="color:var(--secondary);margin:0 0 10px;font-size:1.6rem">Selesai untuk Hari Ini!</h3>
+                    <p style="color:#ddd;font-size:1.05rem;margin:0">Pastikan project sudah ditest, disimpan, dan
+                        feedback sudah diisi.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation -->
         <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
         <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="resultModal">
+        <div id="modalEmoji" style="font-size:5rem">🎉</div>
+        <h2 id="modalTitle">Correct</h2>
+        <p id="modalMessage">Great job.</p>
+        <button class="huge-btn" style="margin-top:20px" onclick="closeModal()">OK</button>
     </div>
 
     <script>
@@ -396,91 +1305,146 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
+        let draggedItem = null;
+        let micStream = null;
+        let audioContext = null;
+        let analyser = null;
+        let rafId = null;
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
+        function showSlide(index, direction = 'next') {
+            if (index === currentSlide && slides[index].classList.contains('active')) return;
+            stopMicTest();
+            slides.forEach(s => s.classList.remove('active', 'is-next', 'is-exiting'));
+            const oldSlide = slides[currentSlide];
+            const newSlide = slides[index];
+            if (direction === 'next') {
+                oldSlide.classList.add('is-exiting');
+                newSlide.classList.add('is-next');
+                setTimeout(() => { newSlide.classList.add('active'); newSlide.classList.remove('is-next'); }, 40);
+            } else {
+                newSlide.classList.add('active');
+            }
             currentSlide = index;
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
-
-            if (slides[index].id === 'slide8') initLab();
-            if (slides[index].id === 'slide13') initQuiz();
         }
-
         function changeSlide(direction) {
             const newIndex = currentSlide + direction;
-            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex);
+            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex, direction === 1 ? 'next' : 'prev');
         }
+        document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') changeSlide(1); else if (e.key === 'ArrowLeft') changeSlide(-1); });
 
-        // --- Data Doctor Lab (Slide 8) ---
-        const dataSet = [
-            { id: 'd1', val: 'Umur: 13, Jarak: 2km', type: 'good' },
-            { id: 'd2', val: 'Umur: 999, Jarak: -10km', type: 'bad' },
-            { id: 'd3', val: 'Umur: 15, Jarak: 10km', type: 'good' },
-            { id: 'd4', val: 'Umur: 5, Jarak: 0.5km', type: 'good' },
-            { id: 'd5', val: 'Umur: abc, Jarak: ???', type: 'bad' }
-        ];
-
-        function initLab() {
-            const pool = document.getElementById('dataPool');
-            const feedback = document.getElementById('labFeedback');
-            pool.innerHTML = '';
-            feedback.textContent = '';
-            
-            dataSet.forEach(data => {
-                const el = document.createElement('div');
-                el.className = 'data-item';
-                el.textContent = data.val;
-                el.draggable = true;
-                el.id = data.id;
-                el.dataset.type = data.type;
-                el.ondragstart = (e) => e.dataTransfer.setData('text', e.target.id);
-                pool.appendChild(el);
-            });
-
-            document.querySelectorAll('.bin-zone').forEach(zone => {
-                zone.ondragover = (e) => { e.preventDefault(); zone.classList.add('drag-over'); };
-                zone.ondragleave = () => zone.classList.remove('drag-over');
-                zone.ondrop = (e) => {
-                    e.preventDefault();
-                    zone.classList.remove('drag-over');
-                    const id = e.dataTransfer.getData('text');
-                    const dragged = document.getElementById(id);
-                    if (dragged.dataset.type === zone.dataset.type) {
-                        zone.querySelector('.items-in-zone').appendChild(dragged);
-                        dragged.draggable = false;
-                        dragged.style.opacity = '0.5';
-                    } else {
-                        feedback.textContent = "Hati-hati! Jangan masukkan data rusak ke model AI! ❌";
-                        feedback.style.color = "var(--danger)";
-                    }
-                };
-            });
-        }
-
-        // --- Quiz Logic (Slide 13) ---
-        const quizData = [
-            {
-                q: "Apa yang terjadi jika kita menggunakan data 'rusak' (misal: Umur 1000) untuk melatih AI?",
-                opts: ["A. AI akan semakin pintar", "B. AI akan bingung dan tebakannya salah", "C. Komputer akan meledak"],
-                ans: 1,
-                hint: "Data yang tidak logis akan merusak pola yang dipelajari oleh AI."
-            },
-            {
-                q: "Kenapa kita harus menguji AI dengan data yang BELUM pernah dilatih?",
-                opts: ["A. Agar AI tidak bosan", "B. Untuk memastikan AI bisa memproses pola baru secara mandiri", "C. Agar program Scratch lebih lambat"],
-                ans: 1,
-                hint: "Ujian asli AI adalah saat ia menghadapi situasi baru yang belum pernah ia lihat."
-            },
-            {
-                q: "Faktor apa yang paling mempengaruhi akurasi Machine Learning?",
-                opts: ["A. Harga komputer", "B. Warna background Scratch", "C. Jumlah dan kualitas data training"],
-                ans: 2,
-                hint: "Dataset adalah fondasi utama dari kecerdasan buatan."
+        document.addEventListener('dragstart', e => {
+            if (e.target.classList.contains('drag-item')) {
+                draggedItem = e.target;
+                e.target.style.opacity = '.55';
+                e.dataTransfer.setData('text/plain', e.target.textContent);
             }
+        });
+        document.addEventListener('dragend', e => { if (e.target.classList.contains('drag-item')) e.target.style.opacity = '1'; });
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault(); zone.classList.remove('over');
+                if (!draggedItem) return;
+                const accepted = zone.dataset.accept;
+                if (draggedItem.dataset.type === accepted) {
+                    zone.appendChild(draggedItem);
+                    draggedItem.draggable = false;
+                    draggedItem.classList.add('locked');
+                    showModal('✅', 'Tepat', 'Kartu berhasil ditempatkan pada bagian yang sesuai.');
+                } else {
+                    showModal('⚠️', 'Cek Lagi', 'Bagian ini belum tepat. Pikirkan apakah kartu itu input, process, atau output.');
+                }
+                draggedItem = null;
+            });
+        });
+        function showModal(emoji, title, message) {
+            document.getElementById('modalEmoji').textContent = emoji;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('resultModal').style.display = 'block';
+        }
+        function closeModal() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('resultModal').style.display = 'none';
+        }
+        async function startMicTest() {
+            const status = document.getElementById('micStatus');
+            const fill = document.getElementById('micLevel');
+            try {
+                stopMicTest(false);
+                micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioContext.createMediaStreamSource(micStream);
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                source.connect(analyser);
+                const data = new Uint8Array(analyser.frequencyBinCount);
+                status.textContent = '✅ Microphone aktif. Coba bicara dan lihat bar bergerak.';
+                status.style.color = 'var(--success)';
+                function tick() {
+                    analyser.getByteFrequencyData(data);
+                    const avg = data.reduce((a, b) => a + b, 0) / data.length;
+                    fill.style.width = Math.min(100, Math.round(avg * 1.7)) + '%';
+                    rafId = requestAnimationFrame(tick);
+                }
+                tick();
+            } catch (err) {
+                status.textContent = '⚠️ Microphone belum bisa dibuka. Tidak apa-apa, tetap ikuti project bersama teacher.';
+                status.style.color = 'var(--secondary)';
+                fill.style.width = '0%';
+            }
+        }
+        function stopMicTest(updateText = true) {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = null;
+            if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+            if (audioContext) { audioContext.close().catch(() => { }); audioContext = null; }
+            const fill = document.getElementById('micLevel');
+            if (fill) fill.style.width = '0%';
+            if (updateText && document.getElementById('micStatus')) {
+                document.getElementById('micStatus').textContent = 'Mic test dihentikan.';
+                document.getElementById('micStatus').style.color = '#dff';
+            }
+        }
+        function simulateCommand() {
+            const input = (document.getElementById('commandInput').value || '').trim().toLowerCase();
+            const lampIcon = document.getElementById('lampIcon');
+            const fanIcon = document.getElementById('fanIcon');
+            const lampState = document.getElementById('lampState');
+            const fanState = document.getElementById('fanState');
+            const status = document.getElementById('commandStatus');
+            if (input === 'turn on the lamp') {
+                lampIcon.textContent = '💡'; lampState.textContent = 'Lamp: ON'; lampState.style.color = 'var(--success)'; status.textContent = 'Broadcast: lamp on → Lamp switch costume ke ON.';
+            } else if (input === 'turn off the lamp') {
+                lampIcon.textContent = '⚫'; lampState.textContent = 'Lamp: OFF'; lampState.style.color = 'var(--secondary)'; status.textContent = 'Broadcast: lamp off → Lamp switch costume ke OFF.';
+            } else if (input === 'turn on the fan') {
+                fanIcon.textContent = '🌪️'; fanState.textContent = 'Fan: ON'; fanState.style.color = 'var(--success)'; status.textContent = 'Broadcast: fan on → Fan switch costume ke ON.';
+            } else if (input === 'turn off the fan') {
+                fanIcon.textContent = '🌬️'; fanState.textContent = 'Fan: OFF'; fanState.style.color = 'var(--secondary)'; status.textContent = 'Broadcast: fan off → Fan switch costume ke OFF.';
+            } else {
+                status.textContent = 'Command belum dikenali. Coba: turn on the lamp / turn off the lamp / turn on the fan / turn off the fan.';
+                status.style.color = 'var(--secondary)';
+                return;
+            }
+            status.style.color = 'var(--success)';
+        }
+        function toggleCheck(btn) {
+            btn.classList.toggle('checked');
+            if (btn.classList.contains('checked')) btn.textContent = btn.textContent.replace('☐', '✅');
+            else btn.textContent = btn.textContent.replace('✅', '☐');
+            const checked = document.querySelectorAll('#buildChecklist .checked').length;
+            document.getElementById('checkStatus').textContent = checked + ' / 6 selesai';
+            if (checked === 6) document.getElementById('checkStatus').textContent = '✅ Semua checklist selesai. Siap quick quiz!';
+        }
+        const quizData = [
+            { q: 'Apa fungsi Speech to Text pada project Save Energy?', opts: ['A. Mengubah suara menjadi teks command', 'B. Menggambar sprite baru', 'C. Menghapus semua costume'], ans: 0, hint: 'Speech to Text membantu Scratch membaca ucapan sebagai teks.' },
+            { q: 'Sprite mana yang mendeteksi voice command dan mengirim broadcast?', opts: ['A. Fan', 'B. Lamp', 'C. Room'], ans: 2, hint: 'Room berperan sebagai controller yang mendengar command lalu broadcast ke device.' },
+            { q: 'Apa yang terjadi ketika Room broadcast “lamp on”?', opts: ['A. Lamp switch costume ke lamp on', 'B. Fan otomatis mati selamanya', 'C. Project ditutup'], ans: 0, hint: 'Broadcast diterima oleh Lamp, lalu Lamp mengganti costume sesuai command.' }
         ];
-
         let currentQIdx = 0;
         function initQuiz() {
             const data = quizData[currentQIdx];
@@ -490,49 +1454,45 @@
             optsDiv.innerHTML = '';
             data.opts.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                btn.style.cssText = "background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; text-align: left; transition: 0.3s;";
-                btn.innerHTML = opt;
+                btn.className = 'quiz-opt';
+                btn.textContent = opt;
                 btn.onclick = () => checkQuiz(i, btn);
                 optsDiv.appendChild(btn);
             });
             document.getElementById('q-feedback').style.display = 'none';
             document.getElementById('q-next-btn').style.display = 'none';
         }
-
         function checkQuiz(idx, btn) {
             const data = quizData[currentQIdx];
             const feedback = document.getElementById('q-feedback');
-            const status = document.getElementById('feedback-status');
-            const hint = document.getElementById('feedback-hint');
-            const nextBtn = document.getElementById('q-next-btn');
-            
+            document.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
             if (idx === data.ans) {
-                btn.style.background = "rgba(0, 230, 118, 0.2)";
-                status.textContent = "BENAR! 🎉";
-                feedback.style.color = "#00e676";
+                btn.classList.add('correct');
+                feedback.style.borderColor = 'var(--success)';
+                feedback.style.color = 'var(--success)';
+                feedback.innerHTML = '<strong>BENAR ✅</strong><br>' + data.hint;
             } else {
-                btn.style.background = "rgba(255, 82, 82, 0.2)";
-                status.textContent = "KURANG TEPAT ❌";
-                feedback.style.color = "#ff5252";
+                btn.classList.add('wrong');
+                document.querySelectorAll('.quiz-opt')[data.ans].classList.add('correct');
+                feedback.style.borderColor = 'var(--danger)';
+                feedback.style.color = 'var(--danger)';
+                feedback.innerHTML = '<strong>KURANG TEPAT ❌</strong><br>' + data.hint;
             }
-            hint.textContent = data.hint;
             feedback.style.display = 'block';
-            nextBtn.style.display = 'block';
-            if (currentQIdx === quizData.length - 1) {
-                nextBtn.textContent = "SELESAI 🏁";
-                nextBtn.onclick = () => changeSlide(1);
+            const next = document.getElementById('q-next-btn');
+            next.style.display = 'inline-flex';
+            next.textContent = currentQIdx === quizData.length - 1 ? 'SELESAI 🏁' : 'SOAL BERIKUTNYA ➜';
+        }
+        function nextQuiz() {
+            if (currentQIdx < quizData.length - 1) {
+                currentQIdx++;
+                initQuiz();
+            } else {
+                changeSlide(1);
             }
         }
-
-        function nextQuiz() { currentQIdx++; initQuiz(); }
-
-        window.onload = () => {
-            showSlide(0);
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') changeSlide(1);
-                if (e.key === 'ArrowLeft') changeSlide(-1);
-            });
-        };
+        document.addEventListener('DOMContentLoaded', () => initQuiz());
     </script>
 </body>
+
 </html>
