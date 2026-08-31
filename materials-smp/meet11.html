@@ -1,370 +1,750 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RUANGGURU CODING - MEET 11 SMP</title>
-    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <title>RUANGGURU CODING - SESSION 11 SMP</title>
+    <link rel="icon"
+        href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+        type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4a8b8b;
             --secondary: #f2c140;
             --dark: #1a2424;
-            --light: #ffffff;
+            --panel: #202b2b;
+            --light: #fff;
             --accent: #78a3a3;
             --success: #00e676;
             --danger: #ff5252;
-            --orange: #ffab19;
-            --card-bg: rgba(0, 0, 0, 0.2);
-            
-            /* Scratch Block Colors */
-            --b-event: #FFBF00;
-            --b-look: #9966FF;
-            --b-control: #FFAB19;
-            --b-motion: #4C97FF;
-            --b-sensing: #4CBFE6;
-            --b-op: #59C059;
-            --b-ai: #008080;
+            --blue: #4c97ff;
+            --purple: #9966ff;
+            --orange: #ff8c1a;
+            --card-bg: rgba(255, 255, 255, .075);
         }
 
-        body { 
-            margin: 0; padding: 0; 
-            font-family: 'Outfit', sans-serif; 
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
             background: url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover fixed no-repeat;
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
             color: var(--light);
         }
 
-        .presentation-container { 
-            width: 80vw; height: 80vh; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); 
-            border-radius: 20px; overflow: hidden; 
-            display: flex; flex-direction: column; position: relative; 
+        .presentation-container {
+            width: 80vw;
+            height: 80vh;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .6);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
             background: #202b2b;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, .12);
         }
 
-        .slide { 
-            width: 100%; height: 100%; 
-            padding: 40px 60px; box-sizing: border-box; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            position: absolute; top: 0; left: 0; 
-            transition: all 0.7s cubic-bezier(0.645, 0.045, 0.355, 1); 
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            inset: 0;
+            transition: all .65s cubic-bezier(.645, .045, .355, 1);
             background: linear-gradient(135deg, #2b3a3a 0%, #1a2424 100%);
-            visibility: hidden; opacity: 0; 
+            visibility: hidden;
+            opacity: 0;
+            overflow-y: auto;
         }
 
         .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
+        .slide.is-next { transform: translateX(100%); visibility: visible; opacity: 1; z-index: 11; }
+        .slide.is-exiting { transform: translateX(-100%); opacity: 0; z-index: 5; }
 
-        /* Logos */
-        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; }
+        .slide-logo-left {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            padding: 10px 20px 10px 40px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            gap: 15px;
+        }
+
         .slide-logo-left img { height: 40px; width: auto; }
-        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; }
+        .slide-logo-right {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: white;
+            padding: 10px 40px 10px 20px;
+            border-bottom-left-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
         .slide-logo-right img { height: 40px; width: auto; }
 
-        .nav-button { background-color: var(--secondary); color: #222; border: none; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 55px; height: 55px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; transition: 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-        #prevBtn { left: 20px; } 
+        .nav-button {
+            background: var(--secondary);
+            color: #222;
+            border: none;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: .3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
+        }
+        #prevBtn { left: 20px; }
         #nextBtn { right: 20px; }
         .nav-button:hover:not(:disabled) { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 20px var(--secondary); }
-        .nav-button:disabled { background-color: #555; color: #888; cursor: not-allowed; opacity: 0.5; }
+        .nav-button:disabled { background: #555; color: #888; cursor: not-allowed; opacity: .5; }
 
-        /* Typography */
-        h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
-        .agenda-title { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: 25px; text-align: center; border-left: 10px solid var(--primary); padding-left: 20px; line-height: 1; }
-        .cover-title { font-size: 3.2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; text-align: center; }
-        .cover-subtitle { font-size: 1.4rem; color: var(--accent); font-weight: 400; letter-spacing: 3px; margin-bottom: 40px; text-align: center; }
-        .highlight { color: var(--secondary); font-weight: 800; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        .agenda-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 0 0 28px;
+            text-align: center;
+            border-left: 10px solid var(--primary);
+            padding-left: 20px;
+            line-height: 1.08;
+        }
 
-        /* Elements */
-        .card { background: var(--card-bg); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; backdrop-filter: blur(10px); text-align: center; }
-        .card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.1); border-color: var(--primary); }
-        .huge-btn { background: var(--primary); color: white; padding: 15px 35px; border-radius: 15px; font-weight: 800; font-size: 1.2rem; text-decoration: none; border: none; cursor: pointer; transition: 0.3s; display: inline-block; box-shadow: 0 10px 20px rgba(74, 139, 139, 0.3); }
-        .huge-btn:hover { background: var(--accent); transform: translateY(-3px); }
+        .cover-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            margin: 0 0 12px;
+            line-height: 1.05;
+            text-align: center;
+        }
 
-        @keyframes floatSprite { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-        .float { animation: floatSprite 2s infinite alternate ease-in-out; }
-        
-        .placeholder-img { width: 100%; height: 180px; background: rgba(255,255,255,0.05); border: 2px dashed var(--accent); border-radius: 15px; display: flex; justify-content: center; align-items: center; color: var(--accent); overflow: hidden; }
-        .placeholder-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .card img { max-width: 100%; height: auto; border-radius: 10px; object-fit: contain; }
+        .cover-subtitle {
+            font-size: 1.35rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .highlight-gradient {
+            background: linear-gradient(135deg, #f2c140 0%, #ffffff 48%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+        }
+
+        .small-text { font-size: 1.05rem; color: #dce7e7; line-height: 1.5; }
+        .caption { margin-top: 12px; opacity: .82; font-size: 1rem; color: #e9eeee; text-align: center; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; width: 100%; max-width: 1020px; }
+        .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; width: 100%; max-width: 1060px; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; width: 100%; max-width: 1080px; }
+
+        .card {
+            background: var(--card-bg);
+            padding: 28px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            transition: .3s;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, .18);
+        }
+        .card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, .1); border-color: var(--primary); }
+        .card h4, .card h3 { font-size: 1.55rem; margin: 12px 0 10px; color: var(--secondary); }
+        .card p { font-size: 1.1rem; line-height: 1.45; margin: 0; color: #e9eeee; }
+        .card-icon { font-size: 3.3rem; margin-bottom: 10px; }
+
+        .huge-btn {
+            background: var(--primary);
+            color: white;
+            padding: 18px 42px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.32rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: .3s;
+            box-shadow: 0 10px 20px rgba(76, 151, 255, .18);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+        }
+        .huge-btn:hover { background: var(--accent); transform: scale(1.04); box-shadow: 0 0 30px var(--accent); }
+
+        .note {
+            background: rgba(242, 193, 64, .12);
+            border: 1px dashed var(--secondary);
+            color: #fff7d0;
+            border-radius: 18px;
+            padding: 20px 24px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .teal-note {
+            background: rgba(74, 139, 139, .22);
+            border-left: 7px solid var(--primary);
+            color: #ecffff;
+            border-radius: 18px;
+            padding: 18px 24px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: rgba(255, 255, 255, .08);
+            color: #eef;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .img-container {
+            background: rgba(0, 0, 0, .3);
+            border-radius: 18px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .video-wrap {
+            width: 100%;
+            max-width: 850px;
+            background: rgba(255,255,255,.08);
+            border: 4px solid rgba(242,193,64,.45);
+            border-radius: 22px;
+            padding: 12px;
+            box-shadow: 0 16px 36px rgba(0,0,0,.28);
+        }
+        .video-wrap iframe { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 14px; display: block; }
+
+        .mini-step {
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 18px;
+            padding: 18px;
+            font-size: 1.15rem;
+            line-height: 1.45;
+            color: #f0f5f5;
+            margin-bottom: 12px;
+        }
+        .mini-step strong { color: var(--secondary); }
+
+        .step-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; max-width: 1000px; }
+        .step-mini {
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 12px 26px rgba(0,0,0,.18);
+            text-align: center;
+        }
+        .step-mini span { font-size: 2.6rem; display: block; margin-bottom: 8px; }
+        .step-mini b { color: var(--secondary); font-size: 1.1rem; }
+        .step-mini p { margin: 8px 0 0; color: #e9eeee; font-size: 1rem; line-height: 1.35; }
+
+        .choice-btn, .quiz-opt {
+            background: rgba(255, 255, 255, .06);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, .18);
+            padding: 14px 18px;
+            border-radius: 15px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: .2s;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+        }
+        .choice-btn:hover, .quiz-opt:hover { border-color: var(--secondary); background: rgba(242, 193, 64, .08); }
+        .choice-btn.good, .quiz-opt.correct { background: rgba(0, 230, 118, .18); border-color: var(--success); }
+        .choice-btn.bad, .quiz-opt.wrong { background: rgba(255, 82, 82, .16); border-color: var(--danger); }
+
+        .class-panel {
+            width: 100%;
+            max-width: 820px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 16px 36px rgba(0,0,0,.28);
+        }
+
+        .prediction-box {
+            background: rgba(0,0,0,.42);
+            color: #f8fafc;
+            border-radius: 22px;
+            padding: 22px;
+            width: 100%;
+            max-width: 540px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            box-shadow: 0 10px 20px rgba(0,0,0,.22);
+            border: 1px solid rgba(255,255,255,.14);
+        }
+        .bar { height: 22px; border-radius: 999px; background: rgba(255,255,255,.2); overflow: hidden; margin: 8px 0 14px; }
+        .bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success)); transition: width .5s; }
+
+        .camera-test {
+            width: 100%;
+            min-height: 330px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 24px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 16px 36px rgba(0,0,0,.28);
+        }
+        .camera-test video { width: 100%; max-height: 250px; object-fit: cover; display: none; border-radius: 16px; background: #000; border: 3px solid rgba(242,193,64,.45); }
+        .camera-placeholder { font-size: 5.5rem; color: var(--secondary); }
+
+        .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; max-width: 920px; }
+        .check-item {
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 16px;
+            padding: 16px 18px;
+            font-size: 1.08rem;
+            text-align: left;
+            cursor: pointer;
+            color: #f4ffff;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .check-item .box { width: 28px; height: 28px; border: 3px solid var(--secondary); border-radius: 8px; flex-shrink: 0; display: grid; place-items: center; }
+        .check-item.done { border-color: var(--success); background: rgba(0,230,118,.13); }
+        .check-item.done .box::after { content: '✓'; font-weight: 900; color: var(--success); }
+
+        .quiz-opt { width: 100%; text-align: left; font-weight: 600; }
+
+        .feedback-btn {
+            background: rgba(255,255,255,.07);
+            color: #f4ffff;
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 18px;
+            padding: 18px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: .2s;
+        }
+        .feedback-btn:hover, .feedback-btn.selected { transform: translateY(-5px); background: rgba(242,193,64,.12); border-color: var(--secondary); }
+
+        .float { animation: floating 2.4s infinite alternate ease-in-out; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes floating { from { transform: translateY(0); } to { transform: translateY(-14px); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.04); } 100% { transform: scale(1); } }
+
+        @media(max-width:900px) {
+            .grid-container, .three-col, .two-col, .step-row, .checklist { grid-template-columns: 1fr !important; }
+            .slide { padding: 32px 36px; }
+            .cover-title { font-size: 3rem; }
+            .slide-logo-left img, .slide-logo-right img { height: 32px; }
+            .slide-logo-left { padding-left: 18px; }
+            .slide-logo-right { padding-right: 18px; }
+        }
     </style>
 </head>
+
 <body>
     <div class="slide-logo-left">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="RG">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="DH">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="DS">
-        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Juara">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="Logo Ruangguru">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="Logo Dharmasraya">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQguI0U7hDXQP6UlNo24XCjT5nJKDttC7nSug&s" alt="Logo Disdik">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Logo Dharmasraya Juara">
     </div>
-    <div class="slide-logo-right">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="RG Coding">
-    </div>
+    <div class="slide-logo-right"><img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="Logo Ruangguru Coding"></div>
 
     <div class="presentation-container">
-        <!-- Slide 1: Cover -->
-        <div class="slide active" id="slide1">
-            <h1 class="cover-title">ML: IMAGE RECOGNITION <br><span style="color: var(--secondary);">CHAMELEON PROJECT (PART 2)</span></h1>
-            <p class="cover-subtitle">MEET 11: DESIGN & PROGRAMMING</p>
-            <div style="display: flex; gap: 30px; justify-content: center; align-items: center; margin-top: 20px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 120px;">
-                <div style="font-size: 3rem;">➕</div>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 120px;">
+        <section class="slide active" id="cover">
+            <div style="text-align:center;max-width:1040px">
+                <div class="pill">TEACHABLE MACHINE • IMAGE CLASSIFICATION</div>
+                <h1 class="cover-title"><span class="highlight-gradient">TRAIN YOUR OWN IMAGE AI</span><br>MODEL TESTING LAB</h1>
+                <p class="cover-subtitle">SESSION 11: DATASET QUALITY • TRAINING • CONFIDENCE • RETRAINING</p>
+                <div style="font-size:5.8rem;margin:18px 0" class="float">📷🧠🔍</div>
             </div>
-            <div style="font-size: 6rem; margin-top: 40px;" class="float">🦎💻✨</div>
-        </div>
+        </section>
 
-        <!-- Slide 2: Last Week Recall -->
-        <div class="slide" id="slide2">
-            <h2 class="agenda-title">Kemarin Belajar Apa? 🧠</h2>
-            <div style="display: flex; gap: 40px; width: 100%; align-items: center;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 8rem;" class="float">📸⚙️</div>
+        <section class="slide">
+            <h2 class="agenda-title">Review: Dari Input ke Intelligence 🧠</h2>
+            <div class="grid-container">
+                <div class="card"><div class="card-icon">🌊</div><h4>AI for Ocean</h4><p>Kita melihat AI belajar dari contoh yang diberi label benar atau salah.</p></div>
+                <div class="card"><div class="card-icon">🎧</div><h4>Pretrained AI</h4><p>Di Music Player, kita memakai sistem siap pakai untuk mencari dan membaca data lagu.</p></div>
+                <div class="card"><div class="card-icon">🎙️⌨️</div><h4>Voice & Text Input</h4><p>Save Energy memakai input berbeda, tetapi output tetap dikontrol lewat logic dan broadcast.</p></div>
+                <div class="card"><div class="card-icon">📊</div><h4>Today's Shift</h4><p>Hari ini kita tidak hanya memakai AI. Kita akan melatih, menguji, dan memperbaiki model sendiri.</p></div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Today's Learning Target 🎯</h2>
+            <div class="three-col">
+                <div class="card"><div class="card-icon">🏷️</div><h4>Define Classes</h4><p>Menentukan kategori yang akan dikenali oleh image model.</p></div>
+                <div class="card"><div class="card-icon">📸</div><h4>Build Dataset</h4><p>Mengumpulkan contoh gambar yang cukup jelas dan bervariasi.</p></div>
+                <div class="card"><div class="card-icon">🧠</div><h4>Train Model</h4><p>Membuat model belajar pola visual dari contoh gambar.</p></div>
+                <div class="card"><div class="card-icon">🔍</div><h4>Test Prediction</h4><p>Membaca hasil prediksi dan confidence score.</p></div>
+                <div class="card"><div class="card-icon">⚠️</div><h4>Analyze Error</h4><p>Mencari alasan kenapa model bisa salah atau ragu.</p></div>
+                <div class="card"><div class="card-icon">🔁</div><h4>Retrain</h4><p>Memperbaiki dataset lalu melatih ulang model.</p></div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Motion Detection VS Image Recognition</h2>
+            <div class="two-col">
+                <div class="card">
+                    <div class="card-icon">👋📹</div>
+                    <h4>Video Sensing</h4>
+                    <p>Sistem mendeteksi perubahan gerakan. Ia tahu ada aktivitas, tetapi belum tentu tahu objek apa yang bergerak.</p>
                 </div>
-                <div style="flex: 1.5;">
-                    <div class="card" style="text-align: left; padding: 30px; border-left: 10px solid var(--primary);">
-                        <h3 style="color: var(--primary);">Meet 10: Training Data</h3>
-                        <p style="font-size: 1.4rem;">Kita sudah berhasil melatih model AI untuk mengenali warna (Red, Green, Blue) melalui ML4K.</p>
+                <div class="card">
+                    <div class="card-icon">📷🏷️</div>
+                    <h4>Image Recognition</h4>
+                    <p>Sistem mencoba mengklasifikasikan objek: ini pensil, buku, botol, atau kategori lain.</p>
+                </div>
+            </div>
+            <div class="note" style="margin-top:26px;max-width:920px;text-align:center">Image recognition membutuhkan contoh gambar yang sudah diberi label. Tanpa label, model tidak tahu pola apa yang harus dipelajari.</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Core Concept: How an Image Model Learns</h2>
+            <div class="step-row">
+                <div class="step-mini"><span>📸</span><b>Examples</b><p>Ambil gambar dari beberapa kondisi.</p></div>
+                <div class="step-mini"><span>🏷️</span><b>Labels</b><p>Masukkan gambar ke class yang benar.</p></div>
+                <div class="step-mini"><span>🧠</span><b>Training</b><p>Model mencari pola visual.</p></div>
+                <div class="step-mini"><span>📊</span><b>Prediction</b><p>Model memberi hasil dan tingkat keyakinan.</p></div>
+            </div>
+            <div class="teal-note" style="margin-top:28px;max-width:900px;text-align:center">Bahasa sederhananya: kita sedang mengajari komputer melihat perbedaan visual melalui data contoh.</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Class, Dataset, Confidence</h2>
+            <div class="three-col">
+                <div class="card"><div class="card-icon">🏷️</div><h4>Class</h4><p>Kategori target. Contoh: Pencil, Book, Bottle.</p></div>
+                <div class="card"><div class="card-icon">📚</div><h4>Dataset</h4><p>Kumpulan gambar yang dipakai untuk melatih model.</p></div>
+                <div class="card"><div class="card-icon">📈</div><h4>Confidence</h4><p>Angka yang menunjukkan seberapa yakin model terhadap prediksinya.</p></div>
+            </div>
+            <div class="note" style="margin-top:26px;max-width:900px;text-align:center">Confidence tinggi belum selalu berarti benar. Kita tetap harus menguji model dengan contoh baru.</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Activity: Human Classifier</h2>
+            <div class="class-panel">
+                <div id="classifyEmoji" style="font-size:7rem;margin-bottom:8px">✏️</div>
+                <h3 id="classifyPrompt" style="font-size:1.55rem;margin:8px 0;color:var(--secondary)">Pilih class yang paling tepat.</h3>
+                <p class="small-text" style="margin-top:0">Latihan ini menunjukkan bahwa manusia juga melakukan klasifikasi berdasarkan ciri visual.</p>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px">
+                    <button class="choice-btn" onclick="checkClass('Pencil')">✏️ Pencil</button>
+                    <button class="choice-btn" onclick="checkClass('Book')">📘 Book</button>
+                    <button class="choice-btn" onclick="checkClass('Bottle')">🧴 Bottle</button>
+                </div>
+            </div>
+            <div class="teal-note" id="classifyFeedback" style="margin-top:18px;max-width:820px;text-align:center;min-height:60px">Pilih jawaban untuk mulai.</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Dataset Quality Audit</h2>
+            <div class="two-col">
+                <div class="card" id="modelA">
+                    <div class="card-icon">✏️✏️✏️</div>
+                    <h4>Dataset A</h4>
+                    <p>Semua gambar pensil dari angle, jarak, dan cahaya yang sama.</p>
+                    <button class="huge-btn" style="margin-top:18px;font-size:1.05rem;padding:12px 24px" onclick="chooseDataset('A')">Pilih A</button>
+                </div>
+                <div class="card" id="modelB">
+                    <div class="card-icon">✏️🔄📏</div>
+                    <h4>Dataset B</h4>
+                    <p>Gambar pensil dari dekat, jauh, miring, terang, dan sedikit gelap.</p>
+                    <button class="huge-btn" style="margin-top:18px;font-size:1.05rem;padding:12px 24px" onclick="chooseDataset('B')">Pilih B</button>
+                </div>
+            </div>
+            <div class="note" id="datasetFeedback" style="margin-top:24px;max-width:860px;text-align:center;min-height:64px">Dataset mana yang kemungkinan lebih kuat saat diuji dengan gambar baru?</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Project Mission: Classroom Object Model</h2>
+            <div class="two-col">
+                <div class="card">
+                    <div class="card-icon" style="font-size:6rem">✏️📘🧴</div>
+                    <h4>Train an Image Classifier</h4>
+                    <p>Model akan belajar membedakan beberapa benda sederhana yang ada di kelas.</p>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Goal:</strong> model bisa menebak class dari gambar baru.</div>
+                    <div class="mini-step"><strong>Evidence:</strong> hasil prediksi dan confidence bisa dibaca.</div>
+                    <div class="mini-step"><strong>Challenge:</strong> coba membuat model bingung, lalu perbaiki dataset.</div>
+                    <div class="teal-note">Fokus kita bukan hanya “berhasil”, tapi memahami cara model mengambil keputusan.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Tool: Teachable Machine</h2>
+            <div class="two-col">
+                <div class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4rhyn5lAmRq1JUpYuV3i65zPNffv2AeXhLmZIsfpHQg&s=10" alt="Teachable Machine Logo" class="float" style="height:120px; object-fit:contain; margin-bottom:15px;">
+                    <h4>Web-based ML Tool</h4>
+                    <p>Teachable Machine membantu kita membuat model sederhana tanpa menulis kode machine learning.</p>
+                </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Input:</strong> contoh gambar dari webcam atau upload.</div>
+                    <div class="mini-step"><strong>Process:</strong> training model berdasarkan class.</div>
+                    <div class="mini-step"><strong>Output:</strong> prediksi class dan confidence score.</div>
+                    <div class="note">Hari ini pilih <strong>Image Project → Standard Image Model</strong>.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Watch First: Image Model Training</h2>
+            <p class="small-text" style="margin-top:-12px;text-align:center;max-width:860px">Saat menonton, perhatikan urutan kerja: class, examples, train model, test prediction.</p>
+            <div class="video-wrap">
+                <iframe src="https://www.youtube.com/embed/tcctLEYf97g" title="How to Train an Image Model with Teachable Machine" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="teal-note" style="margin-top:18px;max-width:860px;text-align:center">Catat satu hal yang menurutmu paling penting agar model tidak mudah salah.</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Open Teachable Machine</h2>
+            <div style="text-align:center;max-width:900px">
+                <div style="font-size:6.5rem;margin-bottom:14px" class="float">📷🧠🚀</div>
+                <p style="font-size:1.35rem;line-height:1.5;color:#e9eeee">Buka platform, pilih Image Project, lalu gunakan Standard Image Model.</p>
+                <a class="huge-btn pulse" href="https://teachablemachine.withgoogle.com/train/image" target="_blank" rel="noopener noreferrer" style="font-size:1.8rem;padding:24px 54px;margin-top:18px">OPEN TEACHABLE MACHINE ↗</a>
+                <div class="note" style="margin-top:24px">Gunakan benda, bukan wajah teman. Kita fokus pada object classification.</div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Camera Setup & Data Safety</h2>
+            <div class="two-col">
+                <div class="camera-test">
+                    <video id="cameraPreview" autoplay playsinline muted></video>
+                    <div id="cameraPlaceholder" class="camera-placeholder">📷</div>
+                    <p id="cameraStatus" style="font-size:1.12rem;font-weight:800;color:#dff;text-align:center;min-height:48px">Klik Start Camera untuk cek kamera.</p>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+                        <button class="huge-btn" style="font-size:1rem;padding:11px 22px" onclick="startCameraTest()">START CAMERA</button>
+                        <button class="huge-btn" style="font-size:1rem;padding:11px 22px;background:var(--danger)" onclick="stopCameraTest()">STOP</button>
                     </div>
                 </div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Allow camera:</strong> izinkan browser jika muncul permission.</div>
+                    <div class="mini-step"><strong>Privacy:</strong> gunakan benda, bukan wajah atau informasi pribadi.</div>
+                    <div class="mini-step"><strong>Lighting:</strong> pastikan objek cukup terang dan terlihat jelas.</div>
+                    <div class="note">Kalau kamera belum bisa dibuka, tetap ikuti teacher dan gunakan contoh bersama.</div>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Slide 3: Today's Mission -->
-        <div class="slide" id="slide3">
-            <h2 class="agenda-title">Misi Hari Ini 🎯</h2>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;">
+        <section class="slide">
+            <h2 class="agenda-title">Step 1: Define Classes</h2>
+            <div class="three-col">
+                <div class="card"><div class="card-icon">✏️</div><h4>Class 1</h4><p>Rename menjadi <strong>Pencil</strong>.</p></div>
+                <div class="card"><div class="card-icon">📘</div><h4>Class 2</h4><p>Rename menjadi <strong>Book</strong>.</p></div>
+                <div class="card"><div class="card-icon">🧴</div><h4>Class 3</h4><p>Rename menjadi <strong>Bottle</strong>.</p></div>
+            </div>
+            <div class="teal-note" style="margin-top:26px;max-width:860px;text-align:center">Class name harus konsisten, karena class menjadi label output model.</div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Step 2: Collect Training Images</h2>
+            <div class="two-col">
+                <div class="card"><img src="https://miro.medium.com/1*c-UgFKXCjYvIbcK-CNPzwQ.png" alt="Training Images" style="width:100%; height:auto; max-height:280px; object-fit:contain; margin-bottom:15px; border-radius:10px; background:white; padding:10px;"><h4>Target Data</h4><p>Ambil sekitar 20–30 contoh per class jika memungkinkan.</p></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Variation:</strong> ubah angle, jarak, dan posisi objek.</div>
+                    <div class="mini-step"><strong>Balance:</strong> jumlah gambar setiap class sebaiknya mirip.</div>
+                    <div class="mini-step"><strong>Clean label:</strong> jangan masukkan gambar botol ke class Pencil.</div>
+                    <div class="note">Dataset yang rapi membuat model lebih mudah diuji dan diperbaiki.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Dataset Checklist</h2>
+            <div class="checklist">
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Setiap class punya contoh gambar.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Objek terlihat jelas di kamera.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Gambar tidak semuanya sama persis.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Jumlah data antarclass cukup seimbang.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Tidak ada label yang salah.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Siap klik Train Model.</div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Step 3: Train Model</h2>
+            <div class="two-col">
+                <div style="font-size:8rem;text-align:center" class="pulse">🧠⚡</div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Training</strong> = model mempelajari pola visual dari dataset.</div>
+                    <div class="mini-step"><strong>Model</strong> = hasil training yang bisa dipakai untuk prediction.</div>
+                    <div class="mini-step"><strong>Wait:</strong> jangan test sebelum proses training selesai.</div>
+                    <div class="teal-note">Training bukan magic. Hasil model sangat dipengaruhi kualitas data yang kamu berikan.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2 class="agenda-title">Step 4: Test Prediction & Confidence</h2>
+            <div class="two-col">
                 <div class="card">
-                    <div style="font-size: 3rem;">🎨</div>
-                    <h4>Design Costumes</h4>
-                    <p>Mendesain sprite bunglon dengan 3 warna berbeda.</p>
+                    <div class="card-icon" style="font-size:6rem">✏️</div>
+                    <h4>Show a New Object</h4>
+                    <p>Tunjukkan benda yang belum masuk dataset, lalu lihat apakah model tetap benar.</p>
+                    <button class="huge-btn" style="margin-top:18px;font-size:1rem;padding:12px 24px" onclick="simulatePrediction()">SIMULATE RESULT</button>
                 </div>
-                <div class="card">
-                    <div style="font-size: 3rem;">🔌</div>
-                    <h4>Connect ML4K</h4>
-                    <p>Menghubungkan model AI kita ke dalam Scratch.</p>
-                </div>
-                <div class="card">
-                    <div style="font-size: 3rem;">🔄</div>
-                    <h4>AI Logic</h4>
-                    <p>Menggunakan forever loop untuk deteksi kamera otomatis.</p>
+                <div class="prediction-box">
+                    <div>Prediction Result</div><br>
+                    <div>Pencil <b id="pencilPct">0%</b></div><div class="bar"><span id="pencilBar"></span></div>
+                    <div>Book <b id="bookPct">0%</b></div><div class="bar"><span id="bookBar"></span></div>
+                    <div>Bottle <b id="bottlePct">0%</b></div><div class="bar"><span id="bottleBar"></span></div>
                 </div>
             </div>
-        </div>
+            <div class="note" style="margin-top:18px;max-width:860px;text-align:center">Confidence adalah tingkat keyakinan model, bukan jaminan mutlak bahwa jawabannya benar.</div>
+        </section>
 
-        <!-- Slide 4: Project Showcase -->
-        <div class="slide" id="slide4">
-            <h2 class="agenda-title">The Project Preview 🎬</h2>
-            <div class="card" style="width: 100%; max-width: 600px; padding: 15px; display: flex; flex-direction: column; align-items: center;">
-                <img src="https://cdn-web.ruangguru.com/file-uploader/e2d7b21d-4ae9-4723-a6ed-9715a41b6208.gif" alt="Project Preview GIF" style="width: 100%; max-height: 350px; border-radius: 15px; background: #000; display: block; object-fit: contain;">
-                <p style="margin-top: 15px; color: var(--accent); font-size: 0.9rem; margin-bottom: 0;">Bunglon digital yang berubah warna secara otomatis!</p>
+        <section class="slide">
+            <h2 class="agenda-title">Robustness Test: Can You Confuse It?</h2>
+            <div class="grid-container">
+                <div class="card"><div class="card-icon">📏</div><h4>Distance Test</h4><p>Coba objek dari jauh dan dekat.</p></div>
+                <div class="card"><div class="card-icon">🔄</div><h4>Angle Test</h4><p>Putar objek ke arah berbeda.</p></div>
+                <div class="card"><div class="card-icon">🌑</div><h4>Lighting Test</h4><p>Coba cahaya terang dan agak redup.</p></div>
+                <div class="card"><div class="card-icon">🫣</div><h4>Partial Object</h4><p>Tutup sebagian objek dan lihat prediksinya.</p></div>
             </div>
-        </div>
+            <div class="teal-note" style="margin-top:24px;max-width:900px;text-align:center">Model yang bagus bukan hanya benar saat kondisi ideal, tapi tetap cukup stabil saat kondisi berubah.</div>
+        </section>
 
-        <!-- Slide 5: Open Project Steps -->
-        <div class="slide" id="slide5">
-            <h2 class="agenda-title">Mulai Koding di Scratch 🐱💻</h2>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%;">
-                <div class="card">
-                    <span class="highlight">1. Buka Project</span>
-                    <div class="placeholder-img"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/b8b3569f-5a11-4c9a-8e57-4aa434fef737.png" alt=""></div>
-                    <p style="font-size: 0.8rem;">Klik project <b>chameleon</b> di ML4K.</p>
-                </div>
-                <div class="card">
-                    <span class="highlight">2. Click Make</span>
-                    <div class="placeholder-img"><img src="https://roboguru-forum-cdn.ruangguru.com//image/ded2eb07-759b-4725-86ea-aed29d7ee466.png" alt=""></div>
-                    <p style="font-size: 0.8rem;">Pilih menu <b>Make</b> -> <b>Scratch 3</b>.</p>
-                </div>
-                <div class="card">
-                    <span class="highlight">3. Open Scratch</span>
-                    <div class="placeholder-img"><img src="https://roboguru-forum-cdn.ruangguru.com//image/3379679f-269d-444e-9652-d2d505d255ac.png" alt=""></div>
-                    <p style="font-size: 0.8rem;">Klik tombol <b>Open in Scratch 3</b>.</p>
-                </div>
+        <section class="slide">
+            <h2 class="agenda-title">Error Analysis: Why Did It Fail?</h2>
+            <div class="grid-container">
+                <div class="card"><div class="card-icon">📚</div><h4>Data Too Small</h4><p>Contoh gambar terlalu sedikit untuk pola yang stabil.</p></div>
+                <div class="card"><div class="card-icon">🧬</div><h4>Low Variation</h4><p>Dataset hanya mengajarkan satu bentuk kondisi.</p></div>
+                <div class="card"><div class="card-icon">🏷️</div><h4>Wrong Label</h4><p>Ada contoh yang masuk ke class yang salah.</p></div>
+                <div class="card"><div class="card-icon">🎯</div><h4>Ambiguous Object</h4><p>Objek terlalu mirip, terlalu kecil, atau tidak jelas.</p></div>
             </div>
-        </div>
+        </section>
 
-        <!-- Slide 6: Templates -->
-        <div class="slide" id="slide6">
-            <h2 class="agenda-title">Gunakan Template Chameleon 🦎</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%;">
-                <div class="card">
-                    <h3 class="highlight">1. Klik Project Templates</h3>
-                    <div class="placeholder-img" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/53dbd90f-83df-46d6-a9df-ea04ba8175d6.png" alt=""></div>
-                </div>
-                <div class="card">
-                    <h3 class="highlight">2. Cari "Chameleon"</h3>
-                    <div class="placeholder-img" style="height: 200px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/29743992-52c0-4eff-9cd9-415457a55d3c.png" alt=""></div>
-                </div>
+        <section class="slide">
+            <h2 class="agenda-title">Improve & Retrain Loop</h2>
+            <div class="step-row" style="grid-template-columns:repeat(5,1fr);max-width:1040px">
+                <div class="step-mini"><span>🔍</span><b>Test</b><p>Cari kasus yang salah.</p></div>
+                <div class="step-mini"><span>🧩</span><b>Diagnose</b><p>Kenapa model bingung?</p></div>
+                <div class="step-mini"><span>📸</span><b>Add Data</b><p>Tambah contoh yang tepat.</p></div>
+                <div class="step-mini"><span>🧠</span><b>Retrain</b><p>Latih model lagi.</p></div>
+                <div class="step-mini"><span>✅</span><b>Retest</b><p>Bandingkan hasilnya.</p></div>
             </div>
-            <p style="margin-top: 15px; color: var(--accent);">Ini akan menyiapkan sprite bunglon dan aset yang diperlukan!</p>
-        </div>
+            <div class="note" style="margin-top:24px;max-width:900px;text-align:center">Proses AI development selalu iterative: build, test, analyze, improve.</div>
+        </section>
 
-        <!-- Slide 7: Assets Overview -->
-        <div class="slide" id="slide7">
-            <h2 class="agenda-title">Cek Aset Kamu 🔎</h2>
-            <div class="card" style="width: 100%; max-width: 650px; padding: 15px;">
-                <div class="placeholder-img" style="height: 300px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/1e7ce36b-0417-41c1-93ad-887fedcb0ced.png" alt="Assets Overview"></div>
-                <p style="margin-top: 15px;">Pastikan kamu sudah memiliki sprite <b>Chameleon</b> dan blok ML4K di bagian bawah!</p>
+        <section class="slide">
+            <h2 class="agenda-title">Before You Finish</h2>
+            <div class="checklist">
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Created at least 3 classes.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Collected image datasets.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Used different angles and positions.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Trained the model.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Tested with new examples.</div>
+                <div class="check-item" onclick="toggleCheck(this)"><span class="box"></span>Improved data and retrained.</div>
             </div>
-        </div>
+        </section>
 
-        <!-- Slide 8: Designing Costumes -->
-        <div class="slide" id="slide8">
-            <h2 class="agenda-title">Langkah 1: Siapkan Kostum 🎨</h2>
-            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
-                <div style="flex: 1.5;">
-                    <div class="placeholder-img" style="height: 350px;"><img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/5aa1ff6e-a919-48d0-8005-3105c3a2c1d7.png" alt=""></div>
-                </div>
-                <div style="flex: 1;">
-                    <div class="card" style="text-align: left;">
-                        <h3 class="highlight">Instruksi:</h3>
-                        <ol style="line-height: 1.8;">
-                            <li>Klik tab <b>Costumes</b>.</li>
-                            <li>Klik kanan dan <b>Duplicate</b> costume bunglon.</li>
-                            <li>Beri nama: <br><b>red, green, blue, background</b>.</li>
-                            <li>Gunakan <b>Fill Tool</b> untuk merubah warnanya!</li>
-                        </ol>
-                    </div>
+        <section class="slide">
+            <h2 class="agenda-title">What Did We Build Today?</h2>
+            <div class="two-col">
+                <div class="card"><div class="card-icon" style="font-size:6.5rem">🤖</div><h4>Image Classification Model</h4><p>Model yang menerima gambar, membaca pola visual, lalu memilih class paling mungkin.</p></div>
+                <div style="text-align:left">
+                    <div class="mini-step"><strong>Input:</strong> image dari webcam atau upload.</div>
+                    <div class="mini-step"><strong>Process:</strong> model membaca pola visual.</div>
+                    <div class="mini-step"><strong>Output:</strong> class prediction + confidence score.</div>
+                    <div class="teal-note">Ini adalah fondasi untuk project AI visual yang lebih kompleks.</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Slide 9: Coding Logic -->
-        <div class="slide" id="slide9">
-            <h2 class="agenda-title">Langkah 2: Program Utama 🧠💻</h2>
-            <p style="margin-bottom: 20px;">Susun blok di bawah ini pada sprite <b>Chameleon</b>:</p>
-            <div class="card" style="padding: 15px; background: white; width: 100%; max-width: 650px; border-radius: 20px;">
-                <div class="placeholder-img" style="height: 320px; border: none; background: transparent;">
-                    <img src="./chameleon/assets/blocks_logic.png" alt="Coding Blocks">
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <div style="background: var(--b-event); padding: 5px 15px; border-radius: 5px; color: #000; font-size: 0.8rem;">Events</div>
-                <div style="background: var(--b-look); padding: 5px 15px; border-radius: 5px; font-size: 0.8rem;">Looks</div>
-                <div style="background: var(--b-control); padding: 5px 15px; border-radius: 5px; font-size: 0.8rem;">Control</div>
-                <div style="background: var(--b-ai); padding: 5px 15px; border-radius: 5px; font-size: 0.8rem;">Images (ML4K)</div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Testing Webcam -->
-        <div class="slide" id="slide10">
-            <h2 class="agenda-title">Ayo Testing! 🚀📸</h2>
-            <div style="text-align: center;">
-                <div style="font-size: 8rem; margin-bottom: 20px;" class="float">🚩</div>
-                <p style="font-size: 1.5rem;">Klik <b>Bendera Hijau</b> dan arahkan benda berwarna ke depan kamera!</p>
-                <div class="card" style="margin-top: 20px; border-left: 10px solid var(--success);">
-                    <p>Apakah si bunglon sudah berubah warna mengikuti benda kamu?</p>
-                </div>
-                <p style="margin-top: 20px; color: var(--accent);">Tidak punya webcam? Jangan khawatir, lanjut ke slide berikutnya!</p>
-            </div>
-        </div>
-
-        <!-- Slide 11: No Webcam Solution - Step 1 -->
-        <div class="slide" id="slide11">
-            <h2 class="agenda-title">Solusi Tanpa Webcam - Step 1 🖥️💡</h2>
-            <div style="display: flex; gap: 30px; align-items: center; width: 100%;">
-                <div style="flex: 1.5;">
-                    <div class="placeholder-img" style="height: 350px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/92c97d1a-6207-47b3-ad62-4c12ecd93681.png" alt="Painting Sprite">
-                    </div>
-                </div>
-                <div style="flex: 1;">
-                    <div class="card" style="text-align: left;">
-                        <h3 class="highlight">1. Buat Sprite "Webcam"</h3>
-                        <p>Klik <b>Paint</b> untuk membuat sprite baru. Beri nama sprite ini: <b>Webcam</b>.</p>
-                        <p>Gambar kotak besar di tengah layar. Beri 3 kostum dengan warna yang sama dengan dataset (Red, Green, Blue).</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: No Webcam Solution - Step 2 -->
-        <div class="slide" id="slide12">
-            <h2 class="agenda-title">Solusi Tanpa Webcam - Step 2 ⚙️💻</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%;">
-                <div class="card" style="background: white; padding: 10px;">
-                    <h4 style="color: var(--dark); margin-bottom: 10px;">Program Chameleon</h4>
-                    <div class="placeholder-img" style="height: 250px; border: none; background: transparent;">
-                        <img src="./chameleon/assets/no_webcam_logic_1.png" alt="Chameleon Blocks">
-                    </div>
-                </div>
-                <div class="card" style="background: white; padding: 10px;">
-                    <h4 style="color: var(--dark); margin-bottom: 10px;">Program Webcam Sprite</h4>
-                    <div class="placeholder-img" style="height: 250px; border: none; background: transparent;">
-                        <img src="./chameleon/assets/no_webcam_logic_2.png" alt="Webcam Blocks">
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="margin-top: 15px; width: 100%; border-left: 8px solid var(--orange);">
-                <p style="margin: 0;">Tekan tombol <b>SPACE</b> untuk mengganti warna, dan bunglon akan mendeteksi warna dari sprite tersebut!</p>
-            </div>
-        </div>
-
-        <!-- Slide 13: Encouragement -->
-        <div class="slide" id="slide13">
-            <h2 class="agenda-title">Masih Ada yang Salah? 🤔</h2>
-            <div style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div style="flex: 1; text-align: center;">
-                    <div style="font-size: 10rem;" class="float">🛠️</div>
-                </div>
-                <div style="flex: 2; text-align: left;">
-                    <p style="font-size: 1.5rem; line-height: 1.6;">Tidak masalah! Koding dan AI memang butuh ketelitian. Periksa kembali nama kostummu agar sama persis dengan label di ML4K.</p>
-                    <div class="card" style="background: rgba(242, 193, 64, 0.1); border-left: 8px solid var(--secondary);">
-                        <p style="font-size: 1.3rem; margin: 0;">Jika masih belum pas, di pertemuan berikutnya kita akan belajar cara meningkatkan akurasi AI-nya agar lebih pintar!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14: Hebat -->
-        <div class="slide" id="slide14">
-            <div style="font-size: 8rem;" class="animate__animated animate__tada">🏆</div>
-            <h1 class="cover-title" style="color: var(--success);">KERJA BAGUS!</h1>
-            <p style="font-size: 1.8rem; text-align: center;">Kamu sudah berhasil membangun program AI yang bisa "Melihat"!</p>
-            <div class="card" style="margin-top: 30px;">
-                <p style="font-size: 1.3rem;">Penyamaran bunglon digitalmu sekarang sudah berfungsi secara otomatis.</p>
-            </div>
-        </div>
-
-        <!-- Slide 15: Quiz -->
-        <div class="slide" id="slideQuiz">
+        <section class="slide" style="background:#2b3a3a">
             <h2 class="agenda-title">Quick Quiz ⏱️</h2>
-            <div id="quiz-container" style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 25px; width: 100%; max-width: 750px; border: 2px solid rgba(255,255,255,0.1);">
-                <div id="q-header" style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: var(--accent);">
-                    <span id="q-progress">Pertanyaan 1/3</span>
-                </div>
-                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; line-height: 1.4; margin-bottom: 25px;">...</h3>
-                <div id="q-options" style="display: flex; flex-direction: column; gap: 12px;"></div>
-                <div id="q-feedback" style="margin-top: 25px; padding: 15px; border-radius: 15px; display: none; text-align: left; border-left: 6px solid;">
-                    <strong id="feedback-status" style="font-size: 1.2rem; display: block; margin-bottom: 5px;"></strong>
-                    <span id="feedback-hint" style="font-size: 1rem;"></span>
-                </div>
-                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                    <button id="q-next-btn" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button>
-                </div>
+            <div id="quiz-container" style="background:rgba(255,255,255,.1);padding:30px;border-radius:25px;width:100%;max-width:790px;border:2px solid rgba(255,255,255,.1);backdrop-filter:blur(10px)">
+                <div id="q-progress" style="font-weight:bold;color:var(--accent);margin-bottom:16px">Pertanyaan 1/3</div>
+                <h3 id="q-text" style="font-size:1.35rem;margin-top:0;line-height:1.4;margin-bottom:25px;text-transform:none;letter-spacing:0;color:var(--secondary)"></h3>
+                <div id="q-options" style="display:flex;flex-direction:column;gap:12px"></div>
+                <div id="q-feedback" style="margin-top:20px;padding:15px;border-radius:15px;display:none;text-align:left;border-left:6px solid;font-size:1rem"></div>
+                <div style="display:flex;justify-content:flex-end;margin-top:18px"><button id="q-next-btn" class="huge-btn" style="display:none;padding:10px 28px;font-size:1.05rem" onclick="nextQuiz()">SOAL BERIKUTNYA ➜</button></div>
             </div>
-        </div>
+        </section>
 
-        <!-- Slide 16: Feedback -->
-        <div class="slide" id="slideFeedback">
-            <h2 class="agenda-title">Session Feedback 💖</h2>
-            <div style="display: flex; gap: 50px; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 20px;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://bit.ly/feedback-smp11" style="width: 200px;">
-                </div>
-                <div style="text-align: left;">
-                    <h3>Luar Biasa!</h3>
-                    <p style="margin-bottom: 30px;">Sekarang project Chameleon-mu sudah hampir selesai. Sampai jumpa di sesi evaluasi!</p>
-                    <a href="https://bit.ly/feedback-smp11" target="_blank" class="huge-btn">ISI FEEDBACK ➜</a>
-                </div>
+        <section class="slide">
+            <h2 class="agenda-title">Summary Hari Ini 📝</h2>
+            <div class="three-col">
+                <div class="card"><div class="card-icon">🏷️</div><h4>Class</h4><p>Kategori target yang dipelajari model.</p></div>
+                <div class="card"><div class="card-icon">📚</div><h4>Dataset</h4><p>Kumpulan gambar training yang diberi label.</p></div>
+                <div class="card"><div class="card-icon">🧠</div><h4>Training</h4><p>Proses membuat model belajar pola visual.</p></div>
+                <div class="card"><div class="card-icon">📊</div><h4>Confidence</h4><p>Angka keyakinan model terhadap prediksi.</p></div>
+                <div class="card"><div class="card-icon">⚠️</div><h4>Error Analysis</h4><p>Mencari alasan model salah atau ragu.</p></div>
+                <div class="card"><div class="card-icon">🔁</div><h4>Retrain</h4><p>Melatih ulang model setelah dataset diperbaiki.</p></div>
             </div>
-        </div>
+        </section>
 
-        <!-- Navigation -->
+        <section class="slide">
+            <h2 class="agenda-title">Bagaimana Kelas Hari Ini? 💖</h2>
+            <p style="font-size:1.25rem;text-align:center;max-width:800px;margin:-5px 0 30px;color:#ddd">Pilih feedback yang paling sesuai setelah mencoba training image model.</p>
+            <div style="display:flex;gap:18px;align-items:center;justify-content:center;width:100%;max-width:980px;flex-wrap:wrap">
+                <button class="feedback-btn" onclick="pickMood(this,'Nice. Kamu sudah siap mencoba model dengan class yang lebih sulit.')">😄<br>Sangat paham</button>
+                <button class="feedback-btn" onclick="pickMood(this,'Bagus. Latihan testing dan retraining akan bikin makin kuat.')">🙂<br>Cukup paham</button>
+                <button class="feedback-btn" onclick="pickMood(this,'Wajar. Dataset dan confidence memang perlu dicoba langsung berkali-kali.')">🤔<br>Masih bingung</button>
+                <button class="feedback-btn" onclick="pickMood(this,'Catat bagian yang sulit, nanti teacher bantu cek step training-nya.')">🙋<br>Butuh bantuan</button>
+            </div>
+            <div class="teal-note" id="moodResult" style="display:none;margin-top:24px;text-align:center;max-width:780px"></div>
+        </section>
+
         <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
         <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
     </div>
@@ -374,44 +754,106 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         let currentSlide = 0;
+        let streamRef = null;
 
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
+        function showSlide(index, direction = 'next') {
+            if (index === currentSlide && slides[index].classList.contains('active')) return;
+            stopCameraTest(false);
+            slides.forEach(s => s.classList.remove('active', 'is-next', 'is-exiting'));
+            const oldSlide = slides[currentSlide];
+            const newSlide = slides[index];
+            if (direction === 'next') {
+                oldSlide.classList.add('is-exiting');
+                newSlide.classList.add('is-next');
+                setTimeout(() => { newSlide.classList.add('active'); newSlide.classList.remove('is-next'); }, 40);
+            } else {
+                newSlide.classList.add('active');
+            }
             currentSlide = index;
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
-
-            if (slides[index].id === 'slideQuiz') initQuiz();
         }
-
         function changeSlide(direction) {
             const newIndex = currentSlide + direction;
-            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex);
+            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex, direction === 1 ? 'next' : 'prev');
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') changeSlide(1); else if (e.key === 'ArrowLeft') changeSlide(-1); });
+
+        const classifyItems = [
+            { emoji: '✏️', answer: 'Pencil', note: 'Correct. This object belongs to the Pencil class.' },
+            { emoji: '📘', answer: 'Book', note: 'Correct. Different color or cover still belongs to the Book class.' },
+            { emoji: '🧴', answer: 'Bottle', note: 'Correct. The shape and cap are strong visual clues.' },
+            { emoji: '📕', answer: 'Book', note: 'Correct. The model should learn category, not just one color.' },
+            { emoji: '🖊️', answer: 'Pencil', note: 'For this simplified model, pen/pencil are grouped as writing tools.' }
+        ];
+        let currentClassify = 0;
+        function checkClass(answer) {
+            const item = classifyItems[currentClassify];
+            const fb = document.getElementById('classifyFeedback');
+            document.querySelectorAll('#classifyPrompt + div .choice-btn').forEach(btn => btn.classList.remove('good', 'bad'));
+            if (answer === item.answer) {
+                fb.innerHTML = '<strong>Correct.</strong> ' + item.note + ' Moving to the next sample.';
+                currentClassify = (currentClassify + 1) % classifyItems.length;
+                setTimeout(() => {
+                    document.getElementById('classifyEmoji').textContent = classifyItems[currentClassify].emoji;
+                    fb.innerHTML = 'New sample loaded. Decide the most reasonable class.';
+                }, 850);
+            } else {
+                fb.innerHTML = '<strong>Not quite.</strong> Look at the object shape and purpose, not only its color.';
+            }
         }
 
-        // --- Quiz Logic ---
-        const quizData = [
-            {
-                q: "Apa fungsi dari blok 'forever' dalam program Chameleon?",
-                opts: ["A. Agar program jalan sekali saja", "B. Agar AI terus-menerus mendeteksi kamera", "C. Menghapus program"],
-                ans: 1,
-                hint: "Sama seperti mata kita, AI butuh terus 'melihat' setiap detik agar tahu kapan warna berubah."
-            },
-            {
-                q: "Mengapa nama costume harus sama persis dengan label di ML4K?",
-                opts: ["A. Agar terlihat rapi", "B. Agar blok 'switch costume' bisa mengenali hasil prediksi AI", "C. Tidak ada fungsinya"],
-                ans: 1,
-                hint: "Blok AI mengeluarkan teks hasil prediksi. Jika teksnya 'red', Scratch akan mencari kostum bernama 'red'."
-            },
-            {
-                q: "Jika tidak ada webcam, gambar apa yang digunakan oleh blok 'recognise image'?",
-                opts: ["A. Gambar dari internet", "B. Gambar dari sprite (Costume image)", "C. Tidak bisa jalan"],
-                ans: 1,
-                hint: "Kita bisa memalsukan kamera menggunakan gambar dari kostum sprite lain sebagai input AI."
+        function chooseDataset(model) {
+            const fb = document.getElementById('datasetFeedback');
+            if (model === 'B') {
+                fb.innerHTML = '<strong>Correct.</strong> Dataset B is more robust because it includes variation. A model trained with varied examples usually performs better on new inputs.';
+            } else {
+                fb.innerHTML = '<strong>Careful.</strong> Dataset A may work only when the test image looks almost exactly like the training image. That makes the model fragile.';
             }
-        ];
+        }
 
+        async function startCameraTest() {
+            const status = document.getElementById('cameraStatus');
+            const video = document.getElementById('cameraPreview');
+            const ph = document.getElementById('cameraPlaceholder');
+            try {
+                stopCameraTest(false);
+                streamRef = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                video.srcObject = streamRef;
+                video.style.display = 'block';
+                ph.style.display = 'none';
+                status.textContent = '✅ Camera active. You are ready to collect image examples.';
+                status.style.color = 'var(--success)';
+            } catch (err) {
+                status.textContent = '⚠️ Camera belum bisa dibuka. Tetap ikuti teacher dan gunakan contoh bersama.';
+                status.style.color = 'var(--secondary)';
+            }
+        }
+        function stopCameraTest(updateText = true) {
+            if (streamRef) { streamRef.getTracks().forEach(t => t.stop()); streamRef = null; }
+            const video = document.getElementById('cameraPreview');
+            const ph = document.getElementById('cameraPlaceholder');
+            if (video) { video.style.display = 'none'; video.srcObject = null; }
+            if (ph) ph.style.display = 'block';
+            if (updateText && document.getElementById('cameraStatus')) document.getElementById('cameraStatus').textContent = 'Camera stopped.';
+        }
+
+        function toggleCheck(el) { el.classList.toggle('done'); }
+
+        function simulatePrediction() {
+            const vals = [94, 4, 2];
+            const ids = ['pencil', 'book', 'bottle'];
+            ids.forEach((id, i) => {
+                document.getElementById(id + 'Pct').textContent = vals[i] + '%';
+                document.getElementById(id + 'Bar').style.width = vals[i] + '%';
+            });
+        }
+
+        const quizData = [
+            { q: 'Apa yang dimaksud class dalam image classification?', opts: ['A. Kategori output yang ingin dipelajari model', 'B. Tombol untuk menyalakan kamera', 'C. Jenis sprite di Scratch'], ans: 0, hint: 'Class adalah label kategori, misalnya Pencil, Book, atau Bottle.' },
+            { q: 'Mengapa dataset perlu bervariasi?', opts: ['A. Agar model belajar dari banyak kondisi visual', 'B. Agar tampilan website lebih ramai', 'C. Agar training selalu gagal'], ans: 0, hint: 'Variasi membantu model mengenali objek walau angle, jarak, atau cahaya berubah.' },
+            { q: 'Jika model sering salah saat testing, langkah terbaik adalah...', opts: ['A. Menambah dan memperbaiki data, lalu retrain', 'B. Menutup browser tanpa analisis', 'C. Menghapus semua class'], ans: 0, hint: 'AI development bersifat iterative: test, analyze, improve data, retrain.' }
+        ];
         let currentQIdx = 0;
         function initQuiz() {
             const data = quizData[currentQIdx];
@@ -421,49 +863,52 @@
             optsDiv.innerHTML = '';
             data.opts.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                btn.style.cssText = "background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; text-align: left; transition: 0.3s;";
-                btn.innerHTML = opt;
+                btn.className = 'quiz-opt';
+                btn.textContent = opt;
                 btn.onclick = () => checkQuiz(i, btn);
                 optsDiv.appendChild(btn);
             });
             document.getElementById('q-feedback').style.display = 'none';
             document.getElementById('q-next-btn').style.display = 'none';
         }
-
         function checkQuiz(idx, btn) {
             const data = quizData[currentQIdx];
             const feedback = document.getElementById('q-feedback');
-            const status = document.getElementById('feedback-status');
-            const hint = document.getElementById('feedback-hint');
-            const nextBtn = document.getElementById('q-next-btn');
-            
+            document.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
             if (idx === data.ans) {
-                btn.style.background = "rgba(0, 230, 118, 0.2)";
-                status.textContent = "BENAR! 🎉";
-                feedback.style.color = "#00e676";
+                btn.classList.add('correct');
+                feedback.style.borderColor = 'var(--success)';
+                feedback.style.color = 'var(--success)';
+                feedback.innerHTML = '<strong>BENAR ✅</strong><br>' + data.hint;
             } else {
-                btn.style.background = "rgba(255, 82, 82, 0.2)";
-                status.textContent = "KURANG TEPAT ❌";
-                feedback.style.color = "#ff5252";
+                btn.classList.add('wrong');
+                document.querySelectorAll('.quiz-opt')[data.ans].classList.add('correct');
+                feedback.style.borderColor = 'var(--danger)';
+                feedback.style.color = 'var(--danger)';
+                feedback.innerHTML = '<strong>KURANG TEPAT ❌</strong><br>' + data.hint;
             }
-            hint.textContent = data.hint;
             feedback.style.display = 'block';
-            nextBtn.style.display = 'block';
-            if (currentQIdx === quizData.length - 1) {
-                nextBtn.textContent = "SELESAI 🏁";
-                nextBtn.onclick = () => changeSlide(1);
+            const next = document.getElementById('q-next-btn');
+            next.style.display = 'inline-flex';
+            next.textContent = currentQIdx === quizData.length - 1 ? 'SELESAI 🏁' : 'SOAL BERIKUTNYA ➜';
+        }
+        function nextQuiz() {
+            if (currentQIdx < quizData.length - 1) {
+                currentQIdx++;
+                initQuiz();
+            } else {
+                changeSlide(1);
             }
         }
-
-        function nextQuiz() { currentQIdx++; initQuiz(); }
-
-        window.onload = () => {
-            showSlide(0);
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') changeSlide(1);
-                if (e.key === 'ArrowLeft') changeSlide(-1);
-            });
-        };
+        function pickMood(btn, msg) {
+            document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            const box = document.getElementById('moodResult');
+            box.style.display = 'block';
+            box.textContent = msg;
+        }
+        document.addEventListener('DOMContentLoaded', () => initQuiz());
     </script>
 </body>
+
 </html>
