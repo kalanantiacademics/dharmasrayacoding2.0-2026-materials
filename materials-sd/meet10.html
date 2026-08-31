@@ -1,542 +1,1182 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RUANGGURU CODING - SESI 10</title>
-    <link rel="icon" href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" type="image/png">
+    <link rel="icon"
+        href="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+        type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
-        /* CSS Reset dan Global Styles - Mengikuti Meet 10 */
-        body { margin: 0; padding: 0; font-family: 'Fredoka', sans-serif; background: url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover fixed no-repeat; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .presentation-container { width: 77vw; height: 75.5vh; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; position: relative; background-color: transparent; }
-        .slide { width: 100%; height: 100%; padding: 40px 60px; box-sizing: border-box; color: #333; display: flex; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out; background-color: rgba(255, 255, 255, 0.95); visibility: hidden; overflow-y: auto; opacity: 0; }
-        .slide.active { opacity: 1; visibility: visible; z-index: 10; transform: translateX(0); }
-        .slide.is-next { transform: translateX(100%); visibility: visible; opacity: 1; z-index: 11; }
-        .slide.is-exiting { transform: translateX(100%); opacity: 1; z-index: 11; }
-        
-        #slide1 { background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover no-repeat; color: white; align-items: center; text-align: center; justify-content: center; }
-        .solid-teal-bg { background-color: #008080; color: white; }
-        
-        /* Logos */
-        .slide-logo-left { position: fixed; top: 0; left: 0; background-color: white; padding: 10px 20px 10px 40px; border-bottom-right-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; gap: 15px; transition: opacity 0.3s ease; }
-        .slide-logo-left img { height: 45px; width: auto; }
-        .slide-logo-right { position: fixed; top: 0; right: 0; background-color: white; padding: 10px 40px 10px 20px; border-bottom-left-radius: 30px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); display: flex; align-items: center; z-index: 1000; transition: opacity 0.3s ease; }
-        .slide-logo-right img { height: 45px; width: auto; }
+        * {
+            box-sizing: border-box;
+        }
 
-        .nav-button { background-color: #f2c140; color: #222; border: 3px solid white; position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; font-weight: 900; line-height: 1; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; justify-content: center; align-items: center; }
-        #prevBtn { left: 20px; } 
-        #nextBtn { right: 20px; }
-        .nav-button:hover:not(:disabled) { background-color: #ffab19; color: white; transform: translateY(-50%) scale(1.15); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
-        .nav-button:disabled { background-color: #e0e0e0; color: #999; border-color: #ccc; cursor: not-allowed; box-shadow: none; transform: translateY(-50%); }
-        
-        .cover-title { font-size: 4rem; font-weight: 900; margin-bottom: 10px; line-height: 1.1; z-index: 3; text-align: center; }
-        .cover-subtitle { font-size: 1.8rem; font-weight: 400; margin-bottom: 20px; border-bottom: 3px solid #f2c140; padding-bottom: 10px; display: inline-block; z-index: 3; color: white; }
-        .agenda-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: #008080; line-height: 1.2; margin-bottom: 30px; width: 100%; text-align: center; }
-        
-        .game-title-gradient { background: linear-gradient(135deg, #f2c140 0%, #ffffff 50%, #00f2fe 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 20px rgba(242, 193, 64, 0.4)); display: inline-block; }
-        
-        /* Modern Utilities */
-        .txt-blue { color: #4c97ff; font-weight: 800; }
-        .txt-purple { color: #9966ff; font-weight: 800; }
-        .txt-teal { color: #008080; font-weight: 800; }
-        .txt-yellow { color: #f2c140; font-weight: 800; }
-        .txt-green { color: #a8c368; font-weight: 800; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', sans-serif;
+            background: url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover fixed no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-        /* Grid Cards */
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; max-width: 900px; }
-        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.05); border: 2px solid #f0f0f0; transition: transform 0.3s; display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .card-icon { font-size: 3rem; margin-bottom: 15px; }
-        .huge-btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(to right, #008080, #f2c140); color: white; text-decoration: none; font-size: 1.5rem; font-weight: 700; padding: 15px 40px; border-radius: 50px; cursor: pointer; border: none; transition: transform 0.2s; box-shadow: 0 4px 15px rgba(0,128,128,0.3); }
-        .huge-btn:hover { transform: scale(1.05); }
+        .presentation-container {
+            width: 77vw;
+            height: 75.5vh;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: transparent;
+        }
 
-        /* Step Styles - Mengikuti Meet 2/10 */
-        .step-list { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 15px;}
-        .step-item { display: flex; align-items: center; background: white; padding: 15px 25px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 2px solid #f0f0f0; transition: transform 0.3s; font-size: 1.2rem; color: #333; text-align: left; }
-        .step-item:hover { transform: translateX(10px); border-color: #008080; }
-        .step-num { flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #008080, #a8c368); color: white; display: flex; justify-content: center; align-items: center; font-weight: 800; font-size: 1.4rem; margin-right: 20px; }
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 38px 58px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform .6s ease-in-out, opacity .6s ease-in-out;
+            background-color: rgba(255, 255, 255, .95);
+            visibility: hidden;
+            overflow-y: auto;
+            opacity: 0;
+        }
 
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-        
-        /* Quiz */
-        .quiz-opt { background: white; border: 2px solid #ccc; padding: 15px 20px; border-radius: 15px; font-size: 1.2rem; cursor: pointer; transition: 0.2s; text-align: left; margin-bottom: 10px; width: 100%; max-width: 500px; font-family: 'Fredoka', sans-serif; }
-        .quiz-opt:hover { border-color: #008080; background: #f0fdf4; }
-        .quiz-opt.correct { background: #dcfce7; border-color: #22c55e; }
-        .quiz-opt.wrong { background: #fee2e2; border-color: #ef4444; }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+            transform: translateX(0);
+        }
 
-        /* Scratch Blocks CSS (Custom from Meet 9 logic) */
-        .scratch-block { padding: 8px 15px; border-radius: 4px; color: white; font-family: 'Fredoka', sans-serif; font-weight: bold; margin-bottom: 2px; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; width: fit-content; }
-        .block-event { background: #ffbf00; border: 1px solid #e6ac00; border-radius: 15px 15px 4px 4px; }
-        .block-looks { background: #9966ff; border: 1px solid #855cd6; }
-        .block-sensing { background: #4cbfe6; border: 1px solid #2e8eb8; }
-        .block-control { background: #ffab19; border: 1px solid #cf8b17; }
-        .block-wiki { background: #7c4dff; border: 1px solid #6200ea; }
-        .block-input { background: white; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; }
-        .block-arg { background: #4cbfe6; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; }
-        .block-variable { background: #ff5c1a; border: 1px solid #e64a00; }
+        .slide.is-next {
+            transform: translateX(100%);
+            visibility: visible;
+            opacity: 1;
+            z-index: 11;
+        }
 
-        .image-placeholder { width: 100%; height: 180px; background: #eee; border: 2px dashed #ccc; border-radius: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .image-placeholder img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .slide.is-exiting {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 11;
+        }
 
-        /* Step Grid */
-        .step-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1000px; width: 100%; }
-        .step-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 2px solid #f0f0f0; display: flex; flex-direction: column; }
-        .step-header { background: #008080; color: white; padding: 10px 15px; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
-        .step-num-circle { background: #f2c140; color: #333; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
-        .step-body { padding: 20px; font-size: 1.1rem; display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center; }
+        #slide1 {
+            background: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url('https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/41e4a850-e719-4521-ab37-fae4d06b0838.png') center/cover no-repeat;
+            color: white;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .solid-teal-bg {
+            background-color: #008080;
+            color: white;
+        }
+
+        .slide-logo-left {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: white;
+            padding: 10px 20px 10px 40px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            gap: 15px;
+        }
+
+        .slide-logo-left img {
+            height: 45px;
+            width: auto;
+        }
+
+        .slide-logo-right {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background-color: white;
+            padding: 10px 40px 10px 20px;
+            border-bottom-left-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .slide-logo-right img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-button {
+            background-color: #f2c140;
+            color: #222;
+            border: 3px solid white;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: 900;
+            line-height: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .4);
+            transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #prevBtn {
+            left: 20px;
+        }
+
+        #nextBtn {
+            right: 20px;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            background-color: #ffab19;
+            color: white;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .nav-button:disabled {
+            background-color: #e0e0e0;
+            color: #999;
+            border-color: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: translateY(-50%);
+        }
+
+        .cover-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .cover-subtitle {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #f2c140;
+            padding-bottom: 10px;
+            display: inline-block;
+            z-index: 3;
+            color: white;
+        }
+
+        .agenda-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: #008080;
+            line-height: 1.2;
+            margin: 0 0 24px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .game-title-gradient {
+            background: linear-gradient(135deg, #f2c140 0%, #fff 50%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 20px rgba(242, 193, 64, .4));
+            display: inline-block;
+        }
+
+        .txt-blue {
+            color: #4c97ff;
+            font-weight: 800;
+        }
+
+        .txt-purple {
+            color: #9966ff;
+            font-weight: 800;
+        }
+
+        .txt-teal {
+            color: #008080;
+            font-weight: 800;
+        }
+
+        .txt-yellow {
+            color: #f2c140;
+            font-weight: 800;
+        }
+
+        .txt-green {
+            color: #a8c368;
+            font-weight: 800;
+        }
+
+        .txt-red {
+            color: #ff6b6b;
+            font-weight: 800;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, .05);
+            border: 2px solid #f0f0f0;
+            transition: transform .3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .huge-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #008080, #f2c140);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding: 15px 38px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            transition: transform .2s;
+            box-shadow: 0 4px 15px rgba(0, 128, 128, .3);
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .huge-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .mini-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: #e0f2f1;
+            border: 2px solid #008080;
+            color: #008080;
+            font-weight: 800;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            border: 2px solid #a8c368;
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .warning-box {
+            background: #fff8e1;
+            border: 2px dashed #f2c140;
+            border-radius: 20px;
+            padding: 18px;
+        }
+
+        .stage-box {
+            background: #eef7ff;
+            border: 4px solid #4c97ff;
+            border-radius: 22px;
+            padding: 18px;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .code-step {
+            background: #fff;
+            border-left: 10px solid #008080;
+            border-radius: 18px;
+            padding: 18px;
+            text-align: left;
+            font-size: 1.05rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .06);
+        }
+
+        .code-img {
+            width: 100%;
+            max-height: 430px;
+            object-fit: contain;
+            border-radius: 18px;
+            border: 4px solid #f2c140;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .16);
+            background: white;
+        }
+
+        .scratch-block {
+            color: white;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin: 3px 0;
+            box-shadow: inset 0 -3px rgba(0, 0, 0, .15);
+        }
+
+        .b-event {
+            background: #ffbf00;
+            color: #333;
+        }
+
+        .b-control {
+            background: #ffab19;
+        }
+
+        .b-look {
+            background: #9966ff;
+        }
+
+        .b-motion {
+            background: #4c97ff;
+        }
+
+        .b-sensing {
+            background: #5cb1d6;
+        }
+
+        .b-op {
+            background: #59c059;
+        }
+
+        .drag-pool {
+            background: rgba(255, 255, 255, .65);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px dashed #ccc;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .drop-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .drop-header {
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 800;
+            text-align: center;
+            color: white;
+        }
+
+        .drop-target {
+            background: #fff;
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            min-height: 120px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: .3s;
+        }
+
+        .drop-target.active {
+            border-color: #008080;
+            background: #f0fdf4;
+        }
+
+        .draggable {
+            background: #008080;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            cursor: grab;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, .1);
+            user-select: none;
+        }
+
+        .draggable.dragging {
+            opacity: .5;
+        }
+
+        .quiz-opt {
+            background: white;
+            border: 2px solid #ccc;
+            padding: 14px 20px;
+            border-radius: 15px;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: .2s;
+            text-align: left;
+            margin-bottom: 10px;
+            width: 100%;
+            max-width: 650px;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .quiz-opt:hover {
+            border-color: #008080;
+            background: #f0fdf4;
+        }
+
+        .quiz-opt.correct {
+            background: #dcfce7;
+            border-color: #22c55e;
+        }
+
+        .quiz-opt.wrong {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .submit-btn {
+            background: #008080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+            margin-top: 10px;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 128, 128, .3);
+        }
+
+        .camera-wrap {
+            width: 520px;
+            max-width: 100%;
+            min-height: 305px;
+            border-radius: 24px;
+            border: 5px solid #008080;
+            overflow: hidden;
+            background: linear-gradient(135deg, #dff7ff, #fff8e1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #cameraPreview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            transform: scaleX(-1);
+        }
+
+        #cameraPlaceholder {
+            text-align: center;
+            padding: 28px;
+            color: #008080;
+            font-weight: 800;
+        }
+
+        .demo-stage {
+            width: 520px;
+            max-width: 100%;
+            height: 315px;
+            border-radius: 26px;
+            border: 5px solid #4c97ff;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(180deg, #d9f6ff 0%, #fff 55%, #fef3c7 100%);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+        }
+
+        .demo-camera {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 18% 22%, rgba(76, 151, 255, .2), transparent 30%), radial-gradient(circle at 80% 75%, rgba(0, 128, 128, .15), transparent 32%);
+        }
+
+        .demo-hand {
+            position: absolute;
+            left: 25px;
+            bottom: 35px;
+            font-size: 5rem;
+            animation: waveHand 1.15s infinite alternate ease-in-out;
+            z-index: 3;
+        }
+
+        .demo-balloon {
+            position: absolute;
+            left: 60%;
+            top: 32%;
+            font-size: 5.2rem;
+            animation: balloonPop 3s infinite ease-in-out;
+            z-index: 4;
+            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .2));
+        }
+
+        .motion-line {
+            position: absolute;
+            left: 100px;
+            bottom: 115px;
+            font-size: 2.6rem;
+            color: #008080;
+            animation: motionPulse 1s infinite alternate;
+        }
+
+        @keyframes waveHand {
+            from {
+                transform: rotate(-10deg) translateY(0);
+            }
+
+            to {
+                transform: rotate(18deg) translateY(-18px);
+            }
+        }
+
+        @keyframes balloonPop {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+
+            35% {
+                opacity: 1;
+                transform: translate(-45px, -40px) scale(1.15);
+            }
+
+            45% {
+                opacity: 0;
+                transform: translate(-45px, -40px) scale(.2);
+            }
+
+            70% {
+                opacity: 0;
+                transform: translate(80px, 60px) scale(.2);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(80px, 60px) scale(.95);
+            }
+        }
+
+        @keyframes motionPulse {
+            from {
+                opacity: .25;
+                transform: scale(.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.12);
+            }
+        }
+
+        @keyframes floatSprite {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .float {
+            animation: floatSprite 2.2s infinite alternate ease-in-out;
+        }
+
+        @media(max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr !important;
+            }
+
+            .slide {
+                padding: 30px 35px;
+            }
+        }
+
+        .mouse-demo-stage {
+            width: 520px;
+            max-width: 100%;
+            height: 315px;
+            border-radius: 26px;
+            border: 5px solid #4c97ff;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(180deg, #d9f6ff 0%, #fff 55%, #fef3c7 100%);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+        }
+
+        .mouse-cross {
+            position: absolute;
+            left: 42%;
+            top: 45%;
+            font-size: 4.7rem;
+            font-weight: 900;
+            color: #111;
+            animation: crossMove 2.8s infinite ease-in-out;
+            z-index: 5;
+            filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .22));
+        }
+
+        .mouse-balloon {
+            position: absolute;
+            left: 60%;
+            top: 28%;
+            font-size: 5.4rem;
+            animation: mouseBalloonPop 3.2s infinite ease-in-out;
+            z-index: 4;
+            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .2));
+        }
+
+        .mouse-pointer {
+            position: absolute;
+            left: 35%;
+            top: 53%;
+            font-size: 3.4rem;
+            animation: pointerMove 2.8s infinite ease-in-out;
+            z-index: 6;
+        }
+
+        @keyframes crossMove {
+            0% {
+                transform: translate(-90px, 80px) rotate(-8deg);
+            }
+
+            45% {
+                transform: translate(85px, -35px) rotate(5deg);
+            }
+
+            100% {
+                transform: translate(-90px, 80px) rotate(-8deg);
+            }
+        }
+
+        @keyframes pointerMove {
+            0% {
+                transform: translate(-70px, 62px);
+            }
+
+            45% {
+                transform: translate(100px, -52px);
+            }
+
+            100% {
+                transform: translate(-70px, 62px);
+            }
+        }
+
+        @keyframes mouseBalloonPop {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            42% {
+                opacity: 1;
+                transform: scale(1.12);
+            }
+
+            50% {
+                opacity: 0;
+                transform: scale(.1);
+            }
+
+            72% {
+                opacity: 0;
+                transform: translate(-130px, 65px) scale(.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-130px, 65px) scale(.95);
+            }
+        }
+
+        .scratch-frame {
+            width: 100%;
+            height: 360px;
+            border-radius: 24px;
+            border: 5px solid #f2c140;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .16);
+        }
+
+        .scratch-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     </style>
 </head>
+
 <body>
     <div class="slide-logo-left" id="globalLogoLeft">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png" alt="Logo Ruangguru">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png" alt="Logo Kabupaten Dharmasraya">
-        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png" alt="Logo Dharmasraya Juara">
+        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/hs/1%20Homepage%20RG/logo%20ruangguru.png"
+            alt="Logo Ruangguru">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Lambang_Kabupaten_Dharmasraya.png"
+            alt="Logo Kabupaten Dharmasraya">
+        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/24f1773d-33d0-4b51-a608-ba820f3c3b9e.png"
+            alt="Logo Dharmasraya Juara">
     </div>
-    <div class="slide-logo-right" id="globalLogoRight">
-        <img src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png" alt="Logo Ruangguru Coding">
-    </div>
-
+    <div class="slide-logo-right" id="globalLogoRight"><img
+            src="https://cdn-web-2.ruangguru.com/landing-pages/assets/e7d93748-818d-462d-be57-7db1e479cd62.png"
+            alt="Logo Ruangguru Coding"></div>
     <div class="presentation-container" id="mainContainer">
-        
-        <!-- Slide 1: Cover -->
+
         <div class="slide active" id="slide1">
-            <h1 class="cover-title">
-                <div style="line-height: 1.1; text-align: center;">
-                    <span style="font-size: 3rem; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5);">PROJECT:</span><br>
-                    <span class="game-title-gradient" style="font-size: 6.5rem;">OWL WIKI CHATBOT</span>
-                </div>
-            </h1>
-            
-            <div style="display: flex; justify-content: center; align-items: center; gap: 30px; margin: 20px auto; z-index: 3;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" 
-                     alt="Scratch" 
-                     style="height: 100px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
-                <span style="font-size: 3rem; color: white; font-weight: bold;">+</span>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" 
-                     alt="ML4K" 
-                     style="height: 100px; width: auto; object-fit: contain; background: #008080; padding: 10px; border-radius: 15px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+            <h1 class="cover-title"><span style="font-size:3rem; color:#fff;">PROJECT:</span><br><span
+                    class="game-title-gradient" style="font-size:6rem;">BALLOON POPPER</span></h1>
+            <div
+                style="display:flex; justify-content:center; align-items:center; gap:25px; margin:18px auto; z-index:3;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png"
+                    alt="Scratch" style="height:92px; filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));">
+                <span style="font-size:3rem; font-weight:900;">+</span>
+                <span style="font-size:6rem; filter:drop-shadow(0 4px 12px rgba(0,0,0,.4));">🖱️🎈</span>
             </div>
-
-            <p class="cover-subtitle">SESI 10: PROGRAM OWL WIKI BOT</p>
+            <p class="cover-subtitle">SESI 10: MOUSE POINTER INTERACTION</p>
         </div>
 
-        <!-- Slide 2: Recall Alur -->
         <div class="slide" id="slide2">
-            <h2 class="agenda-title">Masih Ingat Alur WikiChatbot? 🦉</h2>
-            <div style="display: flex; gap: 30px; align-items: center; justify-content: center; width: 100%;">
-                <div class="card" style="flex: 1; padding: 20px;">
-                    <div class="card-icon">⌨️</div>
-                    <h4 class="txt-teal">1. Input</h4>
-                    <p style="font-size: 1rem;">Pengguna mengetik topik yang ingin dicari.</p>
+            <h2 class="agenda-title">Rangkuman Sebelumnya 🧠</h2>
+            <div class="grid-container" style="max-width:900px;">
+                <div class="card">
+                    <div class="card-icon">📹🎈</div>
+                    <h3 class="txt-teal">Balloon Popper Webcam</h3>
+                    <p style="font-size:1.2rem;">Kita membuat balon yang bereaksi saat ada gerakan dari kamera.</p>
                 </div>
-                <div style="font-size: 2rem; color: #008080;">➜</div>
-                <div class="card" style="flex: 1; padding: 20px;">
-                    <div class="card-icon">🔍</div>
-                    <h4 class="txt-teal">2. Wikipedia</h4>
-                    <p style="font-size: 1rem;">AI mencari data otomatis dari Wikipedia.</p>
-                </div>
-                <div style="font-size: 2rem; color: #008080;">➜</div>
-                <div class="card" style="flex: 1; padding: 20px;">
-                    <div class="card-icon">💬</div>
-                    <h4 class="txt-teal">3. Output</h4>
-                    <p style="font-size: 1rem;">Burung Hantu menjawab dengan ringkasan data.</p>
+                <div class="card">
+                    <div class="card-icon">👋➡️🎈</div>
+                    <h3 class="txt-purple">Video Sensing</h3>
+                    <p style="font-size:1.2rem;">Input-nya adalah gerakan tubuh yang dibaca oleh kamera.</p>
                 </div>
             </div>
-            <div style="margin-top: 40px; background: #fff8e1; padding: 15px 30px; border-radius: 20px; border: 2px dashed #f2c140;">
-                <p style="margin: 0; font-weight: bold; color: #856404;">Hari ini kita akan memprogramnya secara langsung! 🚀</p>
-            </div>
+            <div class="warning-box" style="margin-top:22px; max-width:820px; text-align:center; font-size:1.25rem;">
+                Hari ini kita membuat versi baru: <strong>tanpa webcam</strong>. Input-nya diganti menjadi <strong>mouse
+                    pointer</strong>.</div>
         </div>
 
-        <!-- Slide 3: What to Learn Today -->
         <div class="slide" id="slide3">
-            <h2 class="agenda-title">Apa yang Akan Kita Pelajari? 📚</h2>
-            <div class="grid-container" style="max-width: 900px;">
-                <div class="card" style="padding: 25px; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div class="step-num" style="margin:0;">1</div>
-                        <h4 class="txt-teal" style="margin:0;">Wikipedia Template</h4>
-                    </div>
-                    <p style="margin-top: 10px;">Membuka template Wikipedia dari ML4K di Scratch.</p>
+            <h2 class="agenda-title">Rencana Kita Hari Ini 🚀</h2>
+            <div class="grid-container" style="max-width:1000px; grid-template-columns:repeat(3,1fr);">
+                <div class="card">
+                    <div class="card-icon">🖱️</div>
+                    <h3>Mouse Input</h3>
+                    <p>Pointer mouse menjadi alat untuk menyentuh balon.</p>
                 </div>
-                <div class="card" style="padding: 25px; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div class="step-num" style="margin:0;">2</div>
-                        <h4 class="txt-teal" style="margin:0;">Percakapan Bot</h4>
-                    </div>
-                    <p style="margin-top: 10px;">Membuat alur percakapan menggunakan blok Ask dan Say.</p>
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <h3>Cross Sprite</h3>
+                    <p>Membuat sprite X yang selalu mengikuti mouse.</p>
                 </div>
-                <div class="card" style="padding: 25px; align-items: flex-start; text-align: left; grid-column: span 2;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <div class="step-num" style="margin:0;">3</div>
-                        <h4 class="txt-teal" style="margin:0;">Menampilkan Data</h4>
-                    </div>
-                    <p style="margin-top: 10px;">Mengambil dan menampilkan ringkasan Wikipedia berdasarkan input pengguna.</p>
+                <div class="card">
+                    <div class="card-icon">🎈</div>
+                    <h3>Balloon Pop</h3>
+                    <p>Balon hilang saat menyentuh sprite Cross.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h3>Sensing</h3>
+                    <p>Menggunakan kondisi touching Cross.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛠️</div>
+                    <h3>Coding</h3>
+                    <p>Menambahkan script baru di Cross dan Balloon.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧪</div>
+                    <h3>Testing</h3>
+                    <p>Mengecek apakah balon pop saat terkena Cross.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Project Demo -->
         <div class="slide" id="slide4">
-            <h2 class="agenda-title">Contoh Hasil Project 🎬</h2>
-            <div style="width: 700px; height: 400px; background: #f0f0f0; border: 5px solid #008080; border-radius: 20px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                <img src="https://cdn-web.ruangguru.com/file-uploader/cc4c03e8-7283-4b53-a987-76668badbcea.gif" alt="Project Demo GIF" style="max-width: 100%; max-height: 100%;">
+            <h2 class="agenda-title">Webcam vs Mouse Pointer ⚖️</h2>
+            <div class="grid-container" style="max-width:980px; grid-template-columns:repeat(2,1fr);">
+                <div class="card">
+                    <div class="card-icon">📹👋</div>
+                    <h3 class="txt-blue">Versi Webcam</h3>
+                    <p style="font-size:1.2rem;">Balon pop karena gerakan tangan terbaca oleh kamera.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖱️❌</div>
+                    <h3 class="txt-purple">Versi Mouse</h3>
+                    <p style="font-size:1.2rem;">Balon pop karena Cross mengikuti mouse dan menyentuh balon.</p>
+                </div>
             </div>
-            <p style="margin-top: 20px; font-size: 1.2rem; font-weight: bold; color: #555;">Bot kita akan menjawab pertanyaan apapun dari Wikipedia! 🌍</p>
+            <p style="font-size:1.35rem; text-align:center; max-width:880px; margin-top:24px;">Game yang mirip bisa
+                dibuat dengan <span class="txt-blue">input berbeda</span>. Cara bermainnya berubah, tetapi logic pop
+                balloon-nya tetap sama: <span class="txt-yellow">jika tersentuh, balon hilang</span>.</p>
         </div>
 
-        <!-- Slide 5: Open Scratch -->
         <div class="slide" id="slide5">
-            <h2 class="agenda-title">Mulai Membuat Program! 🛠️</h2>
-            <div style="background: white; padding: 30px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.06); border: 2px solid #e0f2f1; text-align: center; max-width: 650px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png" style="height: 45px; object-fit: contain;">
-                    <span style="font-size: 2rem; font-weight: bold; color: #ccc;">+</span>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTysI6tQs62DJ5f3bANwqlpKpU6fgjujV7ZmA&s" style="height: 45px; object-fit: contain; background: #008080; padding: 5px; border-radius: 8px;">
+            <h2 class="agenda-title">Cara Kerja Balloon Popper Mouse 🖱️🎈</h2>
+            <div
+                style="display:grid; grid-template-columns:.9fr 1.1fr; gap:28px; align-items:center; width:100%; max-width:1000px;">
+                <div class="mouse-demo-stage">
+                    <div class="demo-camera"></div>
+                    <div class="mouse-pointer">🖱️</div>
+                    <div class="mouse-cross">✕</div>
+                    <div class="mouse-balloon">🎈</div>
                 </div>
-                <p style="font-size: 1.15rem; color: #555; margin-bottom: 25px; font-weight: 600; line-height: 1.4;">
-                    Kita akan membuat program cerdas di editor Scratch khusus<br>yang sudah terintegrasi dengan Machine Learning!
-                </p>
-                <a href="https://machinelearningforkids.co.uk/scratch/" target="_blank" class="huge-btn" style="background: linear-gradient(135deg, #008080 0%, #a8c368 100%); border: 3px solid white; box-shadow: 0 8px 20px rgba(0,128,128,0.3); font-size: 1.5rem; padding: 15px 35px; border-radius: 50px; display: inline-flex; align-items: center; gap: 12px; color: white; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; font-weight: 700;">
-                    🚀 BUKA SCRATCH ML4K
-                </a>
+                <div style="text-align:left;">
+                    <p style="font-size:1.45rem; line-height:1.5;">Sprite <strong>Cross</strong> akan selalu mengikuti
+                        posisi mouse.</p>
+                    <div class="info-box" style="font-size:1.25rem;">Saat <strong>Cross menyentuh Balloon</strong>,
+                        balon akan <strong>hide</strong>, pindah ke posisi acak, lalu <strong>show</strong> lagi.</div>
+                    <p style="font-size:1.25rem;">Jadi pemain bisa “pop” balon dengan mengarahkan mouse ke balon.</p>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 6: Add Extension -->
         <div class="slide" id="slide6">
-            <h2 class="agenda-title">Tahapan Menambah Extension 🔌</h2>
-            <div class="step-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1200px; gap: 20px;">
-                <div class="step-card">
-                    <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">1</div> Add Extension</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/d6a8a95d-8c11-4ca7-a17c-3adeb7b8d9fc.png" alt="Step 1" style="width: 100%; height: 220px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Klik ikon <strong>Add Extension</strong> di pojok kiri bawah.</p>
-                    </div>
+            <h2 class="agenda-title">Input → Process → Output 🔄</h2>
+            <div class="grid-container" style="max-width:980px; grid-template-columns:repeat(3,1fr);">
+                <div class="card">
+                    <div class="card-icon">🖱️</div>
+                    <h3 class="txt-blue">Input</h3>
+                    <p>Gerakan mouse dari pemain.</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">2</div> Pilih Wikipedia</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/80bad3d7-4b73-40c7-8915-68357ab7c86f.png" alt="Step 2" style="width: 100%; height: 220px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Pilih extension bernama <strong>Wikipedia Bot</strong>.</p>
-                    </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3 class="txt-yellow">Process</h3>
+                    <p>Scratch mengecek apakah Cross menyentuh Balloon.</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-header" style="background: #f2c140; color: #333;"><div class="step-num-circle">3</div> Cek Blok Baru</div>
-                    <div class="step-body" style="padding: 15px;">
-                        <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/c7a2c7e1-4da0-40c1-8c01-40c6f753d01e.png" alt="Step 3" style="width: 100%; height: 220px; background: #f0f0f0; border-radius: 10px; margin-bottom: 15px; object-fit: contain; border: 2px dashed #ccc;">
-                        <p style="font-size: 1.1rem; margin: 0;">Blok ungu <strong>Wikipedia</strong> akan muncul!</p>
-                    </div>
+                <div class="card">
+                    <div class="card-icon">🎈💥</div>
+                    <h3 class="txt-green">Output</h3>
+                    <p>Balon hilang, pindah random, lalu muncul lagi.</p>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top:22px; max-width:880px; text-align:center; font-size:1.2rem;">Kita
+                tidak memakai kamera di sesi ini. Semua kontrol dilakukan dengan mouse.</div>
+        </div>
+
+        <div class="slide" id="slide7">
+            <h2 class="agenda-title">Aktivitas Cepat: Mana Input Mouse? 🔎</h2>
+            <p style="font-size:1.15rem; margin-top:-8px;">Geser contoh ke kotak yang tepat.</p>
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px; width:100%; max-width:900px;">
+                <div class="drop-col">
+                    <div class="drop-header" style="background:#4c97ff;">INPUT MOUSE 🖱️</div>
+                    <div class="drop-target" data-accept="mouse"></div>
+                </div>
+                <div class="drop-col">
+                    <div class="drop-header" style="background:#008080;">BUKAN INPUT MOUSE ⚙️</div>
+                    <div class="drop-target" data-accept="not-mouse"></div>
+                </div>
+            </div>
+            <div class="drag-pool" style="margin-top:16px; max-width:900px;">
+                <div class="draggable" draggable="true" data-type="mouse">pointer digerakkan ke balon</div>
+                <div class="draggable" draggable="true" data-type="not-mouse">kamera membaca tangan</div>
+                <div class="draggable" draggable="true" data-type="mouse">sprite Cross mengikuti mouse</div>
+                <div class="draggable" draggable="true" data-type="not-mouse">sprite bergerak saat klik bendera</div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide8">
+            <h2 class="agenda-title">Contoh Project Hari Ini 🎈</h2>
+            <div
+                style="display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center; width:100%; max-width:1000px;">
+                <div class="scratch-frame"><iframe src="https://scratch.mit.edu/projects/1366786578/embed"
+                        allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen></iframe></div>
+                <div style="text-align:left;">
+                    <p style="font-size:1.35rem; line-height:1.5;">Coba klik bendera hijau, lalu arahkan mouse ke balon.
+                    </p>
+                    <div class="info-box" style="font-size:1.2rem;">Saat Cross menyentuh balon, balon akan pop, pindah
+                        ke posisi acak, lalu muncul lagi.</div>
+                    <a class="huge-btn" href="https://scratch.mit.edu/projects/1366786578/" target="_blank"
+                        rel="noopener noreferrer" style="margin-top:18px;">BUKA CONTOH PROJECT ↗</a>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 7: Add Sprite Owl -->
-        <div class="slide" id="slide13">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Tambahkan Sprite Owl 🦉</h2>
-            <div style="display: flex; gap: 40px; align-items: start; justify-content: center; width: 100%;">
-                <div style="flex: 1; max-width: 600px;">
-                    <ul class="step-list">
-                        <li class="step-item"><div class="step-num">1</div> <div>Hapus Kucing Scratch (klik ikon tempat sampah).</div></li>
-                        <li class="step-item"><div class="step-num">2</div> <div>Klik <span class="txt-teal">"Choose a Sprite"</span>, cari burung hantu bernama <span class="txt-green">"Owl"</span>.</div></li>
-                        <li class="step-item"><div class="step-num">3</div> <div>Ubah namanya di kotak Sprite Name menjadi <span class="txt-teal">"Wiki Bot"</span>.</div></li>
-                        <li class="step-item"><div class="step-num">4</div> <div>Pastikan Owl mu punya beberapa <strong>Costume</strong> agar bisa berubah gaya!</div></li>
-                    </ul>
-                </div>
-                <div style="flex: 0 0 450px; text-align: center;">
-                    <div class="image-placeholder" style="height: 300px; border: none; background: transparent;">
-                        <iframe src="https://jumpshare.com/embed/r6Vcq0arPI15UiJqS7DQ" frameborder="0" width="100%" height="100%" style="border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);"></iframe>
-                    </div>
-                    <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Pilih karakter yang punya banyak gaya ya! 🦉</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Add Backdrop -->
-        <div class="slide" id="slide12">
-            <h2 class="agenda-title" style="margin-bottom: 20px;">Tambahkan Latar Belakang (Backdrop) 🖼️</h2>
-            <div style="display: flex; gap: 40px; align-items: start; justify-content: center; width: 100%;">
-                <div style="flex: 0 0 450px; text-align: center;">
-                    <div class="image-placeholder" style="height: 300px; border: none; background: transparent;">
-                        <iframe src="https://jumpshare.com/embed/f3btNglHQgxAvdMIvVKp" frameborder="0" width="100%" height="100%" style="border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);"></iframe>
-                    </div>
-                    <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">Pilih latar yang cocok untuk OwlWiki kita 🌄</p>
-                </div>
-                <div style="flex: 1; max-width: 650px;">
-                    <ul class="step-list">
-                        <li class="step-item"><div class="step-num">1</div> <div>Klik ikon <span class="txt-teal">"Choose a Backdrop"</span> di pojok kanan bawah.</div></li>
-                        <li class="step-item"><div class="step-num">2</div> <div>Pilih latar belakang yang sesuai untuk sprite (contoh: <span class="txt-green">"Forest"</span> atau <span class="txt-green">"Outdoor"</span>).</div></li>
-                        <li class="step-item"><div class="step-num">3</div> <div>Sekarang tampilan Scratch kita sudah menarik! ✨</div></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Coding Blocks -->
         <div class="slide" id="slide9">
-            <h2 class="agenda-title">Program Untuk Wiki Bot 🤖</h2>
-            <div style="display: flex; gap: 40px; align-items: start; justify-content: center; width: 100%;">
-                <div style="flex: 1.2; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #008080;">
-                    <!-- Simulasi Blok Kode -->
-                    <div class="scratch-block block-event">when 🚩 clicked</div>
-                    <div class="scratch-block block-looks">switch costume to <span class="block-input">Owl-a ▼</span></div>
-                    <div class="scratch-block block-looks">say <span class="block-input">Hello! I am an Owl Bot...</span> for <span class="block-input">2</span> secs</div>
-                    <div class="scratch-block block-looks">say <span class="block-input">Type a topic, and I will search...</span> for <span class="block-input">2</span> secs</div>
-                    <div class="scratch-block block-looks">say <span class="block-input">You can ask me about animals...</span> for <span class="block-input">2</span> secs</div>
-                    <div class="scratch-block block-sensing">ask <span class="block-input">Ask me about...</span> and wait</div>
-                    <div class="scratch-block block-looks">switch costume to <span class="block-input">Owl-c ▼</span></div>
-                    <div class="scratch-block block-looks">
-                        say 
-                        <div class="scratch-block block-wiki" style="margin: 0; padding: 4px 10px; border-radius: 20px;">
-                            Wikipedia text about <span class="block-arg">answer</span>
-                        </div>
-                    </div>
-                </div>
-                <div style="flex: 1; text-align: left;">
-                    <h4 class="txt-teal" style="font-size: 1.8rem; margin: 0 0 15px 0;">Penjelasan Program:</h4>
-                    <ul style="font-size: 1.3rem; line-height: 1.8; color: #333; padding-left: 20px; margin: 0;">
-                        <li style="margin-bottom: 10px;"><strong>Switch Costume:</strong> Mengganti gaya bicara bot.</li>
-                        <li style="margin-bottom: 10px;"><strong>Say & Ask:</strong> Membuat bot menyapa dan menanyakan topik.</li>
-                        <li style="margin-bottom: 10px;"><strong>Wikipedia Text:</strong> Mengambil data otomatis dari Wikipedia sesuai <span class="txt-blue">answer</span>.</li>
-                    </ul>
-                    <div style="background: #e0f2f1; padding: 20px; border-radius: 15px; border-left: 6px solid #008080; margin-top: 25px;">
-                        <p style="margin:0; font-size: 1.15rem; line-height: 1.5; color: #222;"><strong>Tips:</strong> Pastikan koneksi internet aktif karena bot harus mencari data ke Wikipedia!</p>
-                    </div>
-                </div>
+            <h2 class="agenda-title">Ayo Buka Scratch 🐱</h2>
+            <div style="text-align:center; max-width:850px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Scratchlogo.svg/3840px-Scratchlogo.svg.png"
+                    alt="Scratch"
+                    style="height:115px; margin-bottom:18px; filter:drop-shadow(0 6px 12px rgba(0,0,0,.2));">
+                <p style="font-size:1.4rem; line-height:1.5;">Kita membuat project langsung di
+                    <strong>scratch.mit.edu</strong>.</p>
+                <a class="huge-btn" href="https://scratch.mit.edu/" target="_blank" rel="noopener noreferrer"
+                    style="font-size:1.9rem; padding:22px 54px;">OPEN SCRATCH ↗</a>
             </div>
         </div>
 
-        <!-- Slide 10: Testing -->
         <div class="slide" id="slide10">
-            <h2 class="agenda-title">Waktunya Testing! 🧪</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-                <div style="font-size: 7rem; animation: floatSprite 2s infinite alternate;">🚩🦉✨</div>
-                <div class="card" style="max-width: 700px; padding: 30px;">
-                    <p style="font-size: 1.4rem; line-height: 1.6;">
-                        Klik <strong>Bendera Hijau</strong> dan ketik satu kata topik (misal: "Planet", "Indonesia", "Tiger").
-                    </p>
-                    <p style="font-size: 1.2rem; color: #008080; font-weight: bold; margin-top: 15px;">
-                        Apakah burung hantumu menjawab dengan benar?
-                    </p>
+            <h2 class="agenda-title">Butuh Starter Project? 🛠️</h2>
+            <div
+                style="display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center; width:100%; max-width:1000px;">
+                <div class="stage-box"><img
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/541086b5-83bb-4123-9545-9dc63f28a3d5.png"
+                        alt="Remix Tutorial"
+                        style="max-width:100%; max-height:310px; object-fit:contain; border-radius:18px;"></div>
+                <div class="code-step">
+                    <h3 class="txt-teal">Langkah Remix:</h3>
+                    <ol style="font-size:1.18rem; line-height:1.6;">
+                        <li>Buka starter project berikut.</li>
+                        <li>Klik tombol <strong>Remix</strong> di kanan atas.</li>
+                        <li>Aset awal sudah siap digunakan.</li>
+                    </ol>
+                    <a href="https://scratch.mit.edu/projects/1366784859/" target="_blank" rel="noopener noreferrer"
+                        class="huge-btn" style="font-size:1.25rem; padding:12px 25px;">BUKA STARTER PROJECT 🎈</a>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11: AI Nature -->
         <div class="slide" id="slide11">
-            <h2 class="agenda-title">Belum Berhasil? Jangan Menyerah! 🛡️</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
-                <div style="font-size: 6rem; animation: floatSprite 2.5s infinite alternate;">🤔🦉💡</div>
-                <div style="max-width: 700px; text-align: left;">
-                    <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 15px;">
-                        Ingat, ini adalah <strong>AI (Artificial Intelligence)</strong>. Kadang dia butuh waktu mencari data, atau topiknya memang tidak ada di Wikipedia.
-                    </p>
-                    
-                    <div style="background: #e0f2f1; padding: 20px; border-radius: 20px; border-left: 8px solid #008080; margin-bottom: 20px;">
-                        <h4 style="margin: 0 0 10px 0; color: #008080; font-size: 1.3rem;">💡 Tips Rahasia (Error Handling)</h4>
-                        <p style="margin: 0; font-size: 1.15rem; line-height: 1.5; color: #333;">
-                            Kita bisa membuat <strong>sistem penyelamat (Error Handling)</strong>! Jika data tidak ditemukan, kita bisa atur program agar bot dengan sopan menjawab: 
-                            <span class="txt-teal">"Maaf, aku belum tahu tentang itu..."</span> atau menyarankan topik lain.
-                        </p>
-                    </div>
-
-                    <p style="font-size: 1.1rem; color: #666; font-style: italic;">
-                        Gak apa-apa kalau program pertama masih bingung, nanti kita bisa ajarkan dia lebih pintar lagi! 😉
-                    </p>
+            <h2 class="agenda-title">Langkah 1: Balon Muncul dan Bergerak 🎈</h2>
+            <div
+                style="display:grid; grid-template-columns:1.1fr .9fr; gap:24px; width:100%; max-width:1050px; align-items:center;">
+                <div class="stage-box"><img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/da12c794-e6e2-42c0-92d1-9a44f7cd3597.png"
+                        alt="Balloon glide random code"></div>
+                <div class="code-step">
+                    <h3 class="txt-teal">Di sprite Balloon:</h3>
+                    <p style="font-size:1.2rem; line-height:1.55;">Langkah ini sama seperti sesi sebelumnya. Buat balon
+                        <strong>show</strong>, lalu <strong>glide to random position</strong>. Agar tidak selalu sama,
+                        gunakan <strong>set size</strong> dengan angka acak.</p>
+                    <div><span class="scratch-block b-event">when green flag clicked</span><br><span
+                            class="scratch-block b-look">show</span><br><span class="scratch-block b-motion">glide to
+                            random position</span><br><span class="scratch-block b-look">set size to random</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11b: Error Handling Code -->
-        <div class="slide" id="slideErrorHandling">
-            <h2 class="agenda-title" style="margin-bottom: 15px;">Program Cerdas: Tanya Terus & Anti Error! 🧠🤖</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
-                
-                <!-- Scratch Code Block Simulation -->
-                <div style="flex: 1.3; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #008080; max-height: 440px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; font-size: 0.85rem; align-items: flex-start; width: 100%;">
-                    <!-- Intro -->
-                    <div class="scratch-block block-event">when 🚩 clicked</div>
-                    <div class="scratch-block block-looks">say <span class="block-input">Hello! I am an Owl Bot...</span> for <span class="block-input">2</span> secs</div>
-                    <div class="scratch-block block-looks">say <span class="block-input">Type a topic, and I will search Wikipedia...</span> for <span class="block-input">2</span> secs</div>
-                    <div class="scratch-block block-looks">say <span class="block-input">You can ask me about animals, planets...</span> for <span class="block-input">2</span> secs</div>
-                    
-                    <!-- Forever -->
-                    <div class="scratch-block block-control" style="border-radius: 4px 4px 0 0; width: 100%;">forever</div>
-                    <div style="border-left: 8px solid #ffab19; margin-left: 10px; padding-left: 8px; display: flex; flex-direction: column; gap: 2px; width: calc(100% - 20px); align-items: flex-start;">
-                        <div class="scratch-block block-looks">switch costume to <span class="block-input">Owl-a ▼</span></div>
-                        <div class="scratch-block block-sensing">ask <span class="block-input">Ask me about...</span> and wait</div>
-                        
-                        <!-- Set topic variable -->
-                        <div class="scratch-block block-variable" style="display: flex; align-items: center; gap: 5px;">
-                            set <span class="block-input">topic ▼</span> to 
-                            <span class="scratch-block block-wiki" style="margin: 0; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px;">
-                                Wikipedia text about <span class="block-arg" style="font-size: 0.7rem; padding: 1px 6px;">answer</span>
-                            </span>
-                        </div>
-                        
-                        <!-- If/Else block -->
-                        <div class="scratch-block block-control" style="border-radius: 4px; width: 100%;">
-                            if 
-                            <span style="background: #59c059; border-radius: 20px; padding: 2px 8px; color: white; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; font-weight: bold;">
-                                <span style="background: #ff5c1a; padding: 1px 6px; border-radius: 10px; color: white;">topic</span> = <span style="background: white; border-radius: 4px; width: 25px; height: 14px; display: inline-block;"></span>
-                            </span> 
-                            then
-                        </div>
-                        
-                        <div style="border-left: 8px solid #ffab19; margin-left: 10px; padding-left: 8px; display: flex; flex-direction: column; gap: 2px; width: calc(100% - 20px); align-items: flex-start;">
-                            <div class="scratch-block block-looks">say <span class="block-input">Sorry, I could not find an answer. Try another topic...</span> for <span class="block-input">2</span> secs</div>
-                        </div>
-                        
-                        <div class="scratch-block block-control" style="border-radius: 0; width: 100%;">else</div>
-                        
-                        <div style="border-left: 8px solid #ffab19; margin-left: 10px; padding-left: 8px; display: flex; flex-direction: column; gap: 2px; width: calc(100% - 20px); align-items: flex-start;">
-                            <div class="scratch-block block-looks">switch costume to <span class="block-input">Owl-c ▼</span></div>
-                            <div class="scratch-block block-looks" style="display: flex; align-items: center; gap: 5px;">
-                                say 
-                                <span class="scratch-block block-wiki" style="margin: 0; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 5px;">
-                                    Wikipedia text about <span class="block-arg" style="font-size: 0.7rem; padding: 1px 6px;">answer</span>
-                                </span> 
-                                for <span class="block-input">10</span> secs
-                            </div>
-                        </div>
-                        
-                        <div class="scratch-block block-control" style="border-radius: 0 0 4px 4px; height: 10px; width: 40px; margin-bottom: 2px;"></div>
-                    </div>
-                    <div class="scratch-block block-control" style="border-radius: 0 0 15px 15px; height: 12px; width: 50px;"></div>
-                </div>
-
-                <!-- Explanation / Bullet points -->
-                <div style="flex: 1; text-align: left;">
-                    <h3 class="txt-teal" style="font-size: 1.8rem; margin: 0 0 15px 0;">Cara Kerja Program:</h3>
-                    <ul style="font-size: 1.25rem; line-height: 1.7; color: #333; padding-left: 20px; margin: 0 0 20px 0;">
-                        <li style="margin-bottom: 12px;"><strong>Forever (Selamanya):</strong> Membuat bot terus bertanya tanpa perlu diklik bendera hijau lagi!</li>
-                        <li style="margin-bottom: 12px;"><strong>Variable `topic`:</strong> Wadah untuk menyimpan jawaban Wikipedia sebelum dibaca bot.</li>
-                        <li style="margin-bottom: 12px;"><strong>Percabangan If-Else:</strong> 
-                            <ul>
-                                <li>Jika `topic` <strong>kosong</strong> (tidak ditemukan), bot bilang "Sorry, I could not find...".</li>
-                                <li>Jika <strong>ada isinya</strong>, bot berubah costume lalu membaca ringkasan data.</li>
-                            </ul>
-                        </li>
-                    </ul>
+        <div class="slide" id="slide12">
+            <h2 class="agenda-title">Langkah 2: Tambahkan Sprite Cross ❌</h2>
+            <div
+                style="display:grid; grid-template-columns:1.1fr .9fr; gap:24px; width:100%; max-width:1050px; align-items:center;">
+                <div class="stage-box"><img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/94056ae5-22e4-497a-a60d-7524b7e1b7dc.png"
+                        alt="Cross follow mouse code"></div>
+                <div class="code-step">
+                    <h3 class="txt-purple">Sprite baru: Cross</h3>
+                    <p style="font-size:1.2rem; line-height:1.55;">Buat sprite berbentuk <strong>X / cross warna
+                            hitam</strong>. Sprite ini akan bergerak mengikuti mouse pointer.</p>
+                    <div><span class="scratch-block b-event">when green flag clicked</span><br><span
+                            class="scratch-block b-control">forever</span><br><span class="scratch-block b-motion">point towards
+                            mouse-pointer</span></div>
+                    <div class="warning-box" style="margin-top:15px; font-size:1.05rem;">Pastikan nama sprite-nya mudah
+                        dikenali, misalnya <strong>Cross</strong>.</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide New: Save Reminder -->
-        <div class="slide" id="slideSave">
-            <h2 class="agenda-title" style="color: #ff6b6b;">PENTING: Simpan Project Kamu! 💾</h2>
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%;">
-                <div style="font-size: 5rem;">💾💻✨</div>
-                <div style="max-width: 600px; text-align: left;">
-                    <p style="font-size: 1.5rem; font-weight: bold; color: #333;">
-                        Jangan lupa untuk SAVE project kamu ke komputer hari ini!
-                    </p>
-                    <div style="background: #fff3e0; padding: 20px; border-radius: 20px; border-left: 10px solid #ff9800; margin-top: 20px;">
-                        <p style="margin: 0; font-size: 1.2rem; line-height: 1.5;">
-                            Minggu depan kita akan <strong>melanjutkan project yang sama</strong> untuk membuatnya jadi lebih canggih lagi. Berikan nama file yang jelas ya!
-                        </p>
-                    </div>
+        <div class="slide" id="slide13">
+            <h2 class="agenda-title">Langkah 3: Balon Pop Saat Menyentuh Cross 💥</h2>
+            <div
+                style="display:grid; grid-template-columns:1.1fr .9fr; gap:24px; width:100%; max-width:1050px; align-items:center;">
+                <div class="stage-box"><img class="code-img"
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/1da854a3-5f9c-49e4-a8f9-b304b8dd25d1.png"
+                        alt="Balloon touching Cross code"></div>
+                <div class="code-step">
+                    <h3 class="txt-blue">Tambahan di sprite Balloon:</h3>
+                    <p style="font-size:1.2rem; line-height:1.55;">Tambahkan script untuk mengecek apakah balon
+                        menyentuh sprite <strong>Cross</strong>. Jika iya, balon akan hilang, pindah random, lalu muncul
+                        lagi.</p>
+                    <div class="info-box" style="font-size:1.08rem;">Kunci logic-nya adalah <strong>if touching
+                            Cross?</strong> Jadi balon hanya pop saat benar-benar tersentuh oleh Cross.</div>
+                    <a href="https://scratch.mit.edu/projects/1366784859/" target="_blank" rel="noopener noreferrer"
+                        class="huge-btn" style="font-size:1.15rem; padding:12px 24px; margin-top:16px;">CEK STARTER
+                        SCRIPT ↗</a>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 12: Great Job -->
-        <div class="slide solid-teal-bg" id="slide12">
-            <h2 class="agenda-title" style="color: #f2c140;">Luar Biasa! Kamu Hebat! 🏆</h2>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-                <div style="font-size: 10rem; animation: bounce 1s infinite alternate;">🥳🦉💻</div>
-                <p style="font-size: 2rem; font-weight: bold;">Bot Wikipedia Pertama Kamu Sudah Jadi!</p>
-                <p style="font-size: 1.3rem; max-width: 700px; text-align: center; opacity: 0.9;">
-                    Sekarang kamu punya asisten pintar yang bisa membantumu belajar banyak hal baru langsung dari Scratch.
-                </p>
-            </div>
-        </div>
-
-        <!-- Slide 13: Quick Quiz -->
-        <div class="slide solid-teal-bg" id="slide13">
-            <h2 class="agenda-title" style="color: #f2c140; margin-bottom: 15px;">Kuis Kilat! ⏱️</h2>
-            <div style="background: white; color: #333; padding: 25px; border-radius: 20px; width: 100%; max-width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                <h3 id="q-text" style="font-size: 1.4rem; margin-top: 0; color: #008080; line-height: 1.3; margin-bottom: 20px;">1. Blok manakah yang digunakan untuk mengambil data ringkasan otomatis?</h3>
-                <div id="q-options" style="display: flex; flex-direction: column; gap: 10px;">
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">A. Ask and wait</button>
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">B. Wikipedia text about [ ]</button>
-                    <button class="quiz-opt" onclick="checkQuiz(this)" style="padding: 12px 20px; font-size: 1.1rem;">C. Switch costume to [ ]</button>
-                </div>
-                <div id="q-feedback" style="margin-top: 15px; font-weight: bold; font-size: 1.2rem; min-height: 30px; text-align: center;"></div>
-                <div style="display: flex; justify-content: center; margin-top: 10px;">
-                    <button id="q-next" class="huge-btn" style="display: none; padding: 10px 30px; font-size: 1.1rem;" onclick="nextQuiz()">Soal Berikutnya ➜</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 14: Summary -->
         <div class="slide" id="slide14">
-            <h2 class="agenda-title">Ringkasan Hari Ini 📝</h2>
-            <div class="grid-container" style="max-width: 1000px; grid-template-columns: repeat(2, 1fr); gap: 25px;">
-                <div class="card" style="padding: 30px; border-left: 12px solid #008080; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🧩</div>
-                        <div>
-                            <h4 class="txt-teal" style="margin: 0; font-size: 1.5rem;">Wikipedia Ext</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Belajar cara menambah fitur pintar ke dalam Scratch.</p>
-                        </div>
-                    </div>
+            <h2 class="agenda-title">Testing: Sudah Berhasil? 🧪</h2>
+            <div class="grid-container" style="max-width:1000px; grid-template-columns:repeat(2,1fr);">
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <h3>Cross Check</h3>
+                    <p>Apakah sprite Cross mengikuti mouse?</p>
                 </div>
-                <div class="card" style="padding: 30px; border-left: 12px solid #f2c140; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🗨️</div>
-                        <div>
-                            <h4 class="txt-yellow" style="margin: 0; font-size: 1.5rem;">Alur Interaksi</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Menggunakan blok Ask & Say untuk berkomunikasi.</p>
-                        </div>
-                    </div>
+                <div class="card">
+                    <div class="card-icon">🎈</div>
+                    <h3>Balloon Check</h3>
+                    <p>Apakah balon muncul dan bergerak ke posisi acak?</p>
                 </div>
-                <div class="card" style="padding: 30px; border-left: 12px solid #4c97ff; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">📖</div>
-                        <div>
-                            <h4 class="txt-blue" style="margin: 0; font-size: 1.5rem;">Data Wikipedia</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">AI mengambil ringkasan informasi secara otomatis.</p>
-                        </div>
-                    </div>
+                <div class="card">
+                    <div class="card-icon">💥</div>
+                    <h3>Touch Check</h3>
+                    <p>Apakah balon hilang saat tersentuh Cross?</p>
                 </div>
-                <div class="card" style="padding: 30px; border-left: 12px solid #9966ff; align-items: flex-start; text-align: left;">
-                    <div style="display: flex; align-items: center; gap: 20px;">
-                        <div style="font-size: 4rem;">🧪</div>
-                        <div>
-                            <h4 class="txt-purple" style="margin: 0; font-size: 1.5rem;">Testing AI</h4>
-                            <p style="font-size: 1.1rem; margin: 8px 0 0; color: #555;">Mencoba hasil program dan memahami cara kerja asisten pintar.</p>
-                        </div>
-                    </div>
+                <div class="card">
+                    <div class="card-icon">🔁</div>
+                    <h3>Respawn Check</h3>
+                    <p>Apakah balon muncul lagi di posisi baru?</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 15: Feedback -->
+        <div class="slide" id="slide15">
+            <h2 class="agenda-title">Jangan Lupa Save Project 💾</h2>
+            <div
+                style="display:grid; grid-template-columns:.8fr 1.2fr; gap:26px; width:100%; max-width:950px; align-items:center;">
+                <div class="stage-box" style="padding:0; overflow:hidden; border:none; background:transparent;"><img
+                        src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/e498442c-d811-4956-ba64-cab26cac98e7.png"
+                        alt="Save Project"
+                        style="width:100%; max-height:280px; object-fit:contain; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,.15);">
+                </div>
+                <div class="code-step">
+                    <h3 class="txt-teal">Cara Save Project:</h3>
+                    <ul style="font-size:1.3rem; line-height:1.65; padding-left:24px;">
+                        <li>Cukup tekan <strong>CTRL + S</strong> di keyboard.</li>
+                        <li>Atau klik tombol <strong>Share</strong> di bagian atas.</li>
+                    </ul>
+                    <div class="warning-box" style="margin-top:15px; font-size:1.1rem; padding:12px;">Pastikan project
+                        tidak hilang sebelum kelas selesai.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide16">
+            <h2 class="agenda-title">Preview Hasil Hari Ini 👀</h2>
+            <div style="text-align:center; max-width:850px;">
+                <div style="font-size:8rem;" class="float">🖱️❌🎈</div>
+                <p style="font-size:1.5rem; line-height:1.55;">Hari ini kita membuat <strong>Balloon Popper tanpa
+                        webcam</strong>. Balon bisa pop karena sprite <strong>Cross</strong> mengikuti mouse dan
+                    menyentuh balon.</p>
+                <div class="warning-box" style="font-size:1.2rem;">Cek lagi: Cross mengikuti mouse, balon hilang saat
+                    tersentuh, lalu muncul kembali di posisi acak.</div>
+            </div>
+        </div>
+
+        <div class="slide solid-teal-bg" id="slide17">
+            <h2 class="agenda-title" style="color:#f2c140;">Quick Quiz ⏱️</h2>
+            <div style="background:white; color:#333; padding:28px; border-radius:20px; width:100%; max-width:760px;">
+                <h3 id="q-text" style="font-size:1.45rem; color:#008080; margin-top:0;">Pertanyaan akan muncul di sini.
+                </h3>
+                <div id="q-options" style="display:flex; flex-direction:column; gap:10px;"></div>
+                <div id="q-feedback" style="margin-top:18px; font-weight:800; font-size:1.15rem; min-height:28px;">
+                </div>
+                <button id="q-next" class="submit-btn" style="display:none;" onclick="nextQuiz()">Soal Berikutnya
+                    ➜</button>
+            </div>
+        </div>
+
+        <div class="slide" id="slide18">
+            <h2 class="agenda-title">Review Hari Ini 📝</h2>
+            <div class="grid-container" style="max-width:900px;">
+                <div class="card">
+                    <div class="card-icon">🖱️</div>
+                    <h3>Mouse Pointer</h3>
+                    <p>Mouse menjadi input utama untuk mengontrol Cross.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❌</div>
+                    <h3>Cross Sprite</h3>
+                    <p>Cross bergerak mengikuti mouse pointer.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧩</div>
+                    <h3>Sensing</h3>
+                    <p>Balloon mengecek apakah menyentuh Cross.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎈</div>
+                    <h3>Balloon Game</h3>
+                    <p>Balon show, glide, hide, lalu muncul lagi.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="slide" id="slide19">
             <h2 class="agenda-title" style="margin-bottom: 15px;">Bagaimana Kelas Hari Ini? 💖</h2>
-            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">
-                Bantu kami menjadi lebih baik dengan mengisi form feedback singkat ya!
-            </p>
-            
-            <div style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
-                <div style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
-                    <div style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">💖</div>
-                    <div style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">✨</div>
-                    <div style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">🎉</div>
-                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png" alt="Happy Cat" style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
+            <p style="font-size: 1.3rem; text-align: center; max-width: 800px; margin-bottom: 30px; color: #555;">Bantu
+                kami menjadi lebih baik dengan mengisi form feedback singkat ya!</p>
+            <div
+                style="display: flex; gap: 40px; align-items: center; justify-content: center; width: 100%; max-width: 900px;">
+                <div
+                    style="position: relative; width: 300px; height: 300px; flex-shrink: 0; display: flex; justify-content: center; align-items: flex-end;">
+                    <div
+                        style="position: absolute; top: 20px; left: 20px; font-size: 3rem; animation: floatSprite 2s infinite alternate;">
+                        💖</div>
+                    <div
+                        style="position: absolute; top: 50px; right: 20px; font-size: 2.5rem; animation: floatSprite 2.5s infinite alternate reverse;">
+                        ✨</div>
+                    <div
+                        style="position: absolute; bottom: 60px; left: 10px; font-size: 2rem; animation: floatSprite 3s infinite alternate;">
+                        🎉</div>
+                    <img src="https://uob-1328237036.cos.ap-singapore.myqcloud.com//file-uploader/images/756d9713-87b5-4ec4-ae39-9f2352b8e280.png"
+                        alt="Happy Cat"
+                        style="width: 220px; z-index: 2; animation: bounce 1s infinite alternate; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">
                 </div>
-                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+                <div
+                    style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #eee; text-align: center; width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
                     <div style="font-size: 5rem; margin-bottom: 20px;">🎒</div>
                     <h3 style="color: #008080; margin: 0 0 10px 0; font-size: 1.8rem;">Selesai untuk Hari Ini!</h3>
-                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Jangan lupa untuk menyelesaikan seluruh aktivitas di LMS ya!</p>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px;">Jangan lupa untuk menyelesaikan
+                        seluruh aktivitas di LMS ya!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation -->
         <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)" disabled>&#9664;</button>
         <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">&#9658;</button>
     </div>
@@ -551,130 +1191,69 @@
             if (index === currentSlide && slides[index].classList.contains('active')) return;
             const oldSlide = slides[currentSlide];
             const newSlide = slides[index];
-            slides.forEach(slide => { 
-                slide.classList.remove('active', 'is-next', 'is-exiting'); 
-                slide.style.zIndex = 1; 
-            });
+            slides.forEach(slide => { slide.classList.remove('active', 'is-next', 'is-exiting'); slide.style.zIndex = 1; });
             if (direction === 'next') {
-                oldSlide.style.zIndex = 10;
-                newSlide.style.zIndex = 11;
-                newSlide.classList.add('is-next');
-                requestAnimationFrame(() => { 
-                    newSlide.classList.add('active'); 
-                    newSlide.classList.remove('is-next'); 
-                });
+                oldSlide.style.zIndex = 10; newSlide.style.zIndex = 11; newSlide.classList.add('is-next');
+                requestAnimationFrame(() => { newSlide.classList.add('active'); newSlide.classList.remove('is-next'); });
             } else {
-                oldSlide.style.zIndex = 11;
-                newSlide.style.zIndex = 10;
-                newSlide.classList.add('active');
-                oldSlide.classList.add('is-exiting');
+                oldSlide.style.zIndex = 11; newSlide.style.zIndex = 10; newSlide.classList.add('active'); oldSlide.classList.add('is-exiting');
             }
             currentSlide = index;
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
-
             const isDarkSlide = slides[index].id === 'slide1' || slides[index].classList.contains('solid-teal-bg');
-            if (isDarkSlide) {
-                prevBtn.style.backgroundColor = 'rgba(255,255,255,0.2)'; 
-                nextBtn.style.backgroundColor = 'rgba(255,255,255,0.2)';
-                prevBtn.style.color = 'white';
-                nextBtn.style.color = 'white';
-            } else {
-                prevBtn.style.backgroundColor = '#f2c140'; 
-                nextBtn.style.backgroundColor = '#f2c140';
-                prevBtn.style.color = '#222';
-                nextBtn.style.color = '#222';
-            }
+            prevBtn.style.backgroundColor = isDarkSlide ? 'rgba(255,255,255,0.2)' : '#f2c140';
+            nextBtn.style.backgroundColor = isDarkSlide ? 'rgba(255,255,255,0.2)' : '#f2c140';
+            prevBtn.style.color = isDarkSlide ? 'white' : '#222';
+            nextBtn.style.color = isDarkSlide ? 'white' : '#222';
         }
-
         function changeSlide(direction) {
             const newIndex = currentSlide + direction;
-            if (newIndex >= 0 && newIndex < slides.length) {
-                showSlide(newIndex, direction === 1 ? 'next' : 'prev');
-            }
+            if (newIndex >= 0 && newIndex < slides.length) showSlide(newIndex, direction === 1 ? 'next' : 'prev');
         }
+        document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') changeSlide(1); else if (e.key === 'ArrowLeft') changeSlide(-1); });
 
-        // Quiz Logic
-        const quizData = [
-            {
-                q: "Blok manakah yang digunakan untuk mengambil data ringkasan otomatis dari Wikipedia?",
-                opts: ["A. Ask and wait", "B. Wikipedia text about [ ]", "C. Switch costume to [ ]"],
-                ans: 1,
-                exp: "Benar! Blok 'Wikipedia text about' adalah fitur spesial dari extension ML4K."
-            },
-            {
-                q: "Apa yang harus kita ketik di kolom input bot agar dia bisa mencari data?",
-                opts: ["A. Angka saja", "B. Nama topik (misal: Tiger)", "C. Perintah koding"],
-                ans: 1,
-                exp: "Tepat! Bot mencari ringkasan berdasarkan kata kunci atau topik yang kamu ketik."
-            },
-            {
-                q: "Apa yang terjadi jika bot tidak menemukan data di Wikipedia?",
-                opts: ["A. Komputer tidak menyala", "B. Bot tidak menjawab", "C. Bot mengarang jawaban"],
-                ans: 1,
-                exp: "Benar! AI hanya bisa menjawab berdasarkan data yang ada. Jika tidak ada, bot mungkin diam atau memberikan pesan error."
-            }
-        ];
-
-        let currentQIdx = 0;
-        function checkQuiz(btn) {
-            const quizSlideId = slides[currentSlide].id;
-            const opts = document.querySelectorAll(`#${quizSlideId} .quiz-opt`);
-            const qNext = document.getElementById('q-next');
-            const feedback = document.getElementById('q-feedback');
-            
-            opts.forEach(o => o.disabled = true);
-            const qData = quizData[currentQIdx];
-            const isCorrect = Array.from(opts).indexOf(btn) === qData.ans;
-
-            if (isCorrect) {
-                btn.classList.add('correct');
-                feedback.style.color = '#22c55e';
-                feedback.textContent = qData.exp;
-            } else {
-                btn.classList.add('wrong');
-                opts[qData.ans].classList.add('correct');
-                feedback.style.color = '#ef4444';
-                feedback.textContent = "Kurang tepat. " + qData.exp;
-            }
-            
-            if (currentQIdx < quizData.length - 1) {
-                qNext.style.display = 'inline-block';
-                qNext.textContent = "Soal Berikutnya ➜";
-            } else {
-                qNext.style.display = 'inline-block';
-                qNext.textContent = "Selesai! Lanjut ke Slide ➜";
-                qNext.onclick = () => changeSlide(1);
-            }
-        }
-
-        function nextQuiz() {
-            currentQIdx++;
-            const qData = quizData[currentQIdx];
-            const qNext = document.getElementById('q-next');
-            
-            document.getElementById('q-text').textContent = (currentQIdx + 1) + ". " + qData.q;
-            const optsDiv = document.getElementById('q-options');
-            optsDiv.innerHTML = '';
-            
-            qData.opts.forEach((optText, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-opt';
-                btn.textContent = optText;
-                btn.onclick = () => checkQuiz(btn);
-                optsDiv.appendChild(btn);
+        let dragged = null;
+        document.addEventListener('dragstart', e => { if (e.target.classList.contains('draggable')) { dragged = e.target; e.target.classList.add('dragging'); } });
+        document.addEventListener('dragend', e => { if (e.target.classList.contains('draggable')) e.target.classList.remove('dragging'); });
+        document.querySelectorAll('.drop-target').forEach(zone => {
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('active'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('active'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault(); zone.classList.remove('active'); if (!dragged) return;
+                const ok = (dragged.dataset.type && dragged.dataset.type === zone.dataset.accept) || (dragged.dataset.val && dragged.dataset.val === zone.dataset.ans);
+                if (ok) { zone.appendChild(dragged); dragged.draggable = false; dragged.style.cursor = 'default'; dragged.style.background = '#a8c368'; }
+                else { zone.style.borderColor = '#ff6b6b'; setTimeout(() => zone.style.borderColor = '#ddd', 600); }
+                dragged = null;
             });
-            
-            document.getElementById('q-feedback').textContent = '';
-            qNext.style.display = 'none';
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') changeSlide(1);
-            else if (e.key === 'ArrowLeft') changeSlide(-1);
         });
 
-        document.addEventListener('DOMContentLoaded', () => showSlide(0));
+        const quizData = [
+            { q: 'Apa input utama pada Balloon Popper tanpa webcam?', opts: ['A. Mouse pointer', 'B. Kamera', 'C. Microphone'], ans: 0, exp: 'Pada versi ini, pemain menggunakan mouse pointer untuk menggerakkan Cross.' },
+            { q: 'Apa fungsi sprite Cross?', opts: ['A. Mengikuti mouse dan menyentuh balon', 'B. Mengganti backdrop', 'C. Menyalakan kamera'], ans: 0, exp: 'Cross menjadi pengganti gerakan kamera. Cross mengikuti mouse pointer.' },
+            { q: 'Blok sensing apa yang dibutuhkan agar Balloon bisa pop?', opts: ['A. touching Cross?', 'B. key space pressed?', 'C. video motion on sprite'], ans: 0, exp: 'Balloon perlu mengecek apakah ia sedang menyentuh sprite Cross.' }
+        ];
+        let currentQIdx = 0;
+        function renderQuiz() {
+            const qData = quizData[currentQIdx];
+            document.getElementById('q-text').textContent = (currentQIdx + 1) + '. ' + qData.q;
+            const opts = document.getElementById('q-options'); opts.innerHTML = '';
+            qData.opts.forEach((opt, i) => { const btn = document.createElement('button'); btn.className = 'quiz-opt'; btn.textContent = opt; btn.onclick = () => checkQuiz(btn, i); opts.appendChild(btn); });
+            document.getElementById('q-feedback').textContent = '';
+            document.getElementById('q-next').style.display = 'none';
+        }
+        function checkQuiz(btn, idx) {
+            const qData = quizData[currentQIdx];
+            const buttons = document.querySelectorAll('#q-options .quiz-opt'); buttons.forEach(b => b.disabled = true);
+            const fb = document.getElementById('q-feedback');
+            if (idx === qData.ans) { btn.classList.add('correct'); fb.style.color = '#22c55e'; fb.textContent = 'Benar! ' + qData.exp; }
+            else { btn.classList.add('wrong'); buttons[qData.ans].classList.add('correct'); fb.style.color = '#ef4444'; fb.textContent = 'Kurang tepat. ' + qData.exp; }
+            const qNext = document.getElementById('q-next'); qNext.style.display = 'inline-block'; qNext.textContent = currentQIdx < quizData.length - 1 ? 'Soal Berikutnya ➜' : 'Selesai! Lanjut ➜';
+        }
+        function nextQuiz() { if (currentQIdx < quizData.length - 1) { currentQIdx++; renderQuiz(); } else changeSlide(1); }
+
+        document.addEventListener('DOMContentLoaded', () => { showSlide(0); renderQuiz(); });
     </script>
 </body>
+
 </html>
